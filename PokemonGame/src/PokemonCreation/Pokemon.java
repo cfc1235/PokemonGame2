@@ -1,14 +1,11 @@
 package PokemonCreation;
 
-import Interfaces.WeightedEnteries;
+import Interfaces.*;
 import Items.NoItem;
 import PokemonCreation.AllAbilities.*;
 import BattleMechanics.BaseVortex;
 import BattleMechanics.Moves;
 import BattleMechanics.Vortex.NoVortex;
-import Interfaces.AddMoveset;
-import Interfaces.CreateOrderedMap;
-import Interfaces.GlobalVariables;
 import Moveset.*;
 
 import javax.swing.*;
@@ -21,7 +18,7 @@ public class Pokemon implements AddMoveset {
     protected List<Integer> EVs = new ArrayList<>();
     protected List<Integer> GivesEVs = new ArrayList<>();
     protected Items item = new NoItem();
-    protected String name;
+    protected String name = "";
     protected int savedHP;
     protected int HP;
     protected int ID;
@@ -74,8 +71,6 @@ public class Pokemon implements AddMoveset {
     protected Boolean isParalyzed = false;
     protected Boolean isAsleep = false;
     protected Boolean isBurned = false;
-    protected Boolean requiresItemEvol = false;
-    protected String itemEvolReq = "";
     protected Boolean hasGender = true;
     protected int Gender = (int) ((Math.random() * 2) + 1);
     protected String pokedexType;
@@ -147,7 +142,9 @@ public class Pokemon implements AddMoveset {
     protected Boolean cannotFlee = false;
     protected Boolean cannotUseMove = false;
     protected ArrayList<CreateOrderedMap<String, Integer>> prohibitedMoves = new ArrayList<>();
+    protected ArrayList<String> itemEvolReqs = new ArrayList<>();
 
+    public ArrayList<String> getItemEvolReqs(){return this.itemEvolReqs;}
     public ArrayList<String> getProhibitedMoves(){
         ArrayList<String> currentProhibitedMoves = new ArrayList<>();
         for(CreateOrderedMap<String, Integer> prohib : this.prohibitedMoves){
@@ -520,12 +517,6 @@ public class Pokemon implements AddMoveset {
         }
     }
 
-    public Boolean getRequiresItemEvol(){
-        return requiresItemEvol;
-    }
-    public String getItemEvolReq(){
-        return itemEvolReq;
-    }
     public int getCaptureRate(){
         return captureRate;
     }
@@ -578,6 +569,18 @@ public class Pokemon implements AddMoveset {
         isPoisoned = false;
     }
     public Items showItem() {return item;}
+    public Pokemon giveItem(Items item, GlobalVariables globalVariables){
+        if(!this.itemEvolReqs.isEmpty()){
+            if(this.itemEvolReqs.contains(item.showName())){
+                return GetPokemon.evolvePoke(globalVariables, this);
+            }
+        }
+        else {
+            giveItem(item);
+        }
+        return this;
+    }
+
     public void giveItem(Items item){
         this.item = item;
         this.savedItem = this.item;

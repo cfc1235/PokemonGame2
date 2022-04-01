@@ -46,6 +46,7 @@ public class AreaTypes {
     protected WeightedEnteries<Integer> pokeChanceSwarm = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> pokeChanceSound = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> trainerPokeChance = new WeightedEnteries<>();
+
     protected void createPokeChances(){
         this.trainerChance.addAll(this.dayChance);
         this.trainerChance.addAll(this.nightChance);

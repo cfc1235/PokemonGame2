@@ -1,6 +1,7 @@
 package BattleMechanics;
 import BattleMechanics.Vortex.NoVortex;
 import Interfaces.CreateOrderedMap;
+import Items.NoItem;
 import PlayerMechanics.AreaMechanics;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.Empty;
@@ -168,7 +169,11 @@ public class Moves {
     protected Boolean chargesElectric = false;
     protected Boolean giveEnemyAbility = false;
     protected ArrayList<CreateOrderedMap<String, Integer>> prohibitsMoves = new ArrayList<>();
+    protected Boolean ridsStatusEffects = false;
 
+    public Boolean getRidsStatusEffects(){return this.ridsStatusEffects;}
+    public void setFlinchChance(int chance){this.FlinchChance = chance;}
+    public void resetFlinchChance(){this.FlinchChance = 0;}
     public ArrayList<CreateOrderedMap<String, Integer>> getProhibitsMoves(){return this.prohibitsMoves;}
     public Boolean getGiveEnemyAbility(){return this.giveEnemyAbility;}
     public Boolean getChargesElectric(){return this.chargesElectric;}
@@ -529,6 +534,10 @@ public class Moves {
                 defender, this, weather,true);
         defender.showAbility().addStageDuringDamage(attacker,
                 defender, this, weather,false);
+        Boolean isUsed = defender.showItem().getStatMultsDuringDamage(this, defender);
+        if(isUsed && defender.showItem().getIsConsumable()){
+            defender.giveItem(new NoItem());
+        }
         if(this.name.equals("Weather Ball")){
             if(weather.showName().equals("Sunny")){
                 this.type = "Fire";
@@ -782,15 +791,18 @@ public class Moves {
                         if (RefinedDamage == 0) {
                             RefinedDamage = 1;
                         }
-                        if (MultHit) {
+                        if (this.MultHit) {
                             System.out.println("Hit " + hitTicker + " for " + RefinedDamage);
                             savedRefinedDamage += RefinedDamage;
                         }
-                        if (!MultHit) {
+                        if (!this.MultHit) {
                             savedRefinedDamage = RefinedDamage;
                         }
                         hitTicker += 1;
                     }
+                }
+                if(!defender.showAbility().getCausesStatEffect().isEmpty()){
+                    defender.showAbility().statEffectOnDamage(this, attacker);
                 }
             }
         }

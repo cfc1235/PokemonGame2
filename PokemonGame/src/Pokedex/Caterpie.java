@@ -30,8 +30,8 @@ public class Caterpie extends Pokemon {
         setTotalEXP();
         setNextLevelEXP();
         setEXPNeeded();
-        EvolTiming = 7;
-        HP = savedHP;
+        this.EvolTiming = 7;
+        this.HP = this.savedHP;
         setFullDirName("Caterpie.png", globalVariables);
         this.setPokeCry("010Cry.wav");
     }

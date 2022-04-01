@@ -2,12 +2,11 @@ package PokemonCreation;
 
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
-import Moveset.SelfDestruct;
 import Weather.Weather;
-
-import java.awt.font.GraphicAttribute;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Abilities {
     protected String name;
@@ -102,7 +101,37 @@ public class Abilities {
     protected List<String> counteringAbilities = new ArrayList();
     protected Boolean healOnType = false;
     protected String healType = "";
+    protected ArrayList<String> causesStatEffect = new ArrayList<>();
+    protected double statChance = 0.0;
 
+    public ArrayList<String> getCausesStatEffect(){return this.causesStatEffect;}
+    public void statEffectOnDamage(Moves moves, Pokemon attacker){
+        if(!this.causesStatEffect.isEmpty()) {
+            if ((moves.getIsSpecial() && this.requiresSpecial) ||
+                    (!moves.getIsSpecial() && this.requiresPhys) ||
+                    (!this.requiresSpecial && !this.requiresPhys)) {
+                Collections.shuffle(this.causesStatEffect);
+                if (this.statChance > new Random().nextDouble()) {
+                    String effect = this.causesStatEffect.get(0);
+                    if(effect.equals("Burn")){
+                        attacker.Burn();
+                    }
+                    if(effect.equals("Sleep")){
+                        attacker.Sleep();
+                    }
+                    if(effect.equals("Paralysis")){
+                        attacker.Paralyze();
+                    }
+                    if(effect.equals("Freeze")){
+                        attacker.Freeze();
+                    }
+                    if(effect.equals("Poison")){
+                        attacker.Poison();
+                    }
+                }
+            }
+        }
+    }
     public Boolean getHealOnType(){return this.healOnType;}
     public Boolean getAbilitiesCounter(){return this.abilitiesCounter;}
     public List<String> getCounteringAbilities(){return this.counteringAbilities;}

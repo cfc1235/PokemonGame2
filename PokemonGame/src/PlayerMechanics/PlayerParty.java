@@ -50,7 +50,7 @@ public class PlayerParty {
                     globalVariables.getItemInventory().giveItemToInventory(pokemon.takeItem());
                 }
                 if(change.equals("Give")){
-                    pokemon.giveItem(globalVariables.getItemInventory().giveItemFromInventory());
+                    pokemon.giveItem(globalVariables.getItemInventory().giveItemFromInventory(), globalVariables);
                 }
             }
 

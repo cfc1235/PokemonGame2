@@ -287,4 +287,8 @@ public interface AddMoveset {
     default Moves addElectricTerrain(){return new ElectricTerrrain();}
     default Moves addSuperpower(){return new Superpower();}
     default Moves addThroatChop(){return new ThroatChop();}
+    default Moves addAcid(){return new Acid();}
+    default Moves addDazzlingGleam(){return new DazzlingGleam();}
+    default Moves addAromatherapy(){return new Aromatherapy();}
+    default Moves addLeafBlade(){return new LeafBlade();}
 }

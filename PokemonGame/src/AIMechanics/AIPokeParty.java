@@ -15,6 +15,16 @@ public class AIPokeParty {
         Random random = new Random();
         int level = currentArea.getMinLevel() + random.nextInt(currentArea.getLevelRange());
         int ID = 0;
+        if(globalVariables.getFullRandomizerOn()){
+            ArrayList<Pokemon> wildTeam = new ArrayList<>();
+            Pokemon pokemon = new Pokemon();
+            while(pokemon.showName().equals("")){
+                ID = random.nextInt(898);
+                pokemon = GetPokemon.getPokemon(level, ID, globalVariables);
+            }
+            wildTeam.add(pokemon);
+            return wildTeam;
+        }
         if(globalVariables.getParty().hasHeadButt() &&
                 !currentArea.getPokeChanceHeadbutt().isEmpty()){
             System.out.println("Would you like to use headbutt for different pokemon? (y/n) ");
@@ -57,6 +67,18 @@ public class AIPokeParty {
             if (Math.random() > .5) {
                 again = false;
             }
+        }
+        if(globalVariables.getFullRandomizerOn()){
+            for (int i = 0; i <= len; ++i) {
+                int level = currentArea.getMinLevel() + random.nextInt(currentArea.getLevelRange());
+                Pokemon pokemon = new Pokemon();
+                while(pokemon.showName().equals("")){
+                    int ID = random.nextInt(898);
+                    pokemon = GetPokemon.getPokemon(level, ID, globalVariables);
+                }
+                trainerTeam.add(pokemon);
+            }
+            return trainerTeam;
         }
         for (int i = 0; i <= len; ++i) {
             int level = currentArea.getMinLevel() + random.nextInt(currentArea.getLevelRange());

@@ -11,11 +11,11 @@ import java.util.Collections;
 public class Charmander extends Pokemon {
 
     public Charmander(int level, GlobalVariables globalVariables) {
-        possibleAbilities.add(new Blaze());
-        possibleAbilities.add(new SolarPower());
+        this.possibleAbilities.add(new Blaze());
+        this.possibleAbilities.add(new SolarPower());
         getAbilities();
-        savedAbility = ability;
-        Collections.addAll(learnedMoves, new CreateOrderedMap<>(0, addScratch()),
+        this.savedAbility = this.ability;
+        Collections.addAll(this.learnedMoves, new CreateOrderedMap<>(0, addScratch()),
                 new CreateOrderedMap<>(0, addGrowl()), new CreateOrderedMap<>(4, addEmber()),
                 new CreateOrderedMap<>(8, addSmokescreen()), new CreateOrderedMap<>(12, addDragonBreath()),
                 new CreateOrderedMap<>(17, addFireFang()), new CreateOrderedMap<>(20, addSlash()),
@@ -24,7 +24,7 @@ public class Charmander extends Pokemon {
                 new CreateOrderedMap<>(40, addFlareBlitz()));
         addFirstMoves();
         setFirstEVs();
-        Collections.addAll(TMmoves, addMegaPunch(), addMegaKick(), addFirePunch(), addThunderPunch(), addFireSpin(),
+        Collections.addAll(this.TMmoves, addMegaPunch(), addMegaKick(), addFirePunch(), addThunderPunch(), addFireSpin(),
                 addDig(), addRest(),addRockSlide(), addSnore(), addProtect(), addScaryFace(), addAttract(), addBeatUp(),
                 addWillOWisp(),addFacade(), addSwift(), addHelpingHand(), addBrickBreak(), addRockTomb(), addFling(),
                 addShadowClaw(),addFireFang());
@@ -36,10 +36,10 @@ public class Charmander extends Pokemon {
         setTotalEXP();
         setNextLevelEXP();
         setEXPNeeded();
-        EvolTiming = 16;
+        this.EvolTiming = 16;
         setGivesEVs(0, 0, 0, 0, 1, 0);
-        HP = savedHP;
-        pokedexType = this.getClass().getSimpleName();
+        this.HP = this.savedHP;
+        this.pokedexType = this.getClass().getSimpleName();
         this.name = this.pokedexType;
         setFullDirName("Charmander.png", globalVariables);
         this.setPokeCry("004Cry.wav");

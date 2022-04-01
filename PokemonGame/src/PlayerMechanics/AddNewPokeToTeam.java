@@ -65,8 +65,8 @@ public class AddNewPokeToTeam {
                 }
             }
             if (ballType.equals("Moon Ball")) {
-                if (defender.getRequiresItemEvol()) {
-                    if (defender.getItemEvolReq().equals("Moon Stone")) {
+                if (!defender.getItemEvolReqs().isEmpty()) {
+                    if (defender.getItemEvolReqs().contains("Moon Stone")) {
                         BallMod = 4;
                     }
                 }

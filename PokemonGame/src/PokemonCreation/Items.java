@@ -1,7 +1,7 @@
 package PokemonCreation;
 
+import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
-import PokemonCreation.Pokemon;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,9 @@ public class Items {
     protected boolean changeSelfEvas = false;
     protected double changeSelfEvasion = 0;
     protected boolean curesParalysis = false;
+    protected boolean forcesEvol = true;
 
+    public Boolean getForcesEvol(){return this.forcesEvol;}
     public ArrayList<CreateOrderedMap<String, Double>> getTypesAffected(){return this.typesAffected;}
     public Boolean getAffectsType(){return this.affectsType;}
     public Boolean getAffectsSelfType(){return this.affectsSelfType;}
@@ -125,4 +127,25 @@ public class Items {
         return this.statMults;
     }
 
+    public Boolean getStatMultsDuringDamage(Moves moves, Pokemon pokemon){
+        getStatMults();
+        Boolean isUsed = false;
+        for(CreateOrderedMap<String, Double> types : this.typesAffected){
+            if(types.getKey().equals(moves.showName())){
+                doStatChanges(pokemon);
+                isUsed = true;
+            }
+        }
+        return isUsed;
+    }
+
+    private void doStatChanges(Pokemon pokemon){
+        pokemon.changeAttMult(this.statMults[0]);
+        pokemon.changeDefMult(this.statMults[1]);
+        pokemon.changeSpecAttMult(this.statMults[2]);
+        pokemon.changeSpecDefMult(this.statMults[3]);
+        pokemon.changeSpeedMult(this.statMults[4]);
+        pokemon.changeAccMult(this.statMults[5]);
+        pokemon.changeEvasMult(this.statMults[6]);
+    }
 }

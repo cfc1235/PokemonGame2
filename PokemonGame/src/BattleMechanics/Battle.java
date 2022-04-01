@@ -16,7 +16,7 @@ import Terrain.Terrain;
 import Weather.Weather;
 import Items.NoItem;
 
-import static Interfaces.Evolve.evolvePoke;
+import static Interfaces.GetPokemon.evolvePoke;
 
 public class Battle {
     private String type;
@@ -542,10 +542,10 @@ public class Battle {
             if (AIPoke.showHP() <= 0) {
                 this.PlayerPoke.showAbility().addStageOnDeath(this.PlayerPoke);
                 this.AIParty.remove(this.AIPoke);
-                for (Pokemon pokemon : ExpLineUp){
-                    pokemon.addEVs(PlayerPoke, AIPoke);
+                for (Pokemon pokemon : this.ExpLineUp){
+                    pokemon.addEVs(this.PlayerPoke, this.AIPoke);
                     System.out.println("");
-                    Boolean EvolTime = Waiting.get(Waiting.indexOf(pokemon)).LevelUp(type, AIPoke);
+                    Boolean EvolTime = this.Waiting.get(this.Waiting.indexOf(pokemon)).LevelUp(type, AIPoke);
                     if(EvolTime) {
                         Scanner scan = new Scanner(System.in);
                         System.out.println(pokemon.showName() + " can evolve. Do you accept?");
@@ -666,7 +666,7 @@ public class Battle {
                         attacker.giveItem(new NoItem());
                     }
                     if (!SelectMove.showName().equals("Snore")) {
-                        if (attacker == PlayerPoke) {
+                        if (attacker == this.PlayerPoke) {
                             if (attacker.showChargeProtect()) {
                                 attacker.unChargeProtect();
                             }
@@ -1187,6 +1187,9 @@ public class Battle {
                         attacker.resetHP();
                         System.out.println(getAttackerName(attacker) + " has fully been restored!");
                     }
+                    if(SelectMove.getRidsStatusEffects()){
+                        attacker.ridStatusEffects();
+                    }
                     if (SelectMove.showSelfSleep()) {
                         attacker.Sleep();
                         System.out.println(getAttackerName(attacker) + " has put itself to sleep!");
@@ -1251,11 +1254,21 @@ public class Battle {
                             this.AIPoke.setFakeLevitateTimer(SelectMove.getLevitateTimer());
                         }
                     }
-                    if (SelectMove.showCanFlinch()) {
+                    if (SelectMove.showCanFlinch() || defender.showAbility().showName().equals("Stench")) {
                         if (Hit) {
+                            Boolean abilityAffected = false;
+                            if (defender.showAbility().showName().equals("Stench")) {
+                                if (SelectMove.showFlinchChance() == 0) {
+                                    SelectMove.setFlinchChance(10);
+                                    abilityAffected = true;
+                                }
+                            }
                             if ((SelectMove.showFlinchChance() / 100.0) >= Math.random()) {
                                 defender.Flinch();
                                 System.out.println(defender.showName() + " is flinching!");
+                            }
+                            if (abilityAffected) {
+                                SelectMove.resetFlinchChance();
                             }
                         }
                     }
@@ -1771,12 +1784,14 @@ public class Battle {
         }
     }
     private Moves AISelectMoves() {
-        List<Moves> MoveList = AIPoke.showMoves();
+        List<Moves> MoveList = this.AIPoke.showMoves();
         Moves Selected;
         List<Moves> trueMoveList = new ArrayList<>();
         int out = 0;
         for (int i = 0; i < MoveList.size(); ++i) {
-            if(MoveList.get(i).showPP() == 0 || (AIPoke.getIsImprisoned() && PlayerPoke.showMoves().contains(MoveList.get(i)))){
+            if(MoveList.get(i).showPP() == 0 ||
+            (this.AIPoke.getIsImprisoned() && this.PlayerPoke.showMoves().contains(MoveList.get(i)))
+            || (this.AIPoke.getProhibitedMoves().contains(MoveList.get(i).showName()))){
                 out += 1;
             }
             else {
@@ -1784,19 +1799,19 @@ public class Battle {
             }
         }
         if(out == MoveList.size()){
-            System.out.println("Out of moves! " + AIPoke.showName() + " can only struggle!");
+            System.out.println("Out of moves! " + this.AIPoke.showName() + " can only struggle!");
             Selected = new Struggle();
         }
         else {
             Selected = trueMoveList.get(new Random().nextInt(trueMoveList.size()));
-            if(AIPoke.getTormented()){
-                while(Selected == AIForcedMove){
+            if(this.AIPoke.getTormented()){
+                while(Selected == this.AIForcedMove){
                     Selected = trueMoveList.get(new Random().nextInt(trueMoveList.size()));
                 }
             }
         }
         if(Selected.showName().equals("Mirror Move")){
-            Selected = PlayerSelectedMove;
+            Selected = this.PlayerSelectedMove;
         }
         return Selected;
     }
@@ -1806,7 +1821,7 @@ public class Battle {
         List<String> AvailableMoves = new ArrayList<>();
         Boolean again = true;
         while (again) {
-            for (Moves MoveCheck : PlayerPoke.showMoves()) {
+            for (Moves MoveCheck : this.PlayerPoke.showMoves()) {
                 List<Integer> PP = new ArrayList<>();
                 PP.add(MoveCheck.showPP());
                 int PPcheck = 0;
@@ -1817,9 +1832,10 @@ public class Battle {
                     int ticker = 0;
                     List<String> tickerList = new ArrayList<>();
                     Scanner scan = new Scanner(System.in);
-                    for (Moves move : PlayerPoke.showMoves()) {
-                        if ((PlayerPoke.getIsImprisoned() && !AIPoke.showMoves().contains(move))
-                                || !PlayerPoke.getIsImprisoned() && !move.showName().equals("Last Resort")) {
+                    for (Moves move : this.PlayerPoke.showMoves()) {
+                        if ((this.PlayerPoke.getIsImprisoned() && !this.AIPoke.showMoves().contains(move))
+                            || (!this.PlayerPoke.getIsImprisoned() && !move.showName().equals("Last Resort"))
+                            || !this.PlayerPoke.getProhibitedMoves().contains(move.showName())) {
                             AvailableMoves.add(move.showName());
                             ticker += 1;
                             String tickerString = Integer.toString(ticker);
@@ -1852,10 +1868,10 @@ public class Battle {
                                 }
                             }
                             if (selectedTicker) {
-                                if (PlayerPoke.showMoves().get(tickerNum - 1) == moves) {
+                                if (this.PlayerPoke.showMoves().get(tickerNum - 1) == moves) {
                                     if (moves.showPP() != 0) {
                                         if(moves.showName().equals("Mirror Move")){
-                                            moves = AISelectedMove;
+                                            moves = this.AISelectedMove;
                                         }
                                         return moves;
                                     }

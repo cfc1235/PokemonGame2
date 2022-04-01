@@ -8,6 +8,8 @@ import UserInterfaces.GameScreen;
 import Weather.*;
 import Terrain.*;
 
+import java.util.Scanner;
+
 public class GlobalVariables {
     private int[] battleCount = new int[898];
     private GameScreen gameScreen = new GameScreen();
@@ -24,7 +26,10 @@ public class GlobalVariables {
     private Boolean hasSwarmAbility = false;
     private Boolean hasSoundAbility = false;
     private ItemInventory itemInventory = new ItemInventory();
+    private Boolean fullRandomizerOn = false;
 
+    public Boolean getFullRandomizerOn(){return this.fullRandomizerOn;}
+    public void setRandomizer(Boolean randomizer){this.fullRandomizerOn = randomizer;}
     public ItemInventory getItemInventory(){return this.itemInventory;}
     public void setHasSoundAbility(){this.hasSwarmAbility = true;}
     public Boolean getHasSoundAbility(){return this.hasSoundAbility;}
