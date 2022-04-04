@@ -54,12 +54,6 @@ public class AreaTypes {
 
     public void championPokeChances(){
         this.trainerPokeChance.clearEntries();
-        this.trainerChance.addAll(this.dayChance);
-        this.trainerChance.addAll(this.nightChance);
-        this.trainerChance.addAll(this.heabuttChance);
-        this.trainerChance.addAll(this.swarmChance);
-        this.trainerChance.addAll(this.soundChance);
-        this.trainerChance.addAll(this.flightChance);
         this.trainerChance.addAll(this.champDayChance);
         this.trainerChance.addAll(this.champNightChance);
         this.trainerChance.addAll(this.champHeadChance);
