@@ -300,5 +300,8 @@ public interface AddMoveset {
     default Moves addStockpile(){return new Stockpile();}
     default Moves addSpitUp(){return new SpitUp();}
     default Moves addSwallow(){return new Swallow();}
+    default Moves addMist(){return new Mist();}
+    default Moves addPowderSnow(){return new PowderSnow();}
+    default Moves addIceShard(){return new IceShard();}
 
 }

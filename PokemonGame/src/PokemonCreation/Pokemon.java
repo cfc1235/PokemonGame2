@@ -144,7 +144,12 @@ public class Pokemon implements AddMoveset {
     protected ArrayList<CreateOrderedMap<String, Integer>> prohibitedMoves = new ArrayList<>();
     protected ArrayList<String> itemEvolReqs = new ArrayList<>();
     protected int stockpile = 0;
+    protected int cannotHaveStatLowered = 0;
 
+    public void resetCannotHaveStatLowered(){this.cannotHaveStatLowered = 0;}
+    public int getCannotHaveStatLowered(){return this.cannotHaveStatLowered;}
+    public void tickDownCannotHaveStatLowered(){this.cannotHaveStatLowered -= 1;}
+    public void setCannotHaveStatLowered(int timer){this.cannotHaveStatLowered = timer;}
     public int getStockpile(){return this.stockpile;}
     public void addToStockpile(){
         if(this.stockpile < 3) {
@@ -492,14 +497,17 @@ public class Pokemon implements AddMoveset {
     public int showCritTimer(){return critTimer;}
     public String showPokedexType(){return pokedexType;}
     public Boolean showhasGender(){
-        return hasGender;
+        return this.hasGender;
     }
     public String showGender() {
-        if (Gender == 0) {
+        if (this.Gender == 0) {
             return "Female";
         }
-        if (Gender == 1) {
+        if (this.Gender == 1) {
             return "Male";
+        }
+        if(!this.hasGender){
+            return "No Gender";
         }
         return null;
     }
@@ -1306,6 +1314,7 @@ public class Pokemon implements AddMoveset {
         this.resetHasElectricCharge();
         this.resetCannotFlee();
         this.resetProhibitedMoves();
+        this.resetCannotHaveStatLowered();
     }
 
     public void resetMults(){
@@ -1319,6 +1328,6 @@ public class Pokemon implements AddMoveset {
     }
 
     protected void PLACEHOLDERFORINTERFACE(){
-        PLACEHOLDER.getKey();
+        this.PLACEHOLDER.getKey();
     }
 }

@@ -829,6 +829,9 @@ public class Battle {
                     if(SelectMove.showName().equals("Stockpile")){
                         attacker.addToStockpile();
                     }
+                    if(SelectMove.getProtectsFromStatChanges() > 0){
+                        attacker.setCannotHaveStatLowered(SelectMove.getProtectsFromStatChanges());
+                    }
                     if (SelectMove.showStatChange()) {
                         Boolean Succeeds = true;
                         if (SelectMove.showcanMiss()) {
@@ -1571,6 +1574,7 @@ public class Battle {
                 }
             }
         }
+        attacker.tickDownCannotHaveStatLowered();
         attacker.tickDownProhibitedMoves();
         attacker.tickDownHasElectricCharge();
         attacker.tickDownOutrageTimer();

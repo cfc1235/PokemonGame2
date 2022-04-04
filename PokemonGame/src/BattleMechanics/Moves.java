@@ -170,7 +170,9 @@ public class Moves {
     protected Boolean giveEnemyAbility = false;
     protected ArrayList<CreateOrderedMap<String, Integer>> prohibitsMoves = new ArrayList<>();
     protected Boolean ridsStatusEffects = false;
+    protected int protectsFromStatChanges = 0;
 
+    public int getProtectsFromStatChanges(){return this.protectsFromStatChanges;}
     public Boolean getRidsStatusEffects(){return this.ridsStatusEffects;}
     public void setFlinchChance(int chance){this.FlinchChance = chance;}
     public void resetFlinchChance(){this.FlinchChance = 0;}
@@ -875,6 +877,9 @@ public class Moves {
         Pokemon changed = attacker;
         if (this.StatchangeEnemy) {
             changed = defender;
+        }
+        if (this.MultChange < 0 && changed.getCannotHaveStatLowered() > 0){
+            return;
         }
         if (this.affectsPhysAtt) {
             changed.changeAttMult(this.MultChange);
