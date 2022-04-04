@@ -755,17 +755,17 @@ public class Battle {
                                 }
                             }
                         }
-                        if ((SelectMove.dealsDamage) && (AIChargeTimer > 0)) {
+                        if ((SelectMove.dealsDamage) && (this.AIChargeTimer > 0)) {
                             System.out.println("Enemy " + attacker.showName() + " must charge!");
                         }
                     }
                     if (SelectMove.showName().equals("Snore")) {
                         System.out.println("Snore only works when the user is asleep!");
                     }
-                    if (SelectMove.showEnemyKnockOffItem()) {
+                    if (SelectMove.showEnemyKnockOffItem() && Hit) {
                         defender.giveItem(new NoItem());
                     }
-                    if (SelectMove.showTakeItem()) {
+                    if (SelectMove.showTakeItem() && Hit) {
                         if (!attacker.showItem().showName().equals("") && !defender.showItem().showName().equals("")) {
                             attacker.giveItem(defender.showItem());
                             defender.giveItem(new NoItem());
@@ -813,9 +813,7 @@ public class Battle {
                         defender.setTormentTimer(SelectMove.getTormentTimer());
                     }
                     if (SelectMove.showaffectsAbilities()) {
-                        if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
-                            attacker.changeAbilities(SelectMove.showtoAbility());
-                        }
+                        defender.changeAbilities(SelectMove.showtoAbility());
                     }
                     if (SelectMove.showAbilitySwap()) {
                         Abilities attackerAbility = attacker.showAbility();
@@ -827,6 +825,9 @@ public class Battle {
                     }
                     if (SelectMove.getCreatesImprison()) {
                         defender.setIsImprisoned();
+                    }
+                    if(SelectMove.showName().equals("Stockpile")){
+                        attacker.addToStockpile();
                     }
                     if (SelectMove.showStatChange()) {
                         Boolean Succeeds = true;
@@ -1408,7 +1409,7 @@ public class Battle {
                             }
                         }
                     }
-                    if (attacker == AIPoke) {
+                    if (attacker == this.AIPoke) {
                         if (Math.random() >= .5) {
                             heal = true;
                         }

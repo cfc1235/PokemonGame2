@@ -143,7 +143,19 @@ public class Pokemon implements AddMoveset {
     protected Boolean cannotUseMove = false;
     protected ArrayList<CreateOrderedMap<String, Integer>> prohibitedMoves = new ArrayList<>();
     protected ArrayList<String> itemEvolReqs = new ArrayList<>();
+    protected int stockpile = 0;
 
+    public int getStockpile(){return this.stockpile;}
+    public void addToStockpile(){
+        if(this.stockpile < 3) {
+            this.stockpile += 1;
+            System.out.println("Stockpiled to " + Integer.toString(this.stockpile));
+        }
+        else {
+            System.out.println("Stockpiled to 3 already!");
+        }
+    }
+    public void resetStockpile(){this.stockpile = 0;}
     public ArrayList<String> getItemEvolReqs(){return this.itemEvolReqs;}
     public ArrayList<String> getProhibitedMoves(){
         ArrayList<String> currentProhibitedMoves = new ArrayList<>();
@@ -654,35 +666,35 @@ public class Pokemon implements AddMoveset {
     public int showTrueSpeed(){return Speed;}
 
     public String showNature() {
-        return nature;
+        return this.nature;
     }
 
     public double showAccMult() {
-        return AccMulitplier;
+        return this.AccMulitplier;
     }
 
     public double showEvasMult() {
-        return EvasMulitplier;
+        return this.EvasMulitplier;
     }
 
     public double showAttMult() {
-        return AttMultiplier;
+        return this.AttMultiplier;
     }
 
     public double showDefMult() {
-        return DefMulitplier;
+        return this.DefMulitplier + this.stockpile;
     }
 
     public double showSpecAttMult() {
-        return SpecAttMultiplier;
+        return this.SpecAttMultiplier;
     }
 
     public double showSpecDefMult() {
-        return SpecDefMulitplier;
+        return this.SpecDefMulitplier + this.stockpile;
     }
 
     public double showSpeedMult() {
-        return SpeedMultiplier;
+        return this.SpeedMultiplier;
     }
 
     private double SpeedDefCalc(){

@@ -5,18 +5,14 @@ import BattleMechanics.Moves;
 public class Tackle extends Moves {
 
     public Tackle(){
-        name = "Tackle";
-        type = "Normal";
-        power = 40;
-        acc = 100;
-        PP = 35;
-        dealsDamage = true;
-        CanMiss = true;
-        Healally = false;
-        StatchangeEnemy = false;
-        StateChangeAlly = false;
-        isSpecial = false;
-        savedPP = PP;
-        makesContact = true;
+        this.name = "Tackle";
+        this.type = "Normal";
+        this.power = 40;
+        this.acc = 100;
+        this.PP = 35;
+        this.dealsDamage = true;
+        this.CanMiss = true;
+        this.savedPP = this.PP;
+        this.makesContact = true;
     }
 }

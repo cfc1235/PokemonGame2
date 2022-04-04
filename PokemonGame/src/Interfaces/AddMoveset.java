@@ -3,6 +3,8 @@ package Interfaces;
 import BattleMechanics.Moves;
 import Moveset.*;
 
+import java.util.Random;
+
 public interface AddMoveset {
 
     default Moves addTwister(){return new Twister();}
@@ -291,4 +293,12 @@ public interface AddMoveset {
     default Moves addDazzlingGleam(){return new DazzlingGleam();}
     default Moves addAromatherapy(){return new Aromatherapy();}
     default Moves addLeafBlade(){return new LeafBlade();}
+    default Moves addWrap(){return new Wrap();}
+    default Moves addKnockOff(){return new KnockOff();}
+    default Moves addGastroAcid(){return new GastroAcid();}
+    default Moves addLeafTornado(){return new LeafTornado();}
+    default Moves addStockpile(){return new Stockpile();}
+    default Moves addSpitUp(){return new SpitUp();}
+    default Moves addSwallow(){return new Swallow();}
+
 }

@@ -2,8 +2,8 @@ package Moveset;
 
 import BattleMechanics.Moves;
 
-public class FireSpin extends Moves {
-    public FireSpin(){
+public class Wrap extends Moves {
+    public Wrap(){
         this.name = "Fire Spin";
         this.type = "Fire";
         this.power = 35;
@@ -14,7 +14,6 @@ public class FireSpin extends Moves {
         this.isSpecial = true;
         this.createsVortex = true;
         this.savedPP = this.PP;
-        this.vortex = new BattleMechanics.Vortex.FireSpin();
-        this.TMNum = 13;
+        this.vortex = new BattleMechanics.Vortex.Wrap();
     }
 }

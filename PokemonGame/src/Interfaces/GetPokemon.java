@@ -85,6 +85,15 @@ public interface GetPokemon {
         if(ID == 45){
             pokemon = new Vileplume(level, globalVariables);
         }
+        if(ID == 69){
+            pokemon = new Bellsprout(level, globalVariables);
+        }
+        if(ID == 70){
+            pokemon = new Weepinbell(level, globalVariables);
+        }
+        if(ID == 71){
+            pokemon = new Victreebel(level, globalVariables);
+        }
         if(ID == 161){
             pokemon = new Sentret(level, globalVariables);
         }
@@ -244,6 +253,16 @@ public interface GetPokemon {
             if (items.showName().equals("Sun Stone")) {
                 evolution = new Bellossom(level, moves, nature, name,
                         IVs, HPMissing, Evs, Gender, ability, isShiny, newItem);
+            }
+        }
+        if(ID == 69){
+            evolution = new Weepinbell(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 70){
+            if(items.showName().equals("Leaf Stone")){
+                evolution = new Victreebel(level, moves, nature, name,
+                        IVs, HPMissing, Evs, Gender, ability, isShiny, new NoItem());
             }
         }
         if(ID == 161){

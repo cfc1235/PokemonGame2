@@ -4,9 +4,9 @@ import BattleMechanics.BaseVortex;
 
 public class Tailwind extends BaseVortex {
     public Tailwind(){
-        Name = "Tailwind";
-        vortexSpeed = true;
-        noRandomLength = true;
-        turnLength = 4;
+        this.Name = "Tailwind";
+        this.vortexSpeed = true;
+        this.noRandomLength = true;
+        this.turnLength = 4;
     }
 }

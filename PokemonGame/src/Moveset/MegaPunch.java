@@ -4,14 +4,14 @@ import BattleMechanics.Moves;
 
 public class MegaPunch extends Moves {
     public MegaPunch(){
-        name = "Mega Punch";
-        type = "Normal";
-        power = 80;
-        PP = 20;
-        acc = 85;
-        dealsDamage = true;
-        CanMiss = true;
-        makesContact = true;
-        TMNum = 0;
+        this.name = "Mega Punch";
+        this.type = "Normal";
+        this.power = 80;
+        this.PP = 20;
+        this.acc = 85;
+        this.dealsDamage = true;
+        this.CanMiss = true;
+        this.makesContact = true;
+        this.TMNum = 0;
     }
 }

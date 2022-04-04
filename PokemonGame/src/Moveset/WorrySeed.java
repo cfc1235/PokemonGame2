@@ -5,11 +5,13 @@ import BattleMechanics.Moves;
 
 public class WorrySeed extends Moves {
     public WorrySeed(){
-        name = "Worry Seed";
-        PP = 10;
-        affectsAbilities = true;
-        toAbility = new Insomnia();
-        affectsBoth = true;
-        CanMiss = false;
+        this.name = "Worry Seed";
+        this.PP = 10;
+        this.savedPP = this.PP;
+        this.affectsAbilities = true;
+        this.toAbility = new Insomnia();
+        this.affectsBoth = true;
+        this.CanMiss = false;
+        this.type = "Grass";
     }
 }

@@ -312,19 +312,37 @@ public class Moves {
     public int showPP(){return PP;}
     public String showType(){return type;}
     public void showHealAm(Weather weather, Pokemon attacker){
-        double fullHeal = HealAmount * attacker.showSavedHP() * attacker.showAbility().HealHelp();
-        if(weatherReq){
-            if(ReqdWeather.equals(weather.showName()));
-                fullHeal = ModHealAm * attacker.showAbility().HealHelp() * attacker.showSavedHP();
+        if(this.name.equals("Swallow")){
+            if(attacker.getStockpile() == 0){
+                this.HealAmount = 0.0;
+            }
+            if(attacker.getStockpile() == 1){
+                this.HealAmount = 1/4.0;
+            }
+            if(attacker.getStockpile() == 2){
+                this.HealAmount = 1/2.0;
+            }
+            if(attacker.getStockpile() == 3){
+                this.HealAmount = 1.0;
+            }
+            attacker.resetStockpile();
         }
-        if(weatherReqDown) {
-            for (String Weather : ReqdWeatherDown) {
+        double fullHeal = this.HealAmount * attacker.showSavedHP() * attacker.showAbility().HealHelp();
+        if(this.weatherReq){
+            if(this.ReqdWeather.equals(weather.showName()));
+                fullHeal = this.ModHealAm * attacker.showAbility().HealHelp() * attacker.showSavedHP();
+        }
+        if(this.weatherReqDown) {
+            for (String Weather : this.ReqdWeatherDown) {
                 if (Weather.equals(weather.showName())) {
-                    fullHeal = ModHealAm2 * attacker.showAbility().HealHelp() * attacker.showSavedHP();
+                    fullHeal = this.ModHealAm2 * attacker.showAbility().HealHelp() * attacker.showSavedHP();
                 }
             }
         }
         int Heal = (int) Math.round(fullHeal);
+        if(Heal + attacker.showHP() > attacker.showSavedHP()){
+            Heal = attacker.showSavedHP() - attacker.showHP();
+        }
         attacker.changeHP(-1 * Heal);}
 
     public void changePP(Pokemon defender){
@@ -499,7 +517,7 @@ public class Moves {
         if(defender.showDefMult() == -3){defMult = (2.0/5);}
         if(defender.showDefMult() == -4){defMult = (2.0/6);}
         if(defender.showDefMult() == -5){defMult = (2.0/7);}
-        if(defender.showDefMult() == -5){defMult = (2.0/8);}
+        if(defender.showDefMult() == -6){defMult = (2.0/8);}
         return defMult;
     }
 
@@ -681,6 +699,21 @@ public class Moves {
                 this.power = 150;
             }
         }
+        if(this.name.equals("Spit Up")){
+            if(attacker.getStockpile() == 0){
+                this.power = 1;
+            }
+            if(attacker.getStockpile() == 1){
+                this.power = 100;
+            }
+            if(attacker.getStockpile() == 2){
+                this.power = 200;
+            }
+            if(attacker.getStockpile() == 3){
+                this.power = 300;
+            }
+            attacker.resetStockpile();
+        }
         if(!defender.getIsProtected()){
             if(Hits(attacker, defender, PlayerPoke, weather)) {
                 if (this.cutsHPTo) {
@@ -780,6 +813,11 @@ public class Moves {
                         if (this.name.equals("Venoshock")) {
                             if (defender.showPoisoned()) {
                                 RefinedDamage = RefinedDamage * 2;
+                            }
+                        }
+                        if(this.name.equals("Knock Off")){
+                            if(!defender.showItem().showName().equals("")){
+                                RefinedDamage = (int) Math.round(RefinedDamage * 1.5);
                             }
                         }
                         if (terrain.showIncreaseType().equals(this.type)) {
