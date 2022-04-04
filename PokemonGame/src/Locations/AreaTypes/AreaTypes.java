@@ -14,10 +14,7 @@ import PokemonCreation.Pokemon;
 import UserInterfaces.ChangeAreaScreen;
 import UserInterfaces.HomeScreen;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class AreaTypes {
@@ -35,24 +32,70 @@ public class AreaTypes {
     protected int levelRange = 0;
     protected int minLevel = 0;
     protected ArrayList<CreateOrderedMap<Integer, Integer>> dayChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> champDayChance = new ArrayList<>();
     protected ArrayList<CreateOrderedMap<Integer, Integer>> nightChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> champNightChance = new ArrayList<>();
     protected ArrayList<CreateOrderedMap<Integer, Integer>> heabuttChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> champHeadChance = new ArrayList<>();
     protected ArrayList<CreateOrderedMap<Integer, Integer>> swarmChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> champSwarmChance = new ArrayList<>();
     protected ArrayList<CreateOrderedMap<Integer, Integer>> soundChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> champSoundChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> flightChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> champFlightChance = new ArrayList<>();
     protected ArrayList<CreateOrderedMap<Integer, Integer>> trainerChance = new ArrayList<>();
     protected WeightedEnteries<Integer> pokeChanceDay = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> pokeChanceNight = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> pokeChanceHeadbutt = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> pokeChanceSwarm = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> pokeChanceSound = new WeightedEnteries<>();
+    protected WeightedEnteries<Integer> pokeChanceFlight = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> trainerPokeChance = new WeightedEnteries<>();
 
+    public void championPokeChances(){
+        this.trainerPokeChance.clearEntries();
+        this.trainerChance.addAll(this.dayChance);
+        this.trainerChance.addAll(this.nightChance);
+        this.trainerChance.addAll(this.heabuttChance);
+        this.trainerChance.addAll(this.swarmChance);
+        this.trainerChance.addAll(this.soundChance);
+        this.trainerChance.addAll(this.flightChance);
+        this.trainerChance.addAll(this.champDayChance);
+        this.trainerChance.addAll(this.champNightChance);
+        this.trainerChance.addAll(this.champHeadChance);
+        this.trainerChance.addAll(this.champSwarmChance);
+        this.trainerChance.addAll(this.champSoundChance);
+        this.trainerChance.addAll(this.champFlightChance);
+        for(CreateOrderedMap<Integer, Integer> day : this.champDayChance){
+            this.pokeChanceDay.addEntry(day.getKey(), day.getValue());
+        }
+        for(CreateOrderedMap<Integer, Integer> night : this.champNightChance){
+            this.pokeChanceNight.addEntry(night.getKey(), night.getValue());
+        }
+        for(CreateOrderedMap<Integer, Integer> swarm : this.champSwarmChance){
+            this.pokeChanceSwarm.addEntry(swarm.getKey(), swarm.getValue());
+        }
+        for(CreateOrderedMap<Integer, Integer> headbutt : this.champHeadChance){
+            this.pokeChanceHeadbutt.addEntry(headbutt.getKey(), headbutt.getValue());
+        }
+        for(CreateOrderedMap<Integer, Integer> sound : this.champSoundChance){
+            this.pokeChanceSound.addEntry(sound.getKey(), sound.getValue());
+        }
+        for(CreateOrderedMap<Integer, Integer> sound : this.champFlightChance){
+            this.pokeChanceFlight.addEntry(sound.getKey(), sound.getValue());
+        }
+        for(CreateOrderedMap<Integer, Integer> sound : this.trainerChance){
+            this.trainerPokeChance.addEntry(sound.getKey(), sound.getValue());
+        }
+
+    }
     protected void createPokeChances(){
         this.trainerChance.addAll(this.dayChance);
         this.trainerChance.addAll(this.nightChance);
         this.trainerChance.addAll(this.heabuttChance);
         this.trainerChance.addAll(this.swarmChance);
         this.trainerChance.addAll(this.soundChance);
+        this.trainerChance.addAll(this.flightChance);
         for(CreateOrderedMap<Integer, Integer> day : this.dayChance){
             this.pokeChanceDay.addEntry(day.getKey(), day.getValue());
         }
@@ -67,6 +110,9 @@ public class AreaTypes {
         }
         for(CreateOrderedMap<Integer, Integer> sound : this.soundChance){
             this.pokeChanceSound.addEntry(sound.getKey(), sound.getValue());
+        }
+        for(CreateOrderedMap<Integer, Integer> sound : this.flightChance){
+            this.pokeChanceFlight.addEntry(sound.getKey(), sound.getValue());
         }
         for(CreateOrderedMap<Integer, Integer> sound : this.trainerChance){
             this.trainerPokeChance.addEntry(sound.getKey(), sound.getValue());
@@ -86,68 +132,68 @@ public class AreaTypes {
         }
     }
     public String getType(){
-        if(isHome){
+        if(this.isHome){
             return "Home";
         }
-        if(isTown){
+        if(this.isTown){
             return "Town";
         }
-        if(isGym){
+        if(this.isGym){
             return "Gym";
         }
-        if(isRoute){
+        if(this.isRoute){
             return "Route";
         }
-        if(isStore){
+        if(this.isStore){
             return "Center";
         }
         return null;
     }
 
-    public int getLevelRange(){return levelRange;}
-    public int getMinLevel(){return minLevel;}
+    public int getLevelRange(){return this.levelRange;}
+    public int getMinLevel(){return this.minLevel;}
     public String getName(){
-        return name;
+        return this.name;
     }
     public void addToNextArea(AreaTypes nextArea){
-        nextAreas.add(nextArea);
+        this.nextAreas.add(nextArea);
     }
     public void addToPreviousArea(AreaTypes prevArea){
-        previousAreas.add(prevArea);
+        this.previousAreas.add(prevArea);
     }
     public void addToTotalAreas(AreaTypes posArea){
-        allPossibleAreas.add(posArea);
+        this.allPossibleAreas.add(posArea);
     }
     public List<AreaTypes> getPreviousAreas(){
-        return previousAreas;
+        return this.previousAreas;
     }
     public List<AreaTypes> getNextAreas(){
-        return nextAreas;
+        return this.nextAreas;
     }
     public List<AreaTypes> getAllPossibleAreas(){
-        return allPossibleAreas;
+        return this.allPossibleAreas;
     }
 
     public AreaTypes resolveCurrentArea(GlobalVariables globalVariables) throws InterruptedException {
-        amountOfTimes += 1;
-        if(onTickerEvents.contains(amountOfTimes)){
+        this.amountOfTimes += 1;
+        if(this.onTickerEvents.contains(this.amountOfTimes)){
             System.out.println("EVENT HERE");
         }
-        if (isHome) {
+        if (this.isHome) {
             resolveHome(globalVariables);
         }
-        if (isRoute) {
+        if (this.isRoute) {
             if(!resolveBattle(globalVariables)){
                 return runToCenter(globalVariables);
             }
         }
-        if (isStore) {
+        if (this.isStore) {
             resolveCenter(globalVariables);
         }
-        if (isGym){
+        if (this.isGym){
             resolveGym();
         }
-        if (isTown){
+        if (this.isTown){
             resolveTown();
         }
         return new ChangeAreaScreen().getNewArea(this, globalVariables.getGameScreen());
@@ -155,12 +201,12 @@ public class AreaTypes {
 
     private AreaTypes runToCenter(GlobalVariables globalVariables){
         globalVariables.getWorldMap().setLostBattle();
-        for (AreaTypes findCenter : previousAreas){
+        for (AreaTypes findCenter : this.previousAreas){
             if(findCenter.isHome || findCenter.isStore){
                 return findCenter;
             }
         }
-        for (AreaTypes findCenter : previousAreas) {
+        for (AreaTypes findCenter : this.previousAreas) {
             for (AreaTypes findCenter2 : findCenter.previousAreas) {
                 if (findCenter2.isHome || findCenter2.isStore) {
                     return findCenter2;

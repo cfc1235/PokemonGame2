@@ -2,6 +2,9 @@ package Locations;
 
 import Locations.AreaTypes.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class WorldMap {
     private AreaTypes home;
     private AreaTypes homeTown;
@@ -9,43 +12,47 @@ public class WorldMap {
     private AreaTypes firstTown;
     private AreaTypes center1;
     private Boolean lostBattle = false;
+    private ArrayList<AreaTypes> fullMap;
 
     public WorldMap(){
-        home = new Home();
-        homeTown = new HomeTown();
-        route1 = new Route1();
-        firstTown = new FirstTown();
-        center1 = new PokemonCenter1();
+        this.home = new Home();
+        this.homeTown = new HomeTown();
+        this.route1 = new Route1();
+        this.firstTown = new FirstTown();
+        this.center1 = new PokemonCenter1();
 
-        home.addToNextArea(homeTown);
-        home.addToTotalAreas(homeTown);
+        this.home.addToNextArea(this.homeTown);
+        this.home.addToTotalAreas(this.homeTown);
 
-        homeTown.addToPreviousArea(home);
-        homeTown.addToNextArea(route1);
-        homeTown.addToTotalAreas(home);
-        homeTown.addToTotalAreas(route1);
+        this.homeTown.addToPreviousArea(this.home);
+        this.homeTown.addToNextArea(this.route1);
+        this.homeTown.addToTotalAreas(this.home);
+        this.homeTown.addToTotalAreas(this.route1);
 
-        route1.addToPreviousArea(homeTown);
-        route1.addToNextArea(firstTown);
-        route1.addToTotalAreas(homeTown);
-        route1.addToTotalAreas(firstTown);
+        this.route1.addToPreviousArea(this.homeTown);
+        this.route1.addToNextArea(this.firstTown);
+        this.route1.addToTotalAreas(this.homeTown);
+        this.route1.addToTotalAreas(this.firstTown);
 
-        firstTown.addToPreviousArea(route1);
-        firstTown.addToNextArea(center1);
-        firstTown.addToTotalAreas(firstTown);
-        firstTown.addToTotalAreas(center1);
+        this.firstTown.addToPreviousArea(this.route1);
+        this.firstTown.addToNextArea(this.center1);
+        this.firstTown.addToTotalAreas(this.firstTown);
+        this.firstTown.addToTotalAreas(this.center1);
 
-        center1.addToPreviousArea(firstTown);
-        center1.addToTotalAreas(firstTown);
+        this.center1.addToPreviousArea(this.firstTown);
+        this.center1.addToTotalAreas(this.firstTown);
 
-
+        Collections.addAll(this.fullMap, this.home, this.homeTown,
+                this.route1, this.firstTown, this.center1);
     }
+
+    public ArrayList<AreaTypes> getFullMap(){return this.fullMap;}
 
     public AreaTypes goHome(){
-        return home;
+        return this.home;
     }
 
-    public Boolean getLostBattle(){return lostBattle;}
-    public void setLostBattle(){lostBattle = true;}
-    public void resetLostBattle(){lostBattle = false;}
+    public Boolean getLostBattle(){return this.lostBattle;}
+    public void setLostBattle(){this.lostBattle = true;}
+    public void resetLostBattle(){this.lostBattle = false;}
 }

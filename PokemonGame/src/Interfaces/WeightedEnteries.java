@@ -23,6 +23,10 @@ public class WeightedEnteries<T extends Object> {
         }
     }
 
+    public void clearEntries(){
+        this.entries.clear();
+        this.accumulatedWeight = 0;
+    }
     public void addEntry(int itemWeight, T weightedItem){
         this.accumulatedWeight += itemWeight;
         Entry newEntry = new Entry();
