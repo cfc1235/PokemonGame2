@@ -20,7 +20,7 @@ public class Abilities {
     protected double possSelfAccuracy;
     protected double possSelfAccuracy2;
     protected Boolean changeSelfEvas = false;
-    protected double changeSelfEvasion;
+    protected double changeSelfEvasion = 1;
     protected Boolean changeSelfAtt = false;
     protected double changeSAtt;
     protected Boolean changeEnAtt = false;
@@ -103,6 +103,8 @@ public class Abilities {
     protected String healType = "";
     protected ArrayList<String> causesStatEffect = new ArrayList<>();
     protected double statChance = 0.0;
+    protected Boolean onStatChange;
+    protected Boolean onChangingStat;
 
     public ArrayList<String> getCausesStatEffect(){return this.causesStatEffect;}
     public void statEffectOnDamage(Moves moves, Pokemon attacker){
@@ -138,8 +140,8 @@ public class Abilities {
     public Boolean getActivateOnDeath(){return this.activateOnDeath;}
     public Boolean getIgnoresParalysisSpeed(){return this.ignoresParalysisSpeed;}
     public double[] getStatMults(Pokemon attacker, Pokemon defender,
-                                 Moves move){
-        this.setStatMults(defender, attacker, move);
+                                 Moves move, Weather weather){
+        this.setStatMults(defender, attacker, move, weather);
         return this.statMults;
     }
     public List<String> getIgnoresMovesNames(){return this.ignoresMovesNames;}
@@ -216,7 +218,7 @@ public class Abilities {
 
 
     public void setStatMults(Pokemon defender, Pokemon attacker,
-                             Moves moves) {
+                             Moves moves, Weather weather) {
         //[Phys Att, Phys Def, Spec Att, Spec Def, Speed, Acc, Evas]
         int i = 0;
         while (i < 8){
@@ -239,7 +241,8 @@ public class Abilities {
                 (this.requiresPhys && !moves.getIsSpecial()) ||
                 (this.requiresSpecial && moves.getIsSpecial()) ||
                 (this.showName().equals("Plus") && defender.showAbility().showName().equals("Minus")) ||
-                (this.showName().equals("Minus") && defender.showAbility().showName().equals("Plus"))){
+                (this.showName().equals("Minus") && defender.showAbility().showName().equals("Plus")) ||
+                ((this.WeatherRequirement = true) && (this.WeatherReq.equals(weather.showName())))){
                     editStatMults();
             }
         }
@@ -289,8 +292,21 @@ public class Abilities {
         }
     }
 
+    public void addStageDuringStatChange(Pokemon defender, Pokemon attacker,
+                                     Moves moves, Weather weather,
+                                     Boolean damageTime){
+        //DAMAGETIME IS TRUE IF DEALING STAT CHANGE.
+        // FALSE IF DAMAGE STAT CHANGE TO THEM
+        if((this.onStatChange && !damageTime) ||  (this.onChangingStat && damageTime) ||
+                ((this.requiresType && this.onMultTypes.contains(moves.showType())) || !this.requiresType)
+                || (this.WeatherReq.equals(weather) || !this.WeatherRequirement)
+        ){
+            doChange(attacker, defender);
+        }
+    }
+
     public void resolveBerryCheck(Pokemon attacker){
-        if(usesBerry) {
+        if(this.usesBerry) {
             if (attacker.showItem().getIsBerry()) {
                 attacker.showItem().useBerry(attacker);
             }

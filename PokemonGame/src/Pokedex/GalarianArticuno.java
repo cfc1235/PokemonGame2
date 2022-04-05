@@ -7,8 +7,8 @@ import PokemonCreation.Pokemon;
 
 import java.util.Collections;
 
-public class Articuno extends Pokemon {
-    public Articuno(int level, GlobalVariables globalVariables){
+public class GalarianArticuno extends Pokemon {
+    public GalarianArticuno(int level, GlobalVariables globalVariables){
         setFirstEVs();
         setNature();
         setIVs();

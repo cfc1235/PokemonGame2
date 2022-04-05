@@ -832,6 +832,9 @@ public class Battle {
                     if(SelectMove.getProtectsFromStatChanges() > 0){
                         attacker.setCannotHaveStatLowered(SelectMove.getProtectsFromStatChanges());
                     }
+                    if(SelectMove.getCausesNoMiss()){
+                        attacker.setCannotMiss();
+                    }
                     if (SelectMove.showStatChange()) {
                         Boolean Succeeds = true;
                         if (SelectMove.showcanMiss()) {

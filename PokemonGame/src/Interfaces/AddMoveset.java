@@ -3,6 +3,7 @@ package Interfaces;
 import BattleMechanics.Moves;
 import Moveset.*;
 
+import java.lang.management.MonitorInfo;
 import java.util.Random;
 
 public interface AddMoveset {
@@ -303,5 +304,12 @@ public interface AddMoveset {
     default Moves addMist(){return new Mist();}
     default Moves addPowderSnow(){return new PowderSnow();}
     default Moves addIceShard(){return new IceShard();}
+    default Moves addAncientPower(){return new AncientPower();}
+    default Moves addFreezeDry(){return new FreezeDry();}
+    default Moves addMindReader(){return new MindReader();}
+    default Moves addSheerCold(){return new SheerCold();}
+    default Moves addIcicleSpear(){return new IcicleSpear();}
+    default Moves addAvalanche(){return new Avalanche();}
+    default Moves addBraveBird(){return new BraveBird();}
 
 }

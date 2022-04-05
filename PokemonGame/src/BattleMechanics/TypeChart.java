@@ -449,7 +449,12 @@ public interface TypeChart {
             }
             if (defender.showType1().equals("Water") ||
                 defender.showType2().equals("Water")){
-                TypeEffect = TypeEffect/2;
+                if(moves.showName().equals("Freeze-Dry")){
+                    TypeEffect = TypeEffect*2;
+                }
+                else {
+                    TypeEffect = TypeEffect / 2;
+                }
             }
             if(defender.showType1().equals("Grass") ||
                 defender.showType2().equals("Grass")){

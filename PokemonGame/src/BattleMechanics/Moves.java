@@ -171,7 +171,9 @@ public class Moves {
     protected ArrayList<CreateOrderedMap<String, Integer>> prohibitsMoves = new ArrayList<>();
     protected Boolean ridsStatusEffects = false;
     protected int protectsFromStatChanges = 0;
+    protected Boolean causesNoMiss = false;
 
+    public Boolean getCausesNoMiss(){return this.causesNoMiss;}
     public int getProtectsFromStatChanges(){return this.protectsFromStatChanges;}
     public Boolean getRidsStatusEffects(){return this.ridsStatusEffects;}
     public void setFlinchChance(int chance){this.FlinchChance = chance;}
@@ -349,10 +351,10 @@ public class Moves {
 
     public void changePP(Pokemon defender){
         if(defender.showAbility().showName().equals("Pressure")){
-            PP -= 2;
+            this.PP -= 2;
         }
         if(!defender.showAbility().showName().equals("Pressure")){
-            PP -= 1;
+            this.PP -= 1;
         }
     }
     public void StatusAffectsPPChange(){
@@ -364,6 +366,10 @@ public class Moves {
 
     public Boolean Hits(Pokemon attacker, Pokemon defender, Pokemon PlayerPoke, Weather weather) {
         Boolean hit = true;
+        if(attacker.getCannotMiss()){
+            attacker.resetCannotMiss();
+            return true;
+        }
         if (this.CanMiss){
             if(this.name.equals("Thunder")){
                 if(weather.showName().equals("Rain")){
@@ -380,8 +386,8 @@ public class Moves {
             int R = new Random().nextInt(randomupper);
             int TotalAccAttDef = (int) Math.round(attacker.showAccMult());
             if(!attacker.showAbility().getIgnoresEvas()){
-                TotalAccAttDef -= defender.showEvasMult() *
-                    defender.showAbility().getStatMults(defender, attacker, this)[6] *
+                TotalAccAttDef -= defender.showEvasMult() +
+                    defender.showAbility().getStatMults(defender, attacker, this, weather)[6] +
                     defender.showItem().getStatMults()[6];
             }
             double TotalAcc = 0;
@@ -399,7 +405,7 @@ public class Moves {
             if(TotalAccAttDef == -5){TotalAcc = (3.0/8);}
             if(TotalAccAttDef <= -6){TotalAcc = (3.0/9);}
             TotalAcc = TotalAcc * this.acc;
-            TotalAcc = TotalAcc * attacker.showAbility().getStatMults(attacker, defender, this)[5] *
+            TotalAcc = TotalAcc * attacker.showAbility().getStatMults(attacker, defender, this, weather)[5] *
                     attacker.showItem().getStatMults()[5];
             if (TotalAcc >= R) {
                 hit = true;
@@ -717,6 +723,23 @@ public class Moves {
             attacker.resetStockpile();
         }
         if(!defender.getIsProtected()){
+            if(this.name.equals("Sheer Cold")){
+                if(!defender.showType1().equals("Ice") &&
+                        !defender.showType2().equals("Ice")){
+                    double rand = new Random().nextInt(100);
+                    int chanceHelp = 20;
+                    if(attacker.showType1().equals("Ice") ||
+                    attacker.showType2().equals("Ice")){
+                        chanceHelp = 30;
+                    }
+                    if(rand < (attacker.showLevel() - defender.showLevel() + chanceHelp)){
+                        return (defender.showHP());
+                    }
+                }
+                else {
+                    return 0;
+                }
+            }
             if(Hits(attacker, defender, PlayerPoke, weather)) {
                 if (this.cutsHPTo) {
                     if(this.name.equals("Endeavor")){
@@ -736,10 +759,10 @@ public class Moves {
                         if (this.isSpecial) {
                             RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2)
                                     * this.power * ((attacker.showSpecAttack() * SpecAttackCalc(attacker) *
-                                    attacker.showAbility().getStatMults(attacker, defender, this)[2] *
+                                    attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
                                     attacker.showItem().getStatMults()[2])  /
                                     (defender.showSpecDefense() * SpecDefCalc(defender) *
-                                    defender.showAbility().getStatMults(defender, attacker, this)[3] *
+                                    defender.showAbility().getStatMults(defender, attacker, this, weather)[3] *
                                     defender.showItem().getStatMults()[2])) / 50.0) + 2);
                             if(defender.getHasSpecWall()){
                                 RawDamage = RawDamage/2;
@@ -748,9 +771,9 @@ public class Moves {
                         if (!this.isSpecial && !this.name.equals("Body Press")) {
                             RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
                                     this.power * ((attacker.showPhysAttack() * AttackCalc(attacker) *
-                                    attacker.showAbility().getStatMults(attacker, defender, this)[0] *
+                                    attacker.showAbility().getStatMults(attacker, defender, this, weather)[0] *
                                     attacker.showItem().getStatMults()[0]) / (defender.showPhysDefense() *
-                                    DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this)[1] *
+                                    DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
                                     defender.showItem().getStatMults()[1])) / 50.0) + 2);
                             if(defender.getHasPhysWall()){
                                 RawDamage = RawDamage/2;
@@ -759,9 +782,9 @@ public class Moves {
                         if (!this.isSpecial && this.name.equals("Body Press")) {
                             RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
                                     this.power * ((attacker.showPhysDefense() * AttackCalc(attacker) *
-                                    attacker.showAbility().getStatMults(attacker, defender, this)[2] *
+                                    attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
                                     attacker.showItem().getStatMults()[2]) / (defender.showPhysDefense() *
-                                    DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this)[2]) *
+                                    DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[2]) *
                                     defender.showItem().getStatMults()[2]) / 50.0) + 2);
                             if(defender.getHasPhysWall()){
                                 RawDamage = RawDamage/2;

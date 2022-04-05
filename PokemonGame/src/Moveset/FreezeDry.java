@@ -1,18 +1,15 @@
 package Moveset;
 
-import BattleMechanics.Moves;
-
-public class IceBeam extends Moves {
-    public IceBeam(){
-        this.name = "Ice Beam";
+public class FreezeDry extends Moonlight{
+    public FreezeDry(){
+        this.name = "Freeze-Dry";
         this.type = "Ice";
-        this.power = 90;
+        this.power = 70;
         this.acc = 100;
-        this.PP = 10;
+        this.PP = 20;
         this.dealsDamage = true;
         this.CanMiss = true;
         this.savedPP = this.PP;
-        this.TMNum = 105;
         this.isSpecial = true;
         this.canFreeze = true;
         this.freezeChance = 10;

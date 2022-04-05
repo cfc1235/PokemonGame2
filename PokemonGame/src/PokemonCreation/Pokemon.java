@@ -145,7 +145,11 @@ public class Pokemon implements AddMoveset {
     protected ArrayList<String> itemEvolReqs = new ArrayList<>();
     protected int stockpile = 0;
     protected int cannotHaveStatLowered = 0;
+    protected Boolean cannotMiss = true;
 
+    public void setCannotMiss(){this.cannotMiss = true;}
+    public void resetCannotMiss(){this.cannotMiss = false;}
+    public Boolean getCannotMiss(){return this.cannotMiss;}
     public void resetCannotHaveStatLowered(){this.cannotHaveStatLowered = 0;}
     public int getCannotHaveStatLowered(){return this.cannotHaveStatLowered;}
     public void tickDownCannotHaveStatLowered(){this.cannotHaveStatLowered -= 1;}
@@ -1211,7 +1215,7 @@ public class Pokemon implements AddMoveset {
         for (Moves moves : showMoves()) {
             moves.resetPP();
         }
-        System.out.println(name + "'s HP and PP have been reset.");
+        System.out.println(this.name + "'s HP and PP have been reset.");
     }
     public String toString(){
         String fullName = this.name + "\nDex Name: " + this.pokedexType + "\nType: " + this.type1;
