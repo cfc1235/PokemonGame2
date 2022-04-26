@@ -94,6 +94,14 @@ public interface GetPokemon {
         if(ID == 71){
             pokemon = new Victreebel(level, globalVariables);
         }
+        if(ID == 144){
+            if(regionCheck < .75) {
+                pokemon = new Articuno(level, globalVariables);
+            }
+            else {
+                pokemon = new GalarianArticuno(level, globalVariables);
+            }
+        }
         if(ID == 161){
             pokemon = new Sentret(level, globalVariables);
         }

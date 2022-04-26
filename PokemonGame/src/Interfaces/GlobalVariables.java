@@ -9,8 +9,6 @@ import UserInterfaces.GameScreen;
 import Weather.*;
 import Terrain.*;
 
-import java.util.Scanner;
-
 public class GlobalVariables {
     private final int[] battleCount = new int[898];
     private final GameScreen gameScreen = new GameScreen();
@@ -29,7 +27,23 @@ public class GlobalVariables {
     private ItemInventory itemInventory = new ItemInventory();
     private Boolean fullRandomizerOn = false;
     private Boolean isChampion = false;
+    private Wallet wallet;
+    private Boolean autoCatch;
+    private Boolean shinyCheat;
 
+    public GlobalVariables(Boolean isInfinteMoney, Boolean randomizer,
+                           Boolean shinyCheat, Boolean autoCatch,
+                           Boolean earlyChamp){
+        this.fullRandomizerOn = randomizer;
+        this.shinyCheat = shinyCheat;
+        this.autoCatch = autoCatch;
+        this.wallet = new Wallet(isInfinteMoney);
+        if(earlyChamp) {
+            becomeChampion();
+        }
+    }
+
+    public Wallet getWallet(){return this.wallet;}
     public void becomeChampion(){
         this.isChampion = true;
         for(AreaTypes areaType : this.worldMap.getFullMap()){
@@ -38,6 +52,12 @@ public class GlobalVariables {
     }
     public Boolean getIsChampion(){
         return this.isChampion;
+    }
+    public Boolean getAutoCatch(){
+        return this.autoCatch;
+    }
+    public Boolean getShinyCheat(){
+        return this.shinyCheat;
     }
     public Boolean getFullRandomizerOn(){return this.fullRandomizerOn;}
     public void setRandomizer(Boolean randomizer){this.fullRandomizerOn = randomizer;}

@@ -172,7 +172,19 @@ public class Moves {
     protected Boolean ridsStatusEffects = false;
     protected int protectsFromStatChanges = 0;
     protected Boolean causesNoMiss = false;
+    protected int createsTrickRoom = 0;
+    protected Boolean swapPower = false;
+    protected Boolean swapPhysAtt = false;
+    protected Boolean swapSpecAtt = false;
+    protected Boolean swapAcc = false;
+    protected Boolean swapPhysDef = false;
+    protected Boolean swapSpecDef = false;
+    protected Boolean swapSpeed = false;
+    protected Boolean swapEvas = false;
 
+    public Boolean getSwapPower(){return this.swapPower;}
+    public double getMultChange(){return this.MultChange;}
+    public int getCreatesTrickRoom(){return this.createsTrickRoom;}
     public Boolean getCausesNoMiss(){return this.causesNoMiss;}
     public int getProtectsFromStatChanges(){return this.protectsFromStatChanges;}
     public Boolean getRidsStatusEffects(){return this.ridsStatusEffects;}
@@ -300,13 +312,13 @@ public class Moves {
         return CanMiss;
     }
     public Boolean showHeal(){
-        if(Healally){
+        if(this.Healally){
             return true;
         }
         return false;
     }
     public Boolean showStatChange(){
-        if ((StatchangeEnemy) || (StateChangeAlly)) {
+        if ((this.StatchangeEnemy) || (this.StateChangeAlly)) {
             return true;
         }
         return false;
@@ -756,7 +768,7 @@ public class Moves {
                         hitTimes = (int) Math.round((Math.random() * range) + MinHit);
                     }
                     while (hitTicker <= hitTimes) {
-                        if (this.isSpecial) {
+                        if (this.isSpecial && !this.name.equals("Psyshock")) {
                             RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2)
                                     * this.power * ((attacker.showSpecAttack() * SpecAttackCalc(attacker) *
                                     attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
@@ -764,6 +776,18 @@ public class Moves {
                                     (defender.showSpecDefense() * SpecDefCalc(defender) *
                                     defender.showAbility().getStatMults(defender, attacker, this, weather)[3] *
                                     defender.showItem().getStatMults()[2])) / 50.0) + 2);
+                            if(defender.getHasSpecWall()){
+                                RawDamage = RawDamage/2;
+                            }
+                        }
+                        if (this.isSpecial && this.name.equals("Psyshock")) {
+                            RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2)
+                                    * this.power * ((attacker.showSpecAttack() * SpecAttackCalc(attacker) *
+                                    attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
+                                    attacker.showItem().getStatMults()[2])  /
+                                    (defender.showPhysDefense() * DefCalc(defender) *
+                                            defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
+                                            defender.showItem().getStatMults()[1])) / 50.0) + 2);
                             if(defender.getHasSpecWall()){
                                 RawDamage = RawDamage/2;
                             }
@@ -883,6 +907,33 @@ public class Moves {
         return savedRefinedDamage;
     }
 
+    public void swapPowers(Pokemon attacker, Pokemon defender){
+        if(this.swapSpeed) {
+            int attackerSpeed = defender.showSpeed(1);
+            defender.setSpeed(attacker.showSpeed(1));
+            attacker.setSpeed(attackerSpeed);
+        }
+        if(this.swapPhysAtt){
+            int attackerAtt = defender.showPhysAttack();
+            defender.setPhysAtt(attacker.showPhysAttack());
+            attacker.setPhysAtt(attackerAtt);
+        }
+        if(this.swapPhysDef){
+            int attackerDef = defender.showPhysDefense();
+            defender.setPhysDefense(attacker.showPhysDefense());
+            attacker.setPhysDefense(attackerDef);
+        }
+        if(this.swapSpecAtt){
+            int attackerSpecAtt = defender.showSpecAttack();
+            defender.setSpecDef(attacker.showSpecDefense());
+            attacker.setSpecDef(attackerSpecAtt);
+        }
+        if(this.swapSpecDef){
+            int attackerSpecDef = defender.showSpecDefense();
+            defender.setSpecDef(attacker.showSpecDefense());
+            attacker.setSpecDef(attackerSpecDef);
+        }
+    }
     public void StatChange(Pokemon attacker, Pokemon defender, Pokemon PlayerPoke, Weather weather) {
         if (this.copiesStatChanges) {
             attacker.changeAttMult(defender.showAttMult());
@@ -1026,6 +1077,8 @@ public class Moves {
                         this.changeTypeName2 + " by " + this.MultChange2);
             }
         }
+        defender.showAbility().addStageDuringStatChange(defender, attacker, this, weather, false);
+        attacker.showAbility().addStageDuringStatChange(attacker, defender, this, weather, true);
     }
 
     public void setSecretPowerStats(AreaMechanics area){

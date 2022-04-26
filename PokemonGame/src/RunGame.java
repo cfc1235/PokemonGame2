@@ -12,7 +12,7 @@ public class RunGame {
 
     public static void main(String[] args) throws InterruptedException,
             UnsupportedAudioFileException, LineUnavailableException, IOException {
-        GlobalVariables globalVariables = new GlobalVariables();
+        GlobalVariables globalVariables = new GlobalVariables(true, false, true, true, true);
         PlayIntroMusic playIntroMusic = new PlayIntroMusic();
         playIntroMusic.start();
         IntroScreen introScreen = new IntroScreen();

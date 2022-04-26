@@ -7,8 +7,9 @@ import java.util.Collections;
 public class Competitve extends Abilities {
     public Competitve(){
         this.name = "Competitive";
-        this.changeSelfSpecAtt = true;
-        this.changeSSpecAtt = 2;
-        this.onChangingStat = true;
+        this.changeSelfAcc = true;
+        this.changeSelfAccuracy = 2;
+        this.onStatChange = true;
+        this.positiveMultChange = false;
     }
 }

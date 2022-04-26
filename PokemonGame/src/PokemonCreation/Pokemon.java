@@ -43,7 +43,7 @@ public class Pokemon implements AddMoveset {
     protected int Speed;
     protected String nature;
     protected double AccMulitplier = 0;
-    protected double SavedAccMult = AccMulitplier;
+    protected double SavedAccMult = 0;
     protected double EvasMulitplier = 0;
     protected double SavedEvasMult = EvasMulitplier;
     protected double AttMultiplier = 0;
@@ -146,6 +146,13 @@ public class Pokemon implements AddMoveset {
     protected int stockpile = 0;
     protected int cannotHaveStatLowered = 0;
     protected Boolean cannotMiss = true;
+    protected int savedAtt;
+    protected int savedDef;
+    protected int savedSpecAtt;
+    protected int savedSpecDef;
+    protected int savedSpeed;
+    protected int savedAcc;
+    protected int savedEv;
 
     public void setCannotMiss(){this.cannotMiss = true;}
     public void resetCannotMiss(){this.cannotMiss = false;}
@@ -361,6 +368,9 @@ public class Pokemon implements AddMoveset {
     }
     private Boolean isShiny(GlobalVariables globalVariables) {
         int battleAmount = globalVariables.getBattleCount()[this.ID];
+        if(globalVariables.getShinyCheat()){
+            return true;
+        }
         boolean shinyCharm = globalVariables.getHasShinyCharm();
         int shinyDifficulty = 2048;
         if (shinyCharm) {
@@ -1163,7 +1173,7 @@ public class Pokemon implements AddMoveset {
             }
         }
         if(!AcceptableMove){
-            System.out.println(name + " is not able to learn any moves.");
+            System.out.println(this.name + " is not able to learn any moves.");
         }
     }
     public void changeBaseStats(){
@@ -1172,42 +1182,47 @@ public class Pokemon implements AddMoveset {
         double DefNat = 1;
         double SpecDefNat = 1;
         double SpeedNat = 1;
-        if(nature.equals("Bold") || nature.equals("Adamant") || nature.equals("Naughty") || nature.equals("Brave")){
+        if(this.nature.equals("Bold") || this.nature.equals("Adamant") || this.nature.equals("Naughty") || this.nature.equals("Brave")){
             AttNat = 1.1;
         }
-        if(nature.equals("Hardy") || nature.equals("Modest") || nature.equals("Calm") || nature.equals("Timid")){
+        if(this.nature.equals("Hardy") || this.nature.equals("Modest") || this.nature.equals("Calm") || this.nature.equals("Timid")){
             AttNat = .9;
         }
-        if(nature.equals("Bold") || nature.equals("Lax") || nature.equals("Gentle") || nature.equals("Hasty")){
+        if(this.nature.equals("Bold") || this.nature.equals("Lax") || this.nature.equals("Gentle") || this.nature.equals("Hasty")){
             DefNat = .9;
         }
-        if(nature.equals("Hardy") || nature.equals("Impish") || nature.equals("Lonely") || nature.equals("Relaxed")){
+        if(this.nature.equals("Hardy") || this.nature.equals("Impish") || this.nature.equals("Lonely") || this.nature.equals("Relaxed")){
             DefNat = 1.1;
         }
-        if(nature.equals("Adamant") || nature.equals("Impish") || nature.equals("Mild") || nature.equals("Jolly")){
+        if(this.nature.equals("Adamant") || this.nature.equals("Impish") || this.nature.equals("Mild") || this.nature.equals("Jolly")){
             SpecDefNat = .9;
         }
-        if(nature.equals("Calm") || nature.equals("Gentle") || nature.equals("Quirky") || nature.equals("Sassy")){
+        if(this.nature.equals("Calm") || this.nature.equals("Gentle") || this.nature.equals("Quirky") || this.nature.equals("Sassy")){
             SpecDefNat = 1.1;
         }
-        if(nature.equals("Modest") || nature.equals("Lax") || nature.equals("Mild") || nature.equals("Quiet")){
+        if(this.nature.equals("Modest") || this.nature.equals("Lax") || this.nature.equals("Mild") || this.nature.equals("Quiet")){
             SpecAttNat = 1.1;
         }
-        if(nature.equals("Naughty") || nature.equals("Lonely") || nature.equals("Quirky") || nature.equals("Naive")){
+        if(this.nature.equals("Naughty") || this.nature.equals("Lonely") || this.nature.equals("Quirky") || this.nature.equals("Naive")){
             SpecAttNat = .9;
         }
-        if(nature.equals("Timid") || nature.equals("Hasty") || nature.equals("Jolly") || nature.equals("Naive")){
+        if(this.nature.equals("Timid") || this.nature.equals("Hasty") || this.nature.equals("Jolly") || this.nature.equals("Naive")){
             SpeedNat = 1.1;
         }
-        if(nature.equals("Brave") || nature.equals("Relaxed") || nature.equals("Quiet") || nature.equals("Sassy")){
+        if(this.nature.equals("Brave") || this.nature.equals("Relaxed") || this.nature.equals("Quiet") || this.nature.equals("Sassy")){
             SpeedNat = .9;
         }
-        PhysDefense = (int) Math.round(((((2 * BaseDef + IV.get(0) + (EVs.get(0)/4.0)) * level)/100.0) + 5) * DefNat);
-        PhysAttack = (int) Math.round(((((2 * BaseAtt + IV.get(1) + (EVs.get(1)/4.0)) * level)/100.0) + 5) * AttNat);
-        SpecAttack = (int) Math.round(((((2 * BaseSpecAtt + IV.get(2) + (EVs.get(2)/4.0)) * level)/100.0) + 5) * SpecAttNat);
-        SpecDefense = (int) Math.round(((((2 * BaseSpecDef + IV.get(3) + (EVs.get(3)/4.0)) * level)/100.0) + 5) * SpecDefNat);
-        Speed = (int) Math.round(((((2 * BaseSp + IV.get(4) + (EVs.get(4)/4.0)) * level)/100.0) + 5) * SpeedNat);
-        savedHP = (int) Math.round(((((2 * BaseHP) + IV.get(5) + (EVs.get(5)/4.0)) * level)/100.0) + level + 10);
+        this.PhysDefense = (int) Math.round(((((2 * this.BaseDef + this.IV.get(0) + (this.EVs.get(0)/4.0)) * this.level)/100.0) + 5) * DefNat);
+        this.PhysAttack = (int) Math.round(((((2 * this.BaseAtt + this.IV.get(1) + (this.EVs.get(1)/4.0)) * this.level)/100.0) + 5) * AttNat);
+        this.SpecAttack = (int) Math.round(((((2 * this.BaseSpecAtt + this.IV.get(2) + (this.EVs.get(2)/4.0)) * this.level)/100.0) + 5) * SpecAttNat);
+        this.SpecDefense = (int) Math.round(((((2 * this.BaseSpecDef + this.IV.get(3) + (this.EVs.get(3)/4.0)) * this.level)/100.0) + 5) * SpecDefNat);
+        this.Speed = (int) Math.round(((((2 * this.BaseSp + this.IV.get(4) + (this.EVs.get(4)/4.0)) * this.level)/100.0) + 5) * SpeedNat);
+        this.savedHP = (int) Math.round(((((2 * this.BaseHP) + this.IV.get(5) + (this.EVs.get(5)/4.0)) * this.level)/100.0) + this.level + 10);
+        this.savedDef = this.PhysDefense;
+        this.savedAtt = this.PhysAttack;
+        this.savedSpecAtt = this.SpecAttack;
+        this.savedSpecDef = this.SpecDefense;
+        this.savedSpeed = this.Speed;
     }
 
     public void visitNurse() {
@@ -1329,6 +1344,29 @@ public class Pokemon implements AddMoveset {
         this.resetSpecAttMult();
         this.resetSpeedMult();
         this.resetSpecDefMult();
+        this.resetAllStats();
+    }
+    public void resetAllStats(){
+        this.setSpeed(this.savedSpeed);
+        this.setSpecDef(this.savedSpecDef);
+        this.setSpecAtt(this.savedSpecAtt);
+        this.setPhysAtt(this.savedAtt);
+        this.setPhysDefense(this.savedDef);
+    }
+    public void setSpeed(int Speed){
+        this.Speed = Speed;
+    }
+    public void setSpecAtt(int SpecAtt){
+        this.SpecAttack = SpecAtt;
+    }
+    public void setSpecDef(int SpecDef){
+        this.SpecDefense = SpecDef;
+    }
+    public void setPhysAtt(int PhysAtt){
+        this.PhysAttack = PhysAtt;
+    }
+    public void setPhysDefense(int physDef){
+        this.PhysDefense = physDef;
     }
 
     protected void PLACEHOLDERFORINTERFACE(){

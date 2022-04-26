@@ -2,19 +2,18 @@ package Moveset;
 
 import BattleMechanics.Moves;
 
-public class IcePunch extends Moves {
-    public IcePunch(){
-        this.name = "Ice Punch";
-        this.type = "Ice";
-        this.power = 75;
+public class FreezingGlare extends Moves {
+    public FreezingGlare(){
+        this.name = "Freezing Glare";
+        this.type = "Psychic";
+        this.power = 90;
         this.acc = 100;
-        this.PP = 15;
+        this.PP = 10;
         this.savedPP = this.PP;
         this.dealsDamage = true;
         this.CanMiss = true;
-        this.makesContact = true;
+        this.isSpecial = true;
         this.canFreeze = true;
         this.freezeChance = 10;
-        this.TMNum = 4;
     }
 }

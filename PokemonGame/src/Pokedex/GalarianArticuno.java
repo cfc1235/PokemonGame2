@@ -12,40 +12,41 @@ public class GalarianArticuno extends Pokemon {
         setFirstEVs();
         setNature();
         setIVs();
-        Collections.addAll(this.possibleAbilities, new Pressure(), new SnowCloak());
+        Collections.addAll(this.possibleAbilities, new Pressure(), new Competitve());
         getAbilities();
         this.savedAbility = this.ability;
         Collections.addAll(this.TMmoves, addFly(), addHyperBeam(), addGigaImpact(),
-                addReflect(), addRest(), addSnore(), addProtect(), addIcyWind(),
-                addSteelWing(), addSandstorm(), addRainDance(), addSunnyDay(),
-                addHail(), addFacade(), addSwift(), addWeatherBall(), addIcicleSpear(),
-                addUTurn(), addAvalanche(), addRound(), addAirSlash(), addIceBeam(),
-                addAgility(), addSubstitute(), addEndure(), addSleepTalk(),
-                addBraveBird(), addHurricane(), addWaterPulse(), addRoar(),
-                addHail(), addDoubleTeam(), addAerialAce(), addPluck(),addUTurn(),
-                addDefog(), addRockSmash());
+                addLightScreen(), addReflect(), addRest(), addSnore(), addProtect(),
+                addScaryFace(), addSteelWing(), addFacade(), addSwift(),
+                addImprison(), addUTurn(), addPowerSwap(), addGuardSwap(),
+                addPsychoCut(), addTrickRoom(), addRound(), addAirSlash(),
+                addPsychic(), addAgility(), addSubstitute(), addPsyshock(),
+                addEndure(), addShadowBall(), addFutureSight(), addSkillSwap(),
+                addSleepTalk(), addHyperVoice(), addCalmMind(), addBraveBird(),
+                addStoredPower(), addAllySwitch());
         Collections.addAll(this.learnedMoves, new CreateOrderedMap<>(0, addGust()),
-                new CreateOrderedMap<>(0, addMist()), new CreateOrderedMap<>(5, addPowderSnow()),
-                new CreateOrderedMap<>(10, addReflect()), new CreateOrderedMap<>(15, addIceShard()),
+                new CreateOrderedMap<>(0, addPsychoShift()), new CreateOrderedMap<>(5, addConfusion()),
+                new CreateOrderedMap<>(10, addReflect()), new CreateOrderedMap<>(15, addHypnosis()),
                 new CreateOrderedMap<>(20, addAgility()), new CreateOrderedMap<>(25, addAncientPower()),
-                new CreateOrderedMap<>(30, addTailwind()), new CreateOrderedMap<>(35, addFreezeDry()),
-                new CreateOrderedMap<>(40, addRoost()), new CreateOrderedMap<>(50, addHail()),
-                new CreateOrderedMap<>(55, addHurricane()), new CreateOrderedMap<>(60, addMindReader()),
-                new CreateOrderedMap<>(65, addBlizzard()), new CreateOrderedMap<>(70, addSheerCold()));
+                new CreateOrderedMap<>(30, addTailwind()), new CreateOrderedMap<>(35, addPsychoCut()),
+                new CreateOrderedMap<>(40, addRecover()), new CreateOrderedMap<>(45, addFreezingGlare()),
+                new CreateOrderedMap<>(50, addDreamEater()), new CreateOrderedMap<>(55, addHurricane()),
+                new CreateOrderedMap<>(60, addMindReader()), new CreateOrderedMap<>(65, addFutureSight()),
+                new CreateOrderedMap<>(70, addTrickRoom()));
         addFirstMoves();
         this.pokedexType = this.getClass().getSimpleName();
         this.name = this.pokedexType;
         setGivesEVs(0, 0, 3, 0, 0, 0);
-        setBaseStats(100, 85, 90, 95, 125,
-                85, 144, 3, 122.1,
-                "Ice", "Slow", level, 261);
-        this.type2 = "Flying";
+        setBaseStats(85, 85, 90, 125, 100,
+                95, 144, 3, 112.2,
+                "Flying", "Slow", level, 290);
+        this.type2 = "Psychic";
         setTotalEXP();
         setNextLevelEXP();
         setEXPNeeded();
         changeBaseStats();
         this.HP = this.savedHP;
-        setFullDirName("Articuno.png", globalVariables);
+        setFullDirName("GalarianArticuno.png", globalVariables);
         this.setPokeCry("144Cry.wav");
     }
 }

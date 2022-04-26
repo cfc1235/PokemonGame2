@@ -24,7 +24,7 @@ public class AddNewPokeToTeam {
         double CatchValue = 0;
         double BallMod = 1;
         System.out.println(ballType);
-        if (ballType.equals("Master Ball")) {
+        if (ballType.equals("Master Ball") || globalVariables.getAutoCatch()) {
             party.getCurrentParty().add(defender);
             System.out.println(defender.showName() + " has been added to your party!");
             if (party.getCurrentParty().size() > 6) {

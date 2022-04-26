@@ -2,14 +2,13 @@ package Moveset;
 
 import BattleMechanics.Moves;
 
-public class Roost extends Moves {
-
-    public Roost(){
+public class Recover extends Moves {
+    public Recover(){
         this.Healally = true;
         this.PP = 10;
         this.savedPP = this.PP;
         this.HealAmount = .5;
-        this.type = "Flying";
-        this.name = "Roost";
+        this.type = "Normal";
+        this.name = "Recover";
     }
 }

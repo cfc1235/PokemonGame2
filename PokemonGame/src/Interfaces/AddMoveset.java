@@ -311,5 +311,12 @@ public interface AddMoveset {
     default Moves addIcicleSpear(){return new IcicleSpear();}
     default Moves addAvalanche(){return new Avalanche();}
     default Moves addBraveBird(){return new BraveBird();}
-
+    default Moves addPsychoCut(){return new PsychoCut();}
+    default Moves addRecover(){return new Recover();}
+    default Moves addFreezingGlare(){return new FreezingGlare();}
+    default Moves addTrickRoom(){return new TrickRoom();}
+    default Moves addPowerSwap(){return new PowerSwap();}
+    default Moves addGuardSwap(){return new GuardSwap();}
+    default Moves addPsyshock(){return new Psyshock();}
+    default Moves addAllySwitch(){return new AllySwitch();}
 }

@@ -2,6 +2,7 @@ package PokemonCreation;
 
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
+import Moveset.TrickRoom;
 import Weather.Weather;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,6 +106,7 @@ public class Abilities {
     protected double statChance = 0.0;
     protected Boolean onStatChange;
     protected Boolean onChangingStat;
+    protected Boolean positiveMultChange = false;
 
     public ArrayList<String> getCausesStatEffect(){return this.causesStatEffect;}
     public void statEffectOnDamage(Moves moves, Pokemon attacker){
@@ -134,6 +136,7 @@ public class Abilities {
             }
         }
     }
+    public Boolean getOnStatChange(){return this.onStatChange;}
     public Boolean getHealOnType(){return this.healOnType;}
     public Boolean getAbilitiesCounter(){return this.abilitiesCounter;}
     public List<String> getCounteringAbilities(){return this.counteringAbilities;}
@@ -297,11 +300,17 @@ public class Abilities {
                                      Boolean damageTime){
         //DAMAGETIME IS TRUE IF DEALING STAT CHANGE.
         // FALSE IF DAMAGE STAT CHANGE TO THEM
+        boolean positiveChange = true;
+        if(moves.getMultChange() < 0) {
+            positiveChange = false;
+        }
         if((this.onStatChange && !damageTime) ||  (this.onChangingStat && damageTime) ||
                 ((this.requiresType && this.onMultTypes.contains(moves.showType())) || !this.requiresType)
                 || (this.WeatherReq.equals(weather) || !this.WeatherRequirement)
         ){
-            doChange(attacker, defender);
+            if(this.positiveMultChange == positiveChange) {
+                doChange(attacker, defender);
+            }
         }
     }
 

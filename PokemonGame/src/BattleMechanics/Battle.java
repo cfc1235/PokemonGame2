@@ -53,6 +53,7 @@ public class Battle {
     private int AiFutureDamageTimer = 0;
     private final Moves placeHolderMove = new NoMove();
     private final AffectsGround affectsGround = new AffectsGround();
+    private int isTrickRoom = 0;
 
     public Battle(GlobalVariables globalVariables, String type, ArrayList<Pokemon> AIParty) {
         this.type = type;
@@ -515,20 +516,21 @@ public class Battle {
                 if(playerChargeTimer > 0){
                     System.out.println("Your " + PlayerPoke.showName() + " is charging!");
                 }
-                if(AIPoke.showHP() > 0){
-                    endTurn(AIPoke, PlayerPoke);
+                if(this.AIPoke.showHP() > 0){
+                    endTurn(this.AIPoke, this.PlayerPoke);
                 }
-                if(PlayerPoke.showHP() > 0) {
-                    endTurn(PlayerPoke, AIPoke);
+                if(this.PlayerPoke.showHP() > 0) {
+                    endTurn(this.PlayerPoke, this.AIPoke);
                     if (!choice.equals("1")) {
                         if (!AISelectedMove.showreqCharge()) {
                             nonuseMove(AISelectedMove);
                         }
                         if (AISelectedMove.showreqCharge()) {
-                            System.out.println("Enemy " + AIPoke.showName() + " is charging!");
+                            System.out.println("Enemy " + this.AIPoke.showName() + " is charging!");
                         }
                     }
                 }
+                this.isTrickRoom -= 1;
             }
             if (PlayerPoke.showHP() <= 0) {
                 this.AIPoke.showAbility().addStageOnDeath(this.AIPoke);
@@ -1030,6 +1032,9 @@ public class Battle {
                             defender.Freeze();
                         }
                     }
+                    if(SelectMove.getSwapPower()){
+                        SelectMove.swapPowers(attacker, defender);
+                    }
                     if (SelectMove.showcanFreeze() || SelectMove.showOnlyCanSleep()) {
                         if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                             if (SelectMove.showOnlyCanFreeze()) {
@@ -1278,6 +1283,9 @@ public class Battle {
                                 SelectMove.resetFlinchChance();
                             }
                         }
+                    }
+                    if(SelectMove.getCreatesTrickRoom() > 0){
+                        this.isTrickRoom = SelectMove.getCreatesTrickRoom();
                     }
                     if (SelectMove.showCreatesSubstitute()) {
                         attacker.createSubstitute();
@@ -1645,7 +1653,7 @@ public class Battle {
                 System.out.println("Your " + attacker.showName() + "'s accuracy multiplier wore off!");
             }
             if(attacker == AIPoke){
-                System.out.println("Enemy " + attacker.showName() + "'s accuracy multiplier wore off!");
+                System.out.println("Enemy " + attacker.showName() + "'s multiplier wore off!");
             }
         }
         if(attacker.showCritTimer() == 0) {
@@ -1929,6 +1937,14 @@ public class Battle {
             }
             if (chance < .5) {
                 first = false;
+            }
+        }
+        if(this.isTrickRoom > 0){
+            if(first){
+                first = false;
+            }
+            else {
+                first = true;
             }
         }
         return first;
