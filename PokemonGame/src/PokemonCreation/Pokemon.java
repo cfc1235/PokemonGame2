@@ -2,11 +2,11 @@ package PokemonCreation;
 
 import Interfaces.*;
 import Items.NoItem;
+import Moveset.OtherDamage.NoMove;
 import PokemonCreation.AllAbilities.*;
 import BattleMechanics.BaseVortex;
 import BattleMechanics.Moves;
 import BattleMechanics.Vortex.NoVortex;
-import Moveset.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -151,9 +151,18 @@ public class Pokemon implements AddMoveset {
     protected int savedSpecAtt;
     protected int savedSpecDef;
     protected int savedSpeed;
-    protected int savedAcc;
-    protected int savedEv;
+    protected Boolean hasQuickGaurd = false;
+    protected int previousDamage = 0;
+    protected Boolean thrownOnFaint = false;
 
+    public void setThrownOnFaint(){this.thrownOnFaint = true;}
+    public void resetThrownOnFaint(){this.thrownOnFaint = false;}
+    public Boolean getThrownOnFaint(){return this.thrownOnFaint;}
+    public void setPreviousDamage(int damage){this.previousDamage = damage;}
+    public int getPreviousDamage(){return this.previousDamage;}
+    public void setHasQuickGaurd(){this.hasQuickGaurd = true;}
+    public void resetHasQuickGuard(){this.hasQuickGaurd = false;}
+    public Boolean getHasQuickGaurd(){return this.hasQuickGaurd;}
     public void setCannotMiss(){this.cannotMiss = true;}
     public void resetCannotMiss(){this.cannotMiss = false;}
     public Boolean getCannotMiss(){return this.cannotMiss;}

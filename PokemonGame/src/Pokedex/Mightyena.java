@@ -3,7 +3,7 @@ package Pokedex;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import Moveset.Snarl;
+import Moveset.Dark.Snarl;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.*;
 import PokemonCreation.Items;

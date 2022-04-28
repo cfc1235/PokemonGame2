@@ -8,7 +8,7 @@ import Items.Consumable.MediumEXPCandy;
 import Items.Consumable.SeedOfMastery;
 import Items.Consumable.SpoiledApricorn;
 import Items.HeldItem.ShedShell;
-import Moveset.Gust;
+import Moveset.Flying.Gust;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.CompoundEyes;
 import PokemonCreation.AllAbilities.ShieldDust;

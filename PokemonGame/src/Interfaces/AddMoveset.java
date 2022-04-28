@@ -1,10 +1,40 @@
 package Interfaces;
 
 import BattleMechanics.Moves;
-import Moveset.*;
-
-import java.lang.management.MonitorInfo;
-import java.util.Random;
+import Moveset.Bug.*;
+import Moveset.Dark.*;
+import Moveset.Dragon.*;
+import Moveset.Electric.*;
+import Moveset.EnemyChange.*;
+import Moveset.Fairy.DazzlingGleam;
+import Moveset.Fairy.DrainingKiss;
+import Moveset.Fairy.Moonblast;
+import Moveset.Fairy.PlayRough;
+import Moveset.Fighting.*;
+import Moveset.Fire.*;
+import Moveset.Flying.*;
+import Moveset.Ghost.NightShade;
+import Moveset.Ghost.ShadowBall;
+import Moveset.Ghost.ShadowClaw;
+import Moveset.Ghost.ShadowSneak;
+import Moveset.Grass.*;
+import Moveset.Ground.*;
+import Moveset.Heal.*;
+import Moveset.Ice.*;
+import Moveset.Normal.*;
+import Moveset.Poison.*;
+import Moveset.Psychic.*;
+import Moveset.Rock.*;
+import Moveset.SelfChange.*;
+import Moveset.Steel.*;
+import Moveset.SwapPower.GuardSwap;
+import Moveset.SwapPower.PowerSwap;
+import Moveset.SwapPower.SkillSwap;
+import Moveset.SwitchPoke.AllySwitch;
+import Moveset.SwitchPoke.BatonPass;
+import Moveset.SwitchPoke.Roar;
+import Moveset.SwitchPoke.Whirlwind;
+import Moveset.Water.*;
 
 public interface AddMoveset {
 
@@ -319,4 +349,16 @@ public interface AddMoveset {
     default Moves addGuardSwap(){return new GuardSwap();}
     default Moves addPsyshock(){return new Psyshock();}
     default Moves addAllySwitch(){return new AllySwitch();}
+    default Moves addDrillPeck(){return new DrillPeck();}
+    default Moves addDetect(){return new Detect();}
+    default Moves addMagneticFlux(){return new MagneticFlux();}
+    default Moves addQuickGuard(){return new QuickGuard();}
+    default Moves addThunderousKick(){return new ThunderousKick();}
+    default Moves addCounter(){return new Counter();}
+    default Moves addCloseCombat(){return new CloseCombat();}
+    default Moves addRevenge(){return new Revenge();}
+    default Moves addBounce(){return new Bounce();}
+    default Moves addLowSweep(){return new LowSweep();}
+    default Moves addRetaliate(){return new Retaliate();}
+    default Moves addLowKick(){return new LowKick();}
 }

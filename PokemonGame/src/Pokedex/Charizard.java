@@ -3,7 +3,7 @@ package Pokedex;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import Moveset.AirSlash;
+import Moveset.Flying.AirSlash;
 import PokemonCreation.*;
 import PokemonCreation.AllAbilities.Blaze;
 import PokemonCreation.AllAbilities.SolarPower;

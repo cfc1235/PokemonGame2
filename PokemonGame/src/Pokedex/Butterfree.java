@@ -5,7 +5,7 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Items.HeldItem.SilverPowder;
 import Items.NoItem;
-import Moveset.Gust;
+import Moveset.Flying.Gust;
 import PokemonCreation.*;
 import PokemonCreation.AllAbilities.TintedLenses;
 import PokemonCreation.AllAbilities.CompoundEyes;

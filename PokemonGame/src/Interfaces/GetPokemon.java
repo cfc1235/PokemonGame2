@@ -2,6 +2,10 @@ package Interfaces;
 
 import BattleMechanics.Moves;
 import Pokedex.*;
+import Pokedex.AlolanForm.AlolanRaticate;
+import Pokedex.AlolanForm.AlolanRattata;
+import Pokedex.GalarianForm.GalarianArticuno;
+import Pokedex.GalarianForm.GalarianZapdos;
 import PokemonCreation.Abilities;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
@@ -102,6 +106,14 @@ public interface GetPokemon {
                 pokemon = new GalarianArticuno(level, globalVariables);
             }
         }
+         if(ID == 145){
+             if(regionCheck < .75) {
+                 pokemon = new Zapdos(level, globalVariables);
+             }
+             else {
+                 pokemon = new GalarianZapdos(level, globalVariables);
+             }
+         }
         if(ID == 161){
             pokemon = new Sentret(level, globalVariables);
         }

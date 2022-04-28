@@ -3,7 +3,7 @@ package Pokedex;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import Moveset.Autotomize;
+import Moveset.Steel.Autotomize;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.Overcoat;
 import PokemonCreation.AllAbilities.Sturdy;

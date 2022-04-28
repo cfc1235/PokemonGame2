@@ -4,7 +4,7 @@ package Pokedex;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import Moveset.Harden;
+import Moveset.SelfChange.Harden;
 import PokemonCreation.*;
 import PokemonCreation.AllAbilities.ShedSkin;
 

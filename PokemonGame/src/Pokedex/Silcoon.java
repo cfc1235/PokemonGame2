@@ -7,7 +7,7 @@ import Items.Apricorn.Apricorn;
 import Items.Consumable.SeedOfMastery;
 import Items.Consumable.SmallEXPCandy;
 import Items.Consumable.SpoiledApricorn;
-import Moveset.Harden;
+import Moveset.SelfChange.Harden;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.ShedSkin;
 import PokemonCreation.Items;

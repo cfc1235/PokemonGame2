@@ -2,7 +2,6 @@ package PokemonCreation;
 
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
-import Moveset.TrickRoom;
 import Weather.Weather;
 import java.util.ArrayList;
 import java.util.Collections;

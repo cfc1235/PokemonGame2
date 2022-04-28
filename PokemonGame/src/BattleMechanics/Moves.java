@@ -176,11 +176,10 @@ public class Moves {
     protected Boolean swapPower = false;
     protected Boolean swapPhysAtt = false;
     protected Boolean swapSpecAtt = false;
-    protected Boolean swapAcc = false;
     protected Boolean swapPhysDef = false;
     protected Boolean swapSpecDef = false;
     protected Boolean swapSpeed = false;
-    protected Boolean swapEvas = false;
+    protected Boolean retaliatingMove = false;
 
     public Boolean getSwapPower(){return this.swapPower;}
     public double getMultChange(){return this.MultChange;}
@@ -323,6 +322,7 @@ public class Moves {
         }
         return false;
     }
+    public void createPower(int power){}
     public int showTimerChange() {return timerChange;}
     public String showName(){return name;}
     public int showPP(){return PP;}
@@ -566,6 +566,12 @@ public class Moves {
         int RefinedDamage;
         double RawDamage = 0;
         int savedRefinedDamage = 0;
+        if(defender.getHasQuickGaurd()){
+            defender.resetHasQuickGuard();
+            if(this.goesFirst){
+                return 0;
+            }
+        }
         //RESOLVE ABILITIES
         double fromAbility = attacker.showAbility().affectedOnDamage(this);
         attacker.showAbility().addStageDuringDamage(attacker,
@@ -590,7 +596,7 @@ public class Moves {
                 this.type = "Rock";
             }
         }
-        if(this.name.equals("Grass Knot")){
+        if(this.name.equals("Grass Knot") || this.name.equals("Low Kick")){
             if(defender.showWeight() < 22){
                 this.power = 20;
             }
@@ -609,6 +615,9 @@ public class Moves {
             if(defender.showWeight() >= 440){
                 this.power = 120;
             }
+        }
+        if(this.retaliatingMove){
+            this.createPower(attacker.getPreviousDamage());
         }
         if(this.name.equals("Heavy Slam")){
             double weightPerc = defender.showWeight()/attacker.showWeight();
@@ -817,9 +826,15 @@ public class Moves {
                         if ((this.name.equals("Acrobatics") && attacker.showItem().showName().equals(""))
                         || ((this.name.equals("Brine")) && (defender.showHP() * 1.0)/defender.showSavedHP() <= .5)
                         || ((this.name.equals("Pursuit")) && defender.getJustThrown())
-                        || ((this.name.equals("Assurance")) && defender.getTookDamage())
+                        || ((this.name.equals("Assurance") || this.name.equals("Revenge")) && defender.getTookDamage())
                         || ((this.name.equals("Payback")) && !attacker.getIsFirst())){
                             RawDamage = RawDamage * 2;
+                        }
+                        if(attacker.getThrownOnFaint()){
+                            attacker.resetThrownOnFaint();
+                            if(this.name.equals("Retaliate")){
+                                RawDamage = RawDamage * 2;
+                            }
                         }
                         if(this.name.equals("Rollout")){
                             if(attacker.getOutrageTimer() == 4){
@@ -908,6 +923,9 @@ public class Moves {
     }
 
     public void swapPowers(Pokemon attacker, Pokemon defender){
+        if(attacker.getThrownOnFaint()){
+            attacker.resetThrownOnFaint();
+        }
         if(this.swapSpeed) {
             int attackerSpeed = defender.showSpeed(1);
             defender.setSpeed(attacker.showSpeed(1));
@@ -935,6 +953,13 @@ public class Moves {
         }
     }
     public void StatChange(Pokemon attacker, Pokemon defender, Pokemon PlayerPoke, Weather weather) {
+        if(attacker.getThrownOnFaint()){
+            attacker.resetThrownOnFaint();
+        }
+        if(this.name.equals("Magnetic Flux") &&
+        (attacker.showAbility().showName().equals("Plus") || attacker.showAbility().showName().equals("Minus"))){
+            return;
+        }
         if (this.copiesStatChanges) {
             attacker.changeAttMult(defender.showAttMult());
             attacker.changeAccMult(defender.showAccMult());

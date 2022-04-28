@@ -3,7 +3,7 @@ package Pokedex;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import Moveset.Agility;
+import Moveset.SelfChange.Agility;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.*;
 import PokemonCreation.Items;

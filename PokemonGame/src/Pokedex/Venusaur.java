@@ -3,7 +3,7 @@ package Pokedex;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import Moveset.PetalBlizzard;
+import Moveset.Grass.PetalBlizzard;
 import PokemonCreation.*;
 import PokemonCreation.AllAbilities.Chlorophyll;
 import PokemonCreation.AllAbilities.Overgrowth;

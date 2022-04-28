@@ -3,7 +3,7 @@ package Pokedex;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import Moveset.FlashCannon;
+import Moveset.Steel.FlashCannon;
 import PokemonCreation.*;
 import PokemonCreation.AllAbilities.RainDish;
 import PokemonCreation.AllAbilities.Torrent;

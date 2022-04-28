@@ -5,9 +5,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 import Interfaces.GlobalVariables;
-import Moveset.ConfusionDamage;
-import Moveset.NoMove;
-import Moveset.Struggle;
+import Moveset.OtherDamage.ConfusionDamage;
+import Moveset.OtherDamage.NoMove;
+import Moveset.OtherDamage.Struggle;
 import PlayerMechanics.*;
 import PokemonCreation.Abilities;
 import PokemonCreation.Items;
@@ -684,6 +684,7 @@ public class Battle {
                                             DamageDealt + " damage!");
                                     if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                         defender.changeHP(DamageDealt);
+                                        defender.setPreviousDamage(DamageDealt);
                                     }
                                     if (defender.showSubstituteHP() > 0 && !SelectMove.showIgnoreSubstitute()) {
                                         defender.damageSubstitute(DamageDealt);
@@ -735,6 +736,7 @@ public class Battle {
                                 if (defender.showSubstituteHP() <= 0 ||
                                         SelectMove.showIgnoreSubstitute()) {
                                     defender.changeHP(DamageDealt);
+                                    defender.damageSubstitute(DamageDealt);
                                 }
                                 if (defender.showSubstituteHP() > 0 && !SelectMove.showIgnoreSubstitute()) {
                                     defender.damageSubstitute(DamageDealt);
@@ -1110,6 +1112,9 @@ public class Battle {
                             AIItemUsed = attacker.showItem();
                         }
                     }
+                    if(SelectMove.showName().equals("Quick Guard")){
+                        attacker.setHasQuickGaurd();
+                    }
                     if (SelectMove.getUsesSpentItem()) {
                         if (attacker == PlayerPoke) {
                             if (playerItemUsed != null) {
@@ -1336,6 +1341,7 @@ public class Battle {
                         if (defender == this.PlayerPoke) {
                             if (this.Waiting.size() > 1) {
                                 this.PlayerPoke = ThrowNew();
+                                this.PlayerPoke.setThrownOnFaint();
                                 this.PlayerPoke.showAbility().resolveStart(
                                         this.PlayerPoke, this.AIPoke, this.weather);
                             }
@@ -1441,6 +1447,7 @@ public class Battle {
                                     + " dealt " + DamageDealt + " damage!");
                             if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                 defender.changeHP(DamageDealt);
+                                defender.damageSubstitute(DamageDealt);
                             }
                             if (defender.showSubstituteHP() > 0 && !SelectMove.showIgnoreSubstitute()) {
                                 defender.damageSubstitute(DamageDealt);
@@ -1466,6 +1473,7 @@ public class Battle {
                                 if (defender.showSubstituteHP() <= 0 ||
                                         SelectMove.showIgnoreSubstitute()) {
                                     defender.changeHP(DamageDealt);
+                                    defender.setPreviousDamage(DamageDealt);
                                 }
                                 if (defender.showSubstituteHP() > 0 &&
                                         !SelectMove.showIgnoreSubstitute()) {
@@ -1495,6 +1503,7 @@ public class Battle {
                             if (defender.showSubstituteHP() <= 0 ||
                                     SelectMove.showIgnoreSubstitute()) {
                                 defender.changeHP(DamageDealt);
+                                defender.setPreviousDamage(DamageDealt);
                             }
                             if (defender.showSubstituteHP() > 0 &&
                                     !SelectMove.showIgnoreSubstitute()) {
@@ -1513,6 +1522,7 @@ public class Battle {
                             System.out.println("Enemy " + AIPoke.showName() + " dealt " + DamageDealt + " damage!");
                             if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                 defender.changeHP(DamageDealt);
+                                defender.setPreviousDamage(DamageDealt);
                             }
                             if (defender.showSubstituteHP() > 0 && !SelectMove.showIgnoreSubstitute()) {
                                 defender.damageSubstitute(DamageDealt);
@@ -1585,6 +1595,7 @@ public class Battle {
                 }
             }
         }
+        attacker.setPreviousDamage(0);
         attacker.tickDownCannotHaveStatLowered();
         attacker.tickDownProhibitedMoves();
         attacker.tickDownHasElectricCharge();
@@ -1966,6 +1977,7 @@ public class Battle {
                 this.AIParty.indexOf(this.AIPoke) + 1);
         this.AIPoke.showAbility().resolveStart(
                 this.AIPoke, this.PlayerPoke, this.weather);
+        this.AIPoke.setThrownOnFaint();
         this.affectsGround.AIPokeGroundOnSwitch(this.AIPoke);
     }
 }
