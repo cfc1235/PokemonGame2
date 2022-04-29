@@ -26,7 +26,9 @@ public class Route1 extends AreaTypes{
                 new CreateOrderedMap<>(20, 312), new CreateOrderedMap<>(40, 403));
         Collections.addAll(this.champFlightChance, new CreateOrderedMap<>(55, 16),
                 new CreateOrderedMap<>(35, 17), new CreateOrderedMap<>(5, 18),
-                new CreateOrderedMap<>(6, 1), new CreateOrderedMap<>());
+                new CreateOrderedMap<>(6, 1), new CreateOrderedMap<>(144, 1),
+                new CreateOrderedMap<>(145, 1), new CreateOrderedMap<>(146, 1),
+                new CreateOrderedMap<>(149, 1));
         createPokeChances();
     }
 }

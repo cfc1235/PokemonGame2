@@ -14,10 +14,6 @@ public class TMInventory {
 
     public TMInventory() {}
 
-    public void addSpecificTMtoInventory(Moves TMadded) {
-        this.TMInventory.add(TMadded.showName());
-    }
-
     public void accessTMs(GlobalVariables globalVariables){
         PlayerParty playerParty = globalVariables.getParty();
         System.out.println("You have this.TMs: ");
@@ -109,7 +105,7 @@ public class TMInventory {
         if(Selection == 49 && !this.TMInventory.contains("Sand Tomb")){}
         if(Selection == 50 && !this.TMInventory.contains("Bullet Seed")){this.TMInventory.add("Bullet Seed");}
         if(Selection == 51 && !this.TMInventory.contains("Icicle Spear")){this.TMInventory.add("Icicle Spear");}
-        if(Selection == 52 && !this.TMInventory.contains("Bounce")){}
+        if(Selection == 52 && !this.TMInventory.contains("Bounce")){this.TMInventory.add("Bounce");}
         if(Selection == 53 && !this.TMInventory.contains("Mud Shot")){}
         if(Selection == 54 && !this.TMInventory.contains("Rock Blast")){}
         if(Selection == 55 && !this.TMInventory.contains("Brine")){this.TMInventory.add("Brine");}
@@ -134,7 +130,7 @@ public class TMInventory {
         if(Selection == 74 && !this.TMInventory.contains("Venoshock")){this.TMInventory.add("Venoshock");}
         if(Selection == 75 && !this.TMInventory.contains("Low Sweep")){this.TMInventory.add("Low Sweep");}
         if(Selection == 76 && !this.TMInventory.contains("Round")){this.TMInventory.add("Round");}
-        if(Selection == 77 && !this.TMInventory.contains("Hex")){}
+        if(Selection == 77 && !this.TMInventory.contains("Hex")){this.TMInventory.add("Hex");}
         if(Selection == 78 && !this.TMInventory.contains("Acrobatics")){this.TMInventory.add("Acrobatics");}
         if(Selection == 79 && !this.TMInventory.contains("Retaliate")){this.TMInventory.add("Retaliate");}
         if(Selection == 80 && !this.TMInventory.contains("Volt Switch")){this.TMInventory.add("Volt Switch");}
@@ -210,7 +206,7 @@ public class TMInventory {
         if(Selection == 150 && !this.TMInventory.contains("Leaf Blade")){this.TMInventory.add("Leaf Blade");}
         if(Selection == 151 && !this.TMInventory.contains("Dragon Dance")){this.TMInventory.add("Dragon Dance");}
         if(Selection == 152 && !this.TMInventory.contains("Gyro Ball")){this.TMInventory.add("Gyro Ball");}
-        if(Selection == 153 && !this.TMInventory.contains("Close Combat")){}
+        if(Selection == 153 && !this.TMInventory.contains("Close Combat")){this.TMInventory.add("Close Combat");}
         if(Selection == 154 && !this.TMInventory.contains("Toxic Spikes")){this.TMInventory.add("Toxic Spikes");}
         if(Selection == 155 && !this.TMInventory.contains("Flare Blitz")){this.TMInventory.add("Flare Blitz");}
         if(Selection == 156 && !this.TMInventory.contains("Aura Sphere")){this.TMInventory.add("Aura Sphere");}
@@ -231,14 +227,14 @@ public class TMInventory {
         if(Selection == 171 && !this.TMInventory.contains("Leaf Storm")){this.TMInventory.add("Leaf Storm");}
         if(Selection == 172 && !this.TMInventory.contains("Power Whip")){this.TMInventory.add("Power Whip");}
         if(Selection == 173 && !this.TMInventory.contains("Gunk Shot")){}
-        if(Selection == 174 && !this.TMInventory.contains("Iron Head")){}
-        if(Selection == 175 && !this.TMInventory.contains("Stone Edge")){}
+        if(Selection == 174 && !this.TMInventory.contains("Iron Head")){this.TMInventory.add("Iron Head");}
+        if(Selection == 175 && !this.TMInventory.contains("Stone Edge")){this.TMInventory.add("Stone Edge");}
         if(Selection == 176 && !this.TMInventory.contains("Stealth Rock")){}
         if(Selection == 177 && !this.TMInventory.contains("Grass Knot")){this.TMInventory.add("Grass Knot");}
         if(Selection == 178 && !this.TMInventory.contains("Sludge Wave")){this.TMInventory.add("Sludge Wave");}
         if(Selection == 179 && !this.TMInventory.contains("Heavy Slam")){this.TMInventory.add("Heavy Slam");}
         if(Selection == 180 && !this.TMInventory.contains("Electro Ball")){this.TMInventory.add("Electro Ball");}
-        if(Selection == 181 && !this.TMInventory.contains("Foul Play")){}
+        if(Selection == 181 && !this.TMInventory.contains("Foul Play")){this.TMInventory.add("Foul Play");}
         if(Selection == 182 && !this.TMInventory.contains("Stored Power")){this.TMInventory.add("Stored Power");}
         if(Selection == 183 && !this.TMInventory.contains("Ally Switch")){this.TMInventory.add("Ally Switch");}
         if(Selection == 184 && !this.TMInventory.contains("Scald")){this.TMInventory.add("Scald");}

@@ -767,7 +767,31 @@ public class Battle {
                         System.out.println("Snore only works when the user is asleep!");
                     }
                     if (SelectMove.showEnemyKnockOffItem() && Hit) {
-                        defender.giveItem(new NoItem());
+                        if(SelectMove.showName().equals("Incinerate") &&
+                        defender.showItem().getIsBerry()){
+                            defender.giveItem(new NoItem());
+                        }
+                        else {
+                            defender.giveItem(new NoItem());
+                        }
+                    }
+                    if(Hit && SelectMove.getResetsType()){
+                        if(SelectMove.StateChangeAlly) {
+                            if (SelectMove.getResetsTypeFrom().equals(attacker.showType1())) {
+                                attacker.setType3(SelectMove.getResetsTypeTo());
+                            }
+                            if (SelectMove.getResetsTypeFrom().equals(attacker.showType2())) {
+                                attacker.setType3(SelectMove.getResetsTypeTo());
+                            }
+                        }
+                        if(SelectMove.StatchangeEnemy) {
+                            if (SelectMove.getResetsTypeFrom().equals(defender.showType1())) {
+                                defender.setType3(SelectMove.getResetsTypeTo());
+                            }
+                            if (SelectMove.getResetsTypeFrom().equals(defender.showType2())) {
+                                defender.setType3(SelectMove.getResetsTypeTo());
+                            }
+                        }
                     }
                     if (SelectMove.showTakeItem() && Hit) {
                         if (!attacker.showItem().showName().equals("") && !defender.showItem().showName().equals("")) {

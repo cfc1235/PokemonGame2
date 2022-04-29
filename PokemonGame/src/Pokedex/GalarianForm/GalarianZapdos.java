@@ -10,6 +10,7 @@ import java.util.Collections;
 
 public class GalarianZapdos extends Pokemon {
     public GalarianZapdos(int level, GlobalVariables globalVariables){
+        this.hasGender = false;
         setFirstEVs();
         setNature();
         setIVs();

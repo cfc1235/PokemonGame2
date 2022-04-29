@@ -154,7 +154,25 @@ public class Pokemon implements AddMoveset {
     protected Boolean hasQuickGaurd = false;
     protected int previousDamage = 0;
     protected Boolean thrownOnFaint = false;
+    protected String type4 = "";
+    protected String type3 = "";
 
+    public void setType3(String newType1){
+        this.type3 = this.type1;
+        this.type1 = newType1;
+    }
+    public void resetType3(){
+        this.type1 = this.type3;
+        this.type3 = "";
+    }
+    public void setType4(String newType2){
+        this.type4 = this.type2;
+        this.type2 = newType2;
+    }
+    public void resetType4(){
+        this.type2 = this.type4;
+        this.type4 = "";
+    }
     public void setThrownOnFaint(){this.thrownOnFaint = true;}
     public void resetThrownOnFaint(){this.thrownOnFaint = false;}
     public Boolean getThrownOnFaint(){return this.thrownOnFaint;}
@@ -1343,6 +1361,12 @@ public class Pokemon implements AddMoveset {
         this.resetCannotFlee();
         this.resetProhibitedMoves();
         this.resetCannotHaveStatLowered();
+        if(!this.type4.equals("")){
+            this.resetType4();
+        }
+        if(!this.type3.equals("")){
+            this.resetType3();
+        }
     }
 
     public void resetMults(){

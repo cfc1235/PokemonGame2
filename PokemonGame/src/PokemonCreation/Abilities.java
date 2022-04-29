@@ -286,9 +286,10 @@ public class Abilities {
                                      Boolean damageTime){
         //DAMAGETIME IS TRUE IF DEALING DAMAGE.
         // FALSE IF DAMAGE DEALT TO THEM
-        if((this.onDealtDamage && !damageTime) ||  (this.onDealingDamage && damageTime) ||
-            ((this.requiresType && this.onMultTypes.contains(moves.showType())) || !this.requiresType)
+        if((this.onDealtDamage && !damageTime) ||  (this.onDealingDamage && damageTime)
+            || (!this.requiresType || this.onMultTypes.contains(moves.showType()))
             || (this.WeatherReq.equals(weather) || !this.WeatherRequirement)
+            || (this.hasReqsinDamage && (defender.showHP()/(double) defender.showSavedHP()) < this.HPReq)
         ){
             doChange(attacker, defender);
         }

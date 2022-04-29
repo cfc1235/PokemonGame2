@@ -1,14 +1,27 @@
 package Interfaces;
 
 import BattleMechanics.Moves;
-import Pokedex.*;
-import Pokedex.AlolanForm.AlolanRaticate;
-import Pokedex.AlolanForm.AlolanRattata;
-import Pokedex.GalarianForm.GalarianArticuno;
-import Pokedex.GalarianForm.GalarianZapdos;
-import PokemonCreation.Abilities;
-import PokemonCreation.Items;
-import PokemonCreation.Pokemon;
+import Pokedex.A.*;
+import Pokedex.AlolanForm.*;
+import Pokedex.B.*;
+import Pokedex.C.*;
+import Pokedex.D.*;
+import Pokedex.F.*;
+import Pokedex.G.*;
+import Pokedex.GalarianForm.*;
+import Pokedex.H.*;
+import Pokedex.I.*;
+import Pokedex.L.*;
+import Pokedex.M.*;
+import Pokedex.N.*;
+import Pokedex.O.*;
+import Pokedex.P.*;
+import Pokedex.R.*;
+import Pokedex.S.*;
+import Pokedex.V.*;
+import Pokedex.W.*;
+import Pokedex.Z.*;
+import PokemonCreation.*;
 import Items.NoItem;
 
 import java.util.List;
@@ -113,6 +126,23 @@ public interface GetPokemon {
              else {
                  pokemon = new GalarianZapdos(level, globalVariables);
              }
+         }
+         if(ID == 146){
+             if(regionCheck < .75) {
+                 pokemon = new Moltres(level, globalVariables);
+             }
+             else {
+                 pokemon = new GalarianMoltres(level, globalVariables);
+             }
+         }
+         if(ID == 147){
+             pokemon = new Dratini(level, globalVariables);
+         }
+         if(ID == 148){
+             pokemon = new Dragonair(level, globalVariables);
+         }
+         if(ID == 149){
+             pokemon = new Dragonite(level, globalVariables);
          }
         if(ID == 161){
             pokemon = new Sentret(level, globalVariables);
@@ -285,6 +315,14 @@ public interface GetPokemon {
                         IVs, HPMissing, Evs, Gender, ability, isShiny, new NoItem());
             }
         }
+        if(ID == 147){
+            evolution = new Dragonair(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 148){
+            evolution = new Dragonite(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
         if(ID == 161){
             evolution = new Furret(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
@@ -302,7 +340,7 @@ public interface GetPokemon {
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(ID == 204){
-            evolution = new Ariados(level, moves, nature, name,
+            evolution = new Forretress(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(ID == 261){

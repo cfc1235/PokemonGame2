@@ -2,9 +2,9 @@ package UserInterfaces;
 
 import Interfaces.Animations;
 import Interfaces.GlobalVariables;
-import Pokedex.Bulbasaur;
-import Pokedex.Charmander;
-import Pokedex.Squirtle;
+import Pokedex.B.Bulbasaur;
+import Pokedex.C.Charmander;
+import Pokedex.S.Squirtle;
 import PokemonCreation.PokeColors;
 import PokemonCreation.Pokemon;
 

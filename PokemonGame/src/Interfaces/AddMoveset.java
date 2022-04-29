@@ -6,17 +6,11 @@ import Moveset.Dark.*;
 import Moveset.Dragon.*;
 import Moveset.Electric.*;
 import Moveset.EnemyChange.*;
-import Moveset.Fairy.DazzlingGleam;
-import Moveset.Fairy.DrainingKiss;
-import Moveset.Fairy.Moonblast;
-import Moveset.Fairy.PlayRough;
+import Moveset.Fairy.*;
 import Moveset.Fighting.*;
 import Moveset.Fire.*;
 import Moveset.Flying.*;
-import Moveset.Ghost.NightShade;
-import Moveset.Ghost.ShadowBall;
-import Moveset.Ghost.ShadowClaw;
-import Moveset.Ghost.ShadowSneak;
+import Moveset.Ghost.*;
 import Moveset.Grass.*;
 import Moveset.Ground.*;
 import Moveset.Heal.*;
@@ -27,13 +21,8 @@ import Moveset.Psychic.*;
 import Moveset.Rock.*;
 import Moveset.SelfChange.*;
 import Moveset.Steel.*;
-import Moveset.SwapPower.GuardSwap;
-import Moveset.SwapPower.PowerSwap;
-import Moveset.SwapPower.SkillSwap;
-import Moveset.SwitchPoke.AllySwitch;
-import Moveset.SwitchPoke.BatonPass;
-import Moveset.SwitchPoke.Roar;
-import Moveset.SwitchPoke.Whirlwind;
+import Moveset.SwapPower.*;
+import Moveset.SwitchPoke.*;
 import Moveset.Water.*;
 
 public interface AddMoveset {
@@ -361,4 +350,15 @@ public interface AddMoveset {
     default Moves addLowSweep(){return new LowSweep();}
     default Moves addRetaliate(){return new Retaliate();}
     default Moves addLowKick(){return new LowKick();}
+    default Moves addIncinerate(){return new Incinerate();}
+    default Moves addBurnUp(){return new BurnUp();}
+    default Moves addFieryWrath(){return new FieryWrath();}
+    default Moves addMemento(){return new Memento();}
+    default Moves addHex(){return new Hex();}
+    default Moves addFoulPlay(){return new FoulPlay();}
+    default Moves addDragonTail(){return new DragonTail();}
+    default Moves addDragonRush(){return new DragonRush();}
+    default Moves addExtremeSpeed(){return new ExtremeSpeed();}
+    default Moves addIronHead(){return new IronHead();}
+    default Moves addStoneEdge(){return new StoneEdge();}
 }
