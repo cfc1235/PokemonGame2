@@ -2,7 +2,9 @@ package Pokedex.S;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.I.Insomnia;
+import PokemonCreation.AllAbilities.S.Sniper;
+import PokemonCreation.AllAbilities.S.Swarm;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

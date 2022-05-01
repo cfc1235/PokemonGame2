@@ -9,7 +9,7 @@ import Items.Consumable.SmallEXPCandy;
 import Items.Consumable.SpoiledApricorn;
 import Moveset.SelfChange.Harden;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.ShedSkin;
+import PokemonCreation.AllAbilities.S.ShedSkin;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

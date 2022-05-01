@@ -3,11 +3,12 @@ package Pokedex.AlolanForm;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import Items.Berries.PechaBerry;
-import Items.NoItem;
+import Interfaces.GetItem;
 import Moveset.EnemyChange.ScaryFace;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.G.Gluttony;
+import PokemonCreation.AllAbilities.H.Hustle;
+import PokemonCreation.AllAbilities.T.ThickFat;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 
@@ -86,8 +87,8 @@ public class AlolanRaticate extends Pokemon {
         this.savedAbility = this.ability;
         this.HP = this.savedHP;
         setFullDirName("Raticate.png", globalVariables);
-        Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(5, new PechaBerry()),
-                new CreateOrderedMap<>(95, new NoItem()));
+        Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(5, GetItem.getPechaBerry()),
+                new CreateOrderedMap<>(95, GetItem.getNoItem()));
         getWildItem();
     }
 }

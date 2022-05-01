@@ -2,9 +2,9 @@ package Pokedex.L;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.Rattled;
-import PokemonCreation.AllAbilities.EarlyBird;
-import PokemonCreation.AllAbilities.Swarm;
+import PokemonCreation.AllAbilities.R.Rattled;
+import PokemonCreation.AllAbilities.E.EarlyBird;
+import PokemonCreation.AllAbilities.S.Swarm;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

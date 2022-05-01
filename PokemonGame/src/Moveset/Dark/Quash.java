@@ -9,6 +9,6 @@ public class Quash extends Moves {
         this.type = "Dark";
         this.PP = 15;
         this.savedPP = this.PP;
-        this.TMNum = 60;
+        this.TMNum = 360;
     }
 }

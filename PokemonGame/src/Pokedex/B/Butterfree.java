@@ -7,8 +7,8 @@ import Items.HeldItem.SilverPowder;
 import Items.NoItem;
 import Moveset.Flying.Gust;
 import PokemonCreation.*;
-import PokemonCreation.AllAbilities.TintedLenses;
-import PokemonCreation.AllAbilities.CompoundEyes;
+import PokemonCreation.AllAbilities.T.TintedLenses;
+import PokemonCreation.AllAbilities.C.CompoundEyes;
 
 import java.util.Collections;
 import java.util.List;

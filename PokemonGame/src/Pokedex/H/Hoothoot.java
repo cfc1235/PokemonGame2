@@ -2,7 +2,9 @@ package Pokedex.H;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.I.Insomnia;
+import PokemonCreation.AllAbilities.K.KeenEyes;
+import PokemonCreation.AllAbilities.T.TintedLenses;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

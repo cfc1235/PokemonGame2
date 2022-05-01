@@ -361,4 +361,14 @@ public interface AddMoveset {
     default Moves addExtremeSpeed(){return new ExtremeSpeed();}
     default Moves addIronHead(){return new IronHead();}
     default Moves addStoneEdge(){return new StoneEdge();}
+    default Moves addBide(){return new Bide();}
+    default Moves addMeanLook(){return new MeanLook();}
+    default Moves addConfuseRay(){return new ConfuseRay();}
+    default Moves addRototiller(){return new Rototiller();}
+    default Moves addBabyDollEyes(){return new BabyDollEyes();}
+    default Moves addDisarmingVoice(){return new DisarmingVoice();}
+    default Moves addLifeDew(){return new LifeDew();}
+    default Moves addSimpleBeam(){return new SimpleBeam();}
+    default Moves addHealPulse(){return new HealPulse();}
+    default Moves addMistyTerrain(){return new MistyTerrain();}
 }

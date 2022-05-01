@@ -2,9 +2,9 @@ package Pokedex.S;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.Frisk;
-import PokemonCreation.AllAbilities.KeenEyes;
-import PokemonCreation.AllAbilities.RunAway;
+import PokemonCreation.AllAbilities.F.Frisk;
+import PokemonCreation.AllAbilities.K.KeenEyes;
+import PokemonCreation.AllAbilities.R.RunAway;
 import PokemonCreation.Pokemon;
 
 

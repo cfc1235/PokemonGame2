@@ -3,15 +3,11 @@ package Pokedex.B;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import Items.Consumable.DazzlingHoney;
-import Items.Consumable.MediumEXPCandy;
-import Items.Consumable.SeedOfMastery;
-import Items.Consumable.SpoiledApricorn;
-import Items.HeldItem.ShedShell;
+import Interfaces.GetItem;
 import Moveset.Flying.Gust;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.Rivalry;
-import PokemonCreation.AllAbilities.Swarm;
+import PokemonCreation.AllAbilities.R.Rivalry;
+import PokemonCreation.AllAbilities.S.Swarm;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 
@@ -88,9 +84,9 @@ public class Beautifly extends Pokemon {
         changeBaseStats();
         this.HP = this.savedHP;
         setFullDirName("Beautifly.png", globalVariables);
-        Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(5, new ShedShell()),
-                new CreateOrderedMap<>(35, new DazzlingHoney()), new CreateOrderedMap<>(15, new SpoiledApricorn()),
-                new CreateOrderedMap<>(100, new MediumEXPCandy()), new CreateOrderedMap<>(20, new SeedOfMastery()));
+        Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(5, GetItem.getShedShell()),
+                new CreateOrderedMap<>(35, GetItem.getDazzlingHoney()), new CreateOrderedMap<>(15, GetItem.getSpoiledApricorn()),
+                new CreateOrderedMap<>(100, GetItem.getMediumEXPCandy()), new CreateOrderedMap<>(20, GetItem.getSeedOfMastery()));
         getWildItem();
     }
 }

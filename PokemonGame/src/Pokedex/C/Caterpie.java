@@ -1,7 +1,7 @@
 package Pokedex.C;
 
-import PokemonCreation.AllAbilities.RunAway;
-import PokemonCreation.AllAbilities.ShieldDust;
+import PokemonCreation.AllAbilities.R.RunAway;
+import PokemonCreation.AllAbilities.S.ShieldDust;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.*;

@@ -43,7 +43,8 @@ public class Items {
     protected boolean changeSelfEvas = false;
     protected double changeSelfEvasion = 0;
     protected boolean curesParalysis = false;
-    protected boolean forcesEvol = true;
+    protected boolean forcesEvol = false;
+    protected double healByPercMax = 0;
 
     public Boolean getForcesEvol(){return this.forcesEvol;}
     public ArrayList<CreateOrderedMap<String, Double>> getTypesAffected(){return this.typesAffected;}
@@ -62,11 +63,11 @@ public class Items {
         return this.name;
     }
     public double showCritChange(Pokemon attacker) {
-        this.itemUsed = true;
-        if (!this.CritrequiresID) {
-            return this.Critnum;
-        }
-        if (this.CritrequiresID) {
+        if(!attacker.showName().equals("Klutz")) {
+            this.itemUsed = true;
+            if (!this.CritrequiresID) {
+                return this.Critnum;
+            }
             if (this.RequireName.equals(attacker.showName())) {
                 return this.newCritNum;
             }
@@ -91,6 +92,14 @@ public class Items {
             }
             if(this.curesParalysis){
                 user.unParalyze();
+            }
+            if(this.canHeal){
+                if(this.healAm > 0) {
+                    user.changeHP(-1 * this.healAm);
+                }
+                else {
+                    user.changeHP(-1 * (int) (this.healByPercMax * user.showSavedHP()));
+                }
             }
         }
     }
@@ -130,10 +139,12 @@ public class Items {
     public Boolean getStatMultsDuringDamage(Moves moves, Pokemon pokemon){
         getStatMults();
         Boolean isUsed = false;
-        for(CreateOrderedMap<String, Double> types : this.typesAffected){
-            if(types.getKey().equals(moves.showName())){
-                doStatChanges(pokemon);
-                isUsed = true;
+        if(!pokemon.showName().equals("Klutz")){
+            for(CreateOrderedMap<String, Double> types : this.typesAffected) {
+                if (types.getKey().equals(moves.showName())) {
+                    doStatChanges(pokemon);
+                    isUsed = true;
+                }
             }
         }
         return isUsed;

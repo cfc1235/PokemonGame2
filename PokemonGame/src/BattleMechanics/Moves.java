@@ -4,7 +4,7 @@ import Interfaces.CreateOrderedMap;
 import Items.NoItem;
 import PlayerMechanics.AreaMechanics;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.Empty;
+import PokemonCreation.AllAbilities.E.Empty;
 import PokemonCreation.Pokemon;
 import Terrain.*;
 import Weather.Overcast;
@@ -53,7 +53,7 @@ public class Moves {
     protected String ReqdWeather = "";
     protected Boolean weatherReqDown = false;
     protected List<String> ReqdWeatherDown = new ArrayList<>();
-    protected Boolean affectsAbilities = true;
+    protected Boolean affectsAbilities = false;
     protected Abilities toAbility = new Empty();
     protected Boolean affectsBoth = false;
     protected Boolean reqCharge = false;
@@ -184,7 +184,9 @@ public class Moves {
     protected String resetsTypeFrom = "";
     protected Boolean resetsType = false;
     protected Boolean setsHPTo0PostStatChange = false;
+    protected Boolean causesCannotFlee = false;
 
+    public Boolean getCausesCannotFlee(){return this.causesCannotFlee;}
     public Boolean getResetsType(){return this.resetsType;}
     public String getResetsTypeTo(){return this.resetsTypeTo;}
     public String getResetsTypeFrom(){return this.resetsTypeFrom;}
@@ -569,7 +571,7 @@ public class Moves {
     public int damageDealt(Pokemon attacker, Pokemon defender,
                            Weather weather, Pokemon PlayerPoke,
                            Terrain terrain, List<Pokemon> Waiting,
-                           Moves enemyMove){
+                           Moves enemyMove, Boolean isFirst){
         int RefinedDamage;
         double RawDamage = 0;
         int savedRefinedDamage = 0;
@@ -582,9 +584,9 @@ public class Moves {
         //RESOLVE ABILITIES
         double fromAbility = attacker.showAbility().affectedOnDamage(this);
         attacker.showAbility().addStageDuringDamage(attacker,
-                defender, this, weather,true);
+                defender, this, weather,true, isFirst);
         defender.showAbility().addStageDuringDamage(attacker,
-                defender, this, weather,false);
+                defender, this, weather,false, isFirst);
         Boolean isUsed = defender.showItem().getStatMultsDuringDamage(this, defender);
         if(isUsed && defender.showItem().getIsConsumable()){
             defender.giveItem(new NoItem());
@@ -1000,6 +1002,9 @@ public class Moves {
             attacker.setWillCrit();
             System.out.println("Your " + attacker.showName() + " will land a critical hit next turn!");
         }
+        if(attacker.showAbility().showName().equals("Simple")){
+            this.MultChange = this.MultChange*2;
+        }
         Pokemon changed = attacker;
         if (this.StatchangeEnemy) {
             changed = defender;
@@ -1131,6 +1136,9 @@ public class Moves {
                 System.out.println("Enemy " + attacker.showName() + " changed your " + defender.showName() + "'s " +
                         this.changeTypeName2 + " by " + this.MultChange2);
             }
+        }
+        if(attacker.showAbility().showName().equals("Simple")){
+            this.MultChange = this.MultChange/2;
         }
         defender.showAbility().addStageDuringStatChange(defender, attacker, this, weather, false);
         attacker.showAbility().addStageDuringStatChange(attacker, defender, this, weather, true);

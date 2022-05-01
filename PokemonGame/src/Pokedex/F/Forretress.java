@@ -5,8 +5,8 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Moveset.Steel.Autotomize;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.Overcoat;
-import PokemonCreation.AllAbilities.Sturdy;
+import PokemonCreation.AllAbilities.O.Overcoat;
+import PokemonCreation.AllAbilities.S.Sturdy;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

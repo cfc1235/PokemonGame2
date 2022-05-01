@@ -5,7 +5,9 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Moveset.SelfChange.Agility;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.F.Frisk;
+import PokemonCreation.AllAbilities.K.KeenEyes;
+import PokemonCreation.AllAbilities.R.RunAway;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

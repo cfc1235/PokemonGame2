@@ -5,8 +5,8 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Moveset.Flying.AirSlash;
 import PokemonCreation.*;
-import PokemonCreation.AllAbilities.Blaze;
-import PokemonCreation.AllAbilities.SolarPower;
+import PokemonCreation.AllAbilities.B.Blaze;
+import PokemonCreation.AllAbilities.S.SolarPower;
 
 import java.util.Collections;
 import java.util.List;

@@ -4,8 +4,8 @@ import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.*;
-import PokemonCreation.AllAbilities.SolarPower;
-import PokemonCreation.AllAbilities.Blaze;
+import PokemonCreation.AllAbilities.S.SolarPower;
+import PokemonCreation.AllAbilities.B.Blaze;
 
 import java.util.Collections;
 import java.util.List;

@@ -2,8 +2,8 @@ package Pokedex.M;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.Minus;
-import PokemonCreation.AllAbilities.VoltAbsorb;
+import PokemonCreation.AllAbilities.M.Minus;
+import PokemonCreation.AllAbilities.V.VoltAbsorb;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

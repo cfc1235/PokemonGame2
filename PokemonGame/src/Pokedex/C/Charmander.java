@@ -1,7 +1,7 @@
 package Pokedex.C;
 
-import PokemonCreation.AllAbilities.Blaze;
-import PokemonCreation.AllAbilities.SolarPower;
+import PokemonCreation.AllAbilities.B.Blaze;
+import PokemonCreation.AllAbilities.S.SolarPower;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.*;

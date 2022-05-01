@@ -2,7 +2,8 @@ package Pokedex.P;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.L.LightningRod;
+import PokemonCreation.AllAbilities.P.Plus;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

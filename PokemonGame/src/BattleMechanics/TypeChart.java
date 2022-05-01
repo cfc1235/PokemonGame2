@@ -22,7 +22,8 @@ public interface TypeChart {
             }
             if (defender.showType1().equals("Ghost") ||
                 defender.showType1().equals("Ghost")){
-                    if (!moves.showName().equals("Struggle")) {
+                    if (!moves.showName().equals("Struggle")
+                    || defender.showAbility().showName().equals("Scrappy")) {
                         TypeEffect = 0;
                     }
             }
@@ -69,8 +70,10 @@ public interface TypeChart {
                     TypeEffect = TypeEffect / 2;
             }
             if (defender.showType1().equals("Ghost") ||
-                defender.showType1().equals("Ghost")){
+                defender.showType1().equals("Ghost")) {
+                if (!defender.showAbility().showName().equals("Scrappy")) {
                     TypeEffect = 0;
+                }
             }
         }
         if(type.equals("Flying")){

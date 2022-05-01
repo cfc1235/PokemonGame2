@@ -142,7 +142,7 @@ public class TMInventory {
         if(Selection == 86 && !this.TMInventory.contains("Phantom Force")){}
         if(Selection == 87 && !this.TMInventory.contains("Draining Kiss")){this.TMInventory.add("Draining Kiss");}
         if(Selection == 88 && !this.TMInventory.contains("Grassy Terrain")){this.TMInventory.add("Grassy Terrain");}
-        if(Selection == 89 && !this.TMInventory.contains("Misty Terrain")){}
+        if(Selection == 89 && !this.TMInventory.contains("Misty Terrain")){this.TMInventory.add("Misty Terrain");}
         if(Selection == 90 && !this.TMInventory.contains("Electric Terrain")){this.TMInventory.add("Electric Terrain");}
         if(Selection == 91 && !this.TMInventory.contains("Pyschic Terrain")){}
         if(Selection == 92 && !this.TMInventory.contains("Mystic Fire")){this.TMInventory.add("Mystic Fire");}
@@ -245,7 +245,7 @@ public class TMInventory {
         if(Selection == 189 && !this.TMInventory.contains("Hurricane")){this.TMInventory.add("Hurricane");}
         if(Selection == 190 && !this.TMInventory.contains("Play Rough")){this.TMInventory.add("Play Rough");}
         if(Selection == 191 && !this.TMInventory.contains("Venom Drench")){this.TMInventory.add("Venom Drench");}
-        if(Selection == 192 && !this.TMInventory.contains("Dazzling  Gleam")){this.TMInventory.add("Dazzling Gleam");}
+        if(Selection == 192 && !this.TMInventory.contains("Dazzling Gleam")){this.TMInventory.add("Dazzling Gleam");}
         if(Selection == 193 && !this.TMInventory.contains("Darkest Lariat")){}
         if(Selection == 194 && !this.TMInventory.contains("High Horsepower")){}
         if(Selection == 195 && !this.TMInventory.contains("Throat Chop")){this.TMInventory.add("Throat Chop");}
@@ -277,6 +277,21 @@ public class TMInventory {
         if(Selection == 297 && !this.TMInventory.contains("Defog")){this.TMInventory.add("Defog");}
         if(Selection == 298 && !this.TMInventory.contains("Rock Smash")){this.TMInventory.add("Rock Smash");}
         if(Selection == 300 && !this.TMInventory.contains("Rock Climb")){}
+        if(Selection == 310 && !this.TMInventory.contains("Hidden Power")){}
+        if(Selection == 321 && !this.TMInventory.contains("Frustration")){this.TMInventory.add("Frustration");}
+        if(Selection == 323 && !this.TMInventory.contains("Smack Down")){}
+        if(Selection == 327 && !this.TMInventory.contains("Return")){this.TMInventory.add("Return");}
+        if(Selection == 343 && !this.TMInventory.contains("Flame Charge")){}
+        if(Selection == 349 && !this.TMInventory.contains("Echoed Voice")){this.TMInventory.add("Echoed Voice");}
+        if(Selection == 358 && !this.TMInventory.contains("Sky Drop")){}
+        if(Selection == 360 && !this.TMInventory.contains("Quash")){this.TMInventory.add("Quash");}
+        if(Selection == 363 && !this.TMInventory.contains("Embargo")){this.TMInventory.add("Embargo");}
+        if(Selection == 370 && !this.TMInventory.contains("Aurora Veil")){this.TMInventory.add("Aurora Veil");}
+        if(Selection == 379 && !this.TMInventory.contains("Frost Breath")){this.TMInventory.add("Frost Breath");}
+        if(Selection == 382 && !this.TMInventory.contains("Dragon Tail")){this.TMInventory.add("Dragon Tail");}
+        if(Selection == 383 && !this.TMInventory.contains("Infestation")){this.TMInventory.add("Infestation");}
+        if(Selection == 382 && !this.TMInventory.contains("Nature Power")){this.TMInventory.add("Nature Power");}
+        if(Selection == 400 && !this.TMInventory.contains("Confide")){this.TMInventory.add("Confide");}
         if(this.TMInventory.size() > currentSize){System.out.println("You got TM" + Selection);}
     }
 }

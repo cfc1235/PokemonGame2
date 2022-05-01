@@ -5,7 +5,9 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Moveset.Dark.Snarl;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.I.Intimidate;
+import PokemonCreation.AllAbilities.M.Moxxie;
+import PokemonCreation.AllAbilities.Q.QuickFeet;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

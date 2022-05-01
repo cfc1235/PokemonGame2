@@ -17,5 +17,6 @@ public class Infestation extends Moves {
         this.savedPP = this.PP;
         this.power = 20;
         this.dealsDamage = true;
+        this.TMNum = 383;
     }
 }

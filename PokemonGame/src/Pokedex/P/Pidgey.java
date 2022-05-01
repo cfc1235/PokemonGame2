@@ -1,8 +1,8 @@
 package Pokedex.P;
 
-import PokemonCreation.AllAbilities.BigPecks;
-import PokemonCreation.AllAbilities.KeenEyes;
-import PokemonCreation.AllAbilities.TangledFeet;
+import PokemonCreation.AllAbilities.B.BigPecks;
+import PokemonCreation.AllAbilities.K.KeenEyes;
+import PokemonCreation.AllAbilities.T.TangledFeet;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.Pokemon;

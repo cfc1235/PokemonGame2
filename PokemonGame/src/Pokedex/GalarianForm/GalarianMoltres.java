@@ -2,8 +2,8 @@ package Pokedex.GalarianForm;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.Berserk;
-import PokemonCreation.AllAbilities.Pressure;
+import PokemonCreation.AllAbilities.B.Berserk;
+import PokemonCreation.AllAbilities.P.Pressure;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

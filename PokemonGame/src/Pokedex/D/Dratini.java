@@ -4,8 +4,8 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Items.EvolItems.DragonScale;
 import Items.NoItem;
-import PokemonCreation.AllAbilities.MarvelScale;
-import PokemonCreation.AllAbilities.ShedSkin;
+import PokemonCreation.AllAbilities.M.MarvelScale;
+import PokemonCreation.AllAbilities.S.ShedSkin;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

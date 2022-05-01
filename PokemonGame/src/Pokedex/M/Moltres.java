@@ -2,8 +2,8 @@ package Pokedex.M;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.FlameBody;
-import PokemonCreation.AllAbilities.Pressure;
+import PokemonCreation.AllAbilities.F.FlameBody;
+import PokemonCreation.AllAbilities.P.Pressure;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

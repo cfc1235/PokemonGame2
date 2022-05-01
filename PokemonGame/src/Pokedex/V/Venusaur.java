@@ -5,8 +5,8 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Moveset.Grass.PetalBlizzard;
 import PokemonCreation.*;
-import PokemonCreation.AllAbilities.Chlorophyll;
-import PokemonCreation.AllAbilities.Overgrowth;
+import PokemonCreation.AllAbilities.C.Chlorophyll;
+import PokemonCreation.AllAbilities.O.Overgrowth;
 
 import java.util.Collections;
 import java.util.List;

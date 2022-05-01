@@ -11,5 +11,6 @@ public class Embargo extends Moves {
         this.savedPP = this.PP;
         this.causesNoItem = true;
         this.noItemTimer = 5;
+        this.TMNum = 363;
     }
 }

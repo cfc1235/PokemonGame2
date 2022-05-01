@@ -15,5 +15,6 @@ public class DragonTail extends Moves {
         this.savedPP = this.PP;
         this.makesContact =true;
         this.speedPriority = -6;
+        this.TMNum = 382;
     }
 }

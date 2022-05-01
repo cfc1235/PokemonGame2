@@ -14,6 +14,6 @@ public class Confide extends Moves {
         this.MultChange = -1;
         this.changeTypeName = " special attack ";
         this.StatchangeEnemy = true;
-        this.TMNum = 100;
+        this.TMNum = 400;
     }
 }

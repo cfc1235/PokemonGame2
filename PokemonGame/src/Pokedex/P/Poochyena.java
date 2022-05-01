@@ -2,9 +2,9 @@ package Pokedex.P;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.QuickFeet;
-import PokemonCreation.AllAbilities.Rattled;
-import PokemonCreation.AllAbilities.RunAway;
+import PokemonCreation.AllAbilities.Q.QuickFeet;
+import PokemonCreation.AllAbilities.R.Rattled;
+import PokemonCreation.AllAbilities.R.RunAway;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

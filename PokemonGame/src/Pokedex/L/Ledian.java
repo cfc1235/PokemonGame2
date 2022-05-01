@@ -4,7 +4,9 @@ import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.E.EarlyBird;
+import PokemonCreation.AllAbilities.I.IronFist;
+import PokemonCreation.AllAbilities.S.Swarm;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

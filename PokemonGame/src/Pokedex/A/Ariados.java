@@ -5,7 +5,9 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Moveset.SelfChange.SwordsDance;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.I.Insomnia;
+import PokemonCreation.AllAbilities.S.Sniper;
+import PokemonCreation.AllAbilities.S.Swarm;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

@@ -6,7 +6,7 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Moveset.SelfChange.Harden;
 import PokemonCreation.*;
-import PokemonCreation.AllAbilities.ShedSkin;
+import PokemonCreation.AllAbilities.S.ShedSkin;
 
 import java.util.List;
 

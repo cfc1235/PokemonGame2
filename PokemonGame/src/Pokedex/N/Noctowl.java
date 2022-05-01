@@ -4,9 +4,9 @@ import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.Insomnia;
-import PokemonCreation.AllAbilities.KeenEyes;
-import PokemonCreation.AllAbilities.TintedLenses;
+import PokemonCreation.AllAbilities.I.Insomnia;
+import PokemonCreation.AllAbilities.K.KeenEyes;
+import PokemonCreation.AllAbilities.T.TintedLenses;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

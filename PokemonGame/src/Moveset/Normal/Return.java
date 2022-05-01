@@ -12,6 +12,6 @@ public class Return extends Moves {
         this.acc = 100;
         this.makesContact = true;
         this.type = "Normal";
-        this.TMNum = 27;
+        this.TMNum = 327;
     }
 }

@@ -14,5 +14,6 @@ public class EchoedVoice extends Moves {
         this.PP = 15;
         this.savedPP = this.PP;
         this.power = 55;
+        this.TMNum = 349;
     }
 }

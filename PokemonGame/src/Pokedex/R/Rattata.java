@@ -1,8 +1,8 @@
 package Pokedex.R;
 
-import PokemonCreation.AllAbilities.Guts;
-import PokemonCreation.AllAbilities.Hustle;
-import PokemonCreation.AllAbilities.RunAway;
+import PokemonCreation.AllAbilities.G.Guts;
+import PokemonCreation.AllAbilities.H.Hustle;
+import PokemonCreation.AllAbilities.R.RunAway;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.Pokemon;

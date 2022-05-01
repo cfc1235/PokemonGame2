@@ -8,8 +8,8 @@ import Items.Consumable.SeedOfMastery;
 import Items.Consumable.SmallEXPCandy;
 import Items.Consumable.SpoiledApricorn;
 import Items.HeldItem.BrightPowder;
-import PokemonCreation.AllAbilities.RunAway;
-import PokemonCreation.AllAbilities.ShieldDust;
+import PokemonCreation.AllAbilities.R.RunAway;
+import PokemonCreation.AllAbilities.S.ShieldDust;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

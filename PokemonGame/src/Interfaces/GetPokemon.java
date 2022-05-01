@@ -213,6 +213,24 @@ public interface GetPokemon {
          if(ID == 405){
              pokemon = new Luxray(level, globalVariables);
          }
+         if(ID == 504){
+             pokemon = new Patrat(level, globalVariables);
+         }
+         if(ID == 505){
+             pokemon = new Watchdog(level, globalVariables);
+         }
+         if(ID == 506){
+             pokemon = new Lillipup(level, globalVariables);
+         }
+         if(ID == 507){
+             pokemon = new Herdier(level, globalVariables);
+         }
+         if(ID == 508){
+             pokemon = new Stoutland(level, globalVariables);
+         }
+         if(ID == 531){
+             pokemon = new Audino(level, globalVariables);
+         }
         return pokemon;
     }
 
@@ -371,6 +389,18 @@ public interface GetPokemon {
         }
         if(ID == 404) {
             evolution = new Luxray(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 504) {
+            evolution = new Watchdog(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 506) {
+            evolution = new Herdier(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 507) {
+            evolution = new Stoutland(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(!evolution.showOnEvol().showName().equals("Nothing") &&

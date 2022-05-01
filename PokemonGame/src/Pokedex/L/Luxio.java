@@ -8,9 +8,9 @@ import Items.Consumable.SeedOfMastery;
 import Items.Consumable.SmallEXPCandy;
 import Items.Consumable.SpoiledApricorn;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.Guts;
-import PokemonCreation.AllAbilities.Intimidate;
-import PokemonCreation.AllAbilities.Rivalry;
+import PokemonCreation.AllAbilities.G.Guts;
+import PokemonCreation.AllAbilities.I.Intimidate;
+import PokemonCreation.AllAbilities.R.Rivalry;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

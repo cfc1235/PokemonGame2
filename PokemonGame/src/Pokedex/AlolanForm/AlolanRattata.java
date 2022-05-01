@@ -1,10 +1,13 @@
 package Pokedex.AlolanForm;
 
+import Interfaces.GetItem;
 import Items.Berries.PechaBerry;
 import Items.NoItem;
-import PokemonCreation.AllAbilities.*;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
+import PokemonCreation.AllAbilities.G.Gluttony;
+import PokemonCreation.AllAbilities.H.Hustle;
+import PokemonCreation.AllAbilities.T.ThickFat;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;
@@ -52,8 +55,8 @@ public class AlolanRattata extends Pokemon {
         this.timeEvolReq = true;
         this.EvolTiming = 20;
         this.setPokeCry("019_1Cry.wav");
-        Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(5, new PechaBerry()),
-                new CreateOrderedMap<>(95, new NoItem()));
+        Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(5, GetItem.getPechaBerry()),
+                new CreateOrderedMap<>(95, GetItem.getNoItem()));
         getWildItem();
     }
 }

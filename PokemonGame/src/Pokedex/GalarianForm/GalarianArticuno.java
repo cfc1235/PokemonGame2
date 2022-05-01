@@ -2,7 +2,8 @@ package Pokedex.GalarianForm;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.C.Competitve;
+import PokemonCreation.AllAbilities.P.Pressure;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

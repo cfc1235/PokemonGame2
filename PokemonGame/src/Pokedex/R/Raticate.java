@@ -5,7 +5,9 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Moveset.EnemyChange.ScaryFace;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.G.Guts;
+import PokemonCreation.AllAbilities.H.Hustle;
+import PokemonCreation.AllAbilities.R.RunAway;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

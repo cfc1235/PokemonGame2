@@ -3,10 +3,10 @@ package PokemonCreation;
 import Interfaces.*;
 import Items.NoItem;
 import Moveset.OtherDamage.NoMove;
-import PokemonCreation.AllAbilities.*;
 import BattleMechanics.BaseVortex;
 import BattleMechanics.Moves;
 import BattleMechanics.Vortex.NoVortex;
+import PokemonCreation.AllAbilities.E.Empty;
 
 import javax.swing.*;
 import java.awt.*;
@@ -156,7 +156,11 @@ public class Pokemon implements AddMoveset {
     protected Boolean thrownOnFaint = false;
     protected String type4 = "";
     protected String type3 = "";
+    protected int bideDamage = 0;
 
+    public int getBideDamage(){return this.bideDamage;}
+    public void setBideDamage(int damage){this.bideDamage += damage;}
+    public void resetBideDamage(){this.bideDamage = 0;}
     public void setType3(String newType1){
         this.type3 = this.type1;
         this.type1 = newType1;
@@ -230,7 +234,7 @@ public class Pokemon implements AddMoveset {
 
     public Boolean getCannotFlee(){return this.cannotFlee;}
     public void setCannotFlee(){
-        if(!this.item.getGarunteesLeave()){
+        if(!this.item.getGarunteesLeave() || !this.ability.showAlwaysFlee()){
             this.cannotFlee = true;
         }
     }
@@ -1330,6 +1334,7 @@ public class Pokemon implements AddMoveset {
         this.resetVortex();
         this.resetConfuseTimer();
         this.resetItem();
+        this.ability.resolveEndFight(this);
     }
 
     public void ridStatusEffects(){
@@ -1366,6 +1371,9 @@ public class Pokemon implements AddMoveset {
         }
         if(!this.type3.equals("")){
             this.resetType3();
+        }
+        if(this.ability.showName().equals("Regenerator")){
+            this.HP += this.savedHP * (1/3.0);
         }
     }
 

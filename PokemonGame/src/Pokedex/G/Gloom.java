@@ -5,7 +5,8 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Items.HeldItem.AbsorbBulb;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.C.Chlorophyll;
+import PokemonCreation.AllAbilities.S.Stench;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

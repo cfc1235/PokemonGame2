@@ -10,7 +10,7 @@ public class PlayNice extends Moves {
         this.StatchangeEnemy = true;
         this.affectsPhysAtt = true;
         this.MultChange = -1;
-        this.changeTypeName = "defense";
+        this.changeTypeName = " attack ";
         this.savedPP = this.PP;
     }
 }

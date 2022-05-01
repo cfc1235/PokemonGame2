@@ -54,6 +54,7 @@ public class Battle {
     private final Moves placeHolderMove = new NoMove();
     private final AffectsGround affectsGround = new AffectsGround();
     private int isTrickRoom = 0;
+    private Boolean isFirst = false;
 
     public Battle(GlobalVariables globalVariables, String type, ArrayList<Pokemon> AIParty) {
         this.type = type;
@@ -231,8 +232,8 @@ public class Battle {
     }
 
     private void useMove(Moves AISelectedMove, String choice){
-        Boolean First = isFirst();
-        if(First){
+        this.isFirst = isFirst();
+        if(this.isFirst){
             this.PlayerPoke.setIsFirst(true);
             this.AIPoke.setIsFirst(false);
         }
@@ -269,7 +270,7 @@ public class Battle {
             this.PlayerSelectedMove = this.AIForcedMove;
         }
         Scanner scan = new Scanner(System.in);
-        if (First || PlayerSelectedMove.showName().equals("Quash")) {
+        if (this.isFirst || PlayerSelectedMove.showName().equals("Quash")) {
             System.out.println("You First!");
             if(PlayerSelectedMove.showaffectsBoth()) {
                 System.out.println("This move can target yourself or the enemy. Who would you like to target? (E for enemy)");
@@ -306,7 +307,7 @@ public class Battle {
                         int Healing = PlayerPoke.showAbility().Heal(this.weather.showName(),
                                 this.PlayerPoke.showSavedHP(), AISelectedMove);
                         if (!(Healing == 1)) {
-                            System.out.println("Your " + this.PlayerPoke.showName() + " healed for " + Healing + " because of its " + PlayerPoke.showAbility().showName());
+                            System.out.println("Your " + this.PlayerPoke.showName() + " healed for " + Healing + " because of its " + this.PlayerPoke.showAbility().showName());
                             this.PlayerPoke.changeHP(-1 * Healing);
                         }
                     }
@@ -322,7 +323,7 @@ public class Battle {
                 }
             }
         }
-        if (!First || AISelectedMove.showName().equals("Quash")){
+        if (!this.isFirst || AISelectedMove.showName().equals("Quash")){
             System.out.println("Enemy First!");
             System.out.println("Enemy " + AIPoke.showName() + " uses " + AISelectedMove.showName());
             double target = Math.random();
@@ -636,7 +637,7 @@ public class Battle {
                         DamageDealt = SelectMove.damageDealt(
                                 attacker, attacker, this.weather,
                                 this.PlayerPoke, this.terrain,
-                                this.Waiting, enemyMove);
+                                this.Waiting, enemyMove, this.isFirst);
                         attacker.changeHP(DamageDealt);
                         System.out.println(getAttackerName(attacker) +
                                 " dealt " + DamageDealt +
@@ -677,7 +678,7 @@ public class Battle {
                                 DamageDealt = SelectMove.damageDealt(
                                         attacker, attacker, this.weather,
                                         this.PlayerPoke, this.terrain,
-                                        this.Waiting, enemyMove);
+                                        this.Waiting, enemyMove, this.isFirst);
                                 if (!SelectMove.getDealsFutureDamage()) {
                                     System.out.println("Your " +
                                             this.PlayerPoke.showName() + " dealt " +
@@ -685,6 +686,9 @@ public class Battle {
                                     if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                         defender.changeHP(DamageDealt);
                                         defender.setPreviousDamage(DamageDealt);
+                                        if(this.AIPoke.getBideDamage() > 0 || enemyMove.showName().equals("Bide")){
+                                            this.AIPoke.setBideDamage(DamageDealt);
+                                        }
                                     }
                                     if (defender.showSubstituteHP() > 0 && !SelectMove.showIgnoreSubstitute()) {
                                         defender.damageSubstitute(DamageDealt);
@@ -704,16 +708,16 @@ public class Battle {
                                     }
                                     if (SelectMove.showDamBackHeal()) {
                                         int Heal = (int) Math.round(DamageDealt / SelectMove.showBackHealAm());
-                                        System.out.println("Your " + PlayerPoke.showName() + " healed for " + DamageDealt + " !");
+                                        System.out.println("Your " + this.PlayerPoke.showName() + " healed for " + DamageDealt + " !");
                                         attacker.changeHP(-1 * Heal);
                                     }
                                 } else {
-                                    if (attacker == PlayerPoke) {
-                                        playerFutureDamage = DamageDealt;
-                                        playerFutureDamageTimer = SelectMove.getTimeToFutureDamage();
+                                    if (attacker == this.PlayerPoke) {
+                                        this.playerFutureDamage = DamageDealt;
+                                        this.playerFutureDamageTimer = SelectMove.getTimeToFutureDamage();
                                     } else {
-                                        AIFutureDamage = DamageDealt;
-                                        AiFutureDamageTimer = SelectMove.getTimeToFutureDamage();
+                                        this.AIFutureDamage = DamageDealt;
+                                        this.AiFutureDamageTimer = SelectMove.getTimeToFutureDamage();
                                     }
                                 }
                             }
@@ -730,7 +734,7 @@ public class Battle {
                                 DamageDealt = SelectMove.damageDealt(
                                         attacker, attacker, this.weather,
                                         this.PlayerPoke, this.terrain,
-                                        this.Waiting, enemyMove);
+                                        this.Waiting, enemyMove, this.isFirst);
                                 System.out.println("Enemy " + this.AIPoke.showName() +
                                         " dealt " + DamageDealt + " damage!");
                                 if (defender.showSubstituteHP() <= 0 ||
@@ -781,7 +785,7 @@ public class Battle {
                                 attacker.setType3(SelectMove.getResetsTypeTo());
                             }
                             if (SelectMove.getResetsTypeFrom().equals(attacker.showType2())) {
-                                attacker.setType3(SelectMove.getResetsTypeTo());
+                                attacker.setType4(SelectMove.getResetsTypeTo());
                             }
                         }
                         if(SelectMove.StatchangeEnemy) {
@@ -789,7 +793,7 @@ public class Battle {
                                 defender.setType3(SelectMove.getResetsTypeTo());
                             }
                             if (SelectMove.getResetsTypeFrom().equals(defender.showType2())) {
-                                defender.setType3(SelectMove.getResetsTypeTo());
+                                defender.setType4(SelectMove.getResetsTypeTo());
                             }
                         }
                     }
@@ -808,7 +812,7 @@ public class Battle {
                         System.out.println(attacker.showName() + " has built a special wall!");
                     }
                     if (SelectMove.getBreaksBarriers()) {
-                        if ((SelectMove.dealsDamage && Hit) || !SelectMove.dealsDamage) {
+                        if (!SelectMove.dealsDamage || Hit) {
                             defender.breakBarriers();
                             System.out.println("Barriers Broken!");
                         }
@@ -832,6 +836,9 @@ public class Battle {
                     }
                     if (SelectMove.getCausesOutrage()) {
                         attacker.setOutrageTimer(SelectMove.getOutrageTimer());
+                    }
+                    if(SelectMove.getCausesCannotFlee()){
+                        defender.setCannotFlee();
                     }
                     if(SelectMove.getCausesEnemyOutrage()){
                         defender.setOutrageTimer(SelectMove.getEnemyOutrageTimer());
@@ -866,7 +873,7 @@ public class Battle {
                     if (SelectMove.showStatChange()) {
                         Boolean Succeeds = true;
                         if (SelectMove.showcanMiss()) {
-                            Succeeds = SelectMove.Hits(attacker, defender, PlayerPoke, weather);
+                            Succeeds = SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather);
                         }
                         if (SelectMove.showStatChangeReqChance()) {
                             if (((SelectMove.showStatChangeReq() / 100) < Math.random()) || !Hit) {
@@ -877,7 +884,7 @@ public class Battle {
                             if (SelectMove.showStatChangeEnemy()) {
                                 if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                     if ((SelectMove.showAffectsEnemy()) && (!defender.getNoStatChange())) {
-                                        SelectMove.StatChange(attacker, defender, PlayerPoke, weather);
+                                        SelectMove.StatChange(attacker, defender, this.PlayerPoke, this.weather);
                                     }
                                     if ((SelectMove.showAffectsEnemy()) && (defender.getNoStatChange())) {
                                         System.out.println(getAttackerName(attacker) + " cannot have their stats changed!");
@@ -886,7 +893,7 @@ public class Battle {
                             }
                             if (SelectMove.showStatChangeAlly()) {
                                 if ((SelectMove.getNeedsKnockOut() && defender.showHP() <= 0) || !SelectMove.getNeedsKnockOut()) {
-                                    SelectMove.StatChange(attacker, defender, PlayerPoke, weather);
+                                    SelectMove.StatChange(attacker, defender, this.PlayerPoke, this.weather);
                                 }
                             }
                         }
@@ -900,7 +907,7 @@ public class Battle {
                     if (SelectMove.showcanSeed()) {
                         if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                             if (SelectMove.showcanMiss()) {
-                                if (SelectMove.Hits(attacker, defender, PlayerPoke, weather)) {
+                                if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
                                     defender.Seed();
                                 }
                             }
@@ -913,131 +920,133 @@ public class Battle {
                             }
                         }
                     }
-                    if (SelectMove.showCanConfuse() || SelectMove.showCanOnlyConfuse()) {
-                        if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
-                            if (SelectMove.showCanOnlyConfuse()) {
-                                if (SelectMove.showcanMiss()) {
-                                    if (SelectMove.Hits(attacker, defender, PlayerPoke, weather)) {
+                    if(this.terrain.showName().equals("Misty")) {
+                        if (SelectMove.showCanConfuse() || SelectMove.showCanOnlyConfuse()) {
+                            if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
+                                if (SelectMove.showCanOnlyConfuse()) {
+                                    if (SelectMove.showcanMiss()) {
+                                        if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
+                                            defender.Confuse(attacker);
+                                        }
+                                    }
+                                    if (!SelectMove.showcanMiss()) {
                                         defender.Confuse(attacker);
                                     }
                                 }
-                                if (!SelectMove.showcanMiss()) {
-                                    defender.Confuse(attacker);
-                                }
-                            }
-                            if (SelectMove.showCanConfuse()) {
-                                if (Hit) {
-                                    if ((SelectMove.showConfuseChance()) >= Math.random()) {
-                                        defender.Confuse(attacker);
-                                    }
-                                }
-                            }
-                            if (defender.showIsConfused()) {
-                                System.out.println(getAttackerName(attacker) + " has been confused!");
-                            }
-                        }
-                    }
-                    if (SelectMove.showcanPoison() || SelectMove.showOnlyCanPoison()) {
-                        if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
-                            if (SelectMove.showOnlyCanPoison()) {
-                                if (SelectMove.showcanMiss()) {
-                                    if (SelectMove.Hits(attacker, defender, PlayerPoke, weather)) {
-                                        defender.Poison();
-                                    }
-                                }
-                                if (!SelectMove.showcanMiss()) {
-                                    defender.Poison();
-                                }
-                            }
-                            if (SelectMove.showcanPoison()) {
-                                if (Hit) {
-                                    if ((SelectMove.showPoisonChance()) >= Math.random()) {
-                                        defender.Poison();
-                                    }
-                                }
-                            }
-                            if ((defender.showType1().equals("Poison")) || ((defender.showType2()).equals("Poison"))) {
-                                defender.unPoison();
-                                System.out.println("Poison doesn't affect Poison Types!");
-                            }
-                            if ((defender.showType1().equals("Steel")) || ((defender.showType2()).equals("Steel"))) {
-                                defender.unPoison();
-                                System.out.println("Poison doesn't affect Steel Types!");
-                            }
-                            if (defender.showAbility().showPoison()) {
-                                System.out.println(defender.showName() + " cannot be poisoned because of its " + defender.showAbility().showName());
-                            }
-                            if (defender.showPoisoned()) {
-                                System.out.println(getAttackerName(defender) + " has been poisoned!");
-                            }
-                        }
-                    }
-                    if (SelectMove.showcanSleep() || SelectMove.showOnlyCanSleep()) {
-                        if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
-                            this.sleepTimer = (int) (Math.random() * 4);
-                            if (defender.showAbility().getCutSleep()) {
-                                this.sleepTimer = this.sleepTimer / defender.showAbility().getCutSleepBy();
-                            }
-                            if (SelectMove.showOnlyCanSleep()) {
-                                if (SelectMove.showcanMiss()) {
-                                    if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
-                                        defender.Sleep();
-                                    }
-                                }
-                                if (!SelectMove.showcanMiss()) {
-                                    defender.Sleep();
-                                }
-                            }
-                            if (SelectMove.showcanSleep()) {
-                                if (Hit) {
-                                    if ((SelectMove.showSleepChance()) >= Math.random()) {
-                                        defender.Sleep();
-                                    }
-                                }
-                            }
-                            if (defender.showAbility().showSleep()) {
-                                System.out.println(defender.showName() + " cannot be put to sleep because of its " + defender.showAbility().showName());
-                            }
-                            if (defender.showAsleep()) {
-                                System.out.println(getAttackerName(defender) + " has been put to sleep!");
-                            }
-                        }
-                    }
-                    if (SelectMove.getOnlyCanParalyze() || SelectMove.showcanParalyze()) {
-                        if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
-                            if (SelectMove.getOnlyCanParalyze()) {
-                                if (SelectMove.showcanMiss()) {
-                                    if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
-                                        defender.Paralyze();
-                                    }
-                                }
-                                if (!SelectMove.showcanMiss()) {
-                                    defender.Paralyze();
-                                }
-                            }
-                            if (SelectMove.showcanParalyze()) {
-                                if (Hit) {
-                                    if (SelectMove.getParalysisTypeFail().equals(defender.showType1()) || SelectMove.getParalysisTypeFail().equals(defender.showType2())) {
-                                        System.out.println(SelectMove.showName() + " cannot paralyze " + SelectMove.getParalysisTypeFail() + " types!");
-                                    }
-                                    if (!SelectMove.getParalysisTypeFail().equals(defender.showType1()) && !SelectMove.getParalysisTypeFail().equals(defender.showType2())) {
-                                        if ((SelectMove.getParalysisChance()) >= (Math.random())) {
-                                            defender.Paralyze();
+                                if (SelectMove.showCanConfuse()) {
+                                    if (Hit) {
+                                        if ((SelectMove.showConfuseChance()) >= Math.random()) {
+                                            defender.Confuse(attacker);
                                         }
                                     }
                                 }
-                            }
-                            if (defender.showType1().equals("Ground") || defender.showType2().equals("Ground")) {
-                                if (SelectMove.showType().equals("Electric")) {
-                                    defender.unParalyze();
-                                    System.out.println("Ground types cannot be paralyzed by electric moves!");
+                                if (defender.showIsConfused()) {
+                                    System.out.println(getAttackerName(attacker) + " has been confused!");
                                 }
                             }
-                            if (defender.showAbility().showParalyze()) {
-                                System.out.println(defender.showName() + " cannot be paralyzed because of its " + defender.showAbility().showName());
+                        }
+                        if (SelectMove.showcanPoison() || SelectMove.showOnlyCanPoison()) {
+                            if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
+                                if (SelectMove.showOnlyCanPoison()) {
+                                    if (SelectMove.showcanMiss()) {
+                                        if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
+                                            defender.Poison();
+                                        }
+                                    }
+                                    if (!SelectMove.showcanMiss()) {
+                                        defender.Poison();
+                                    }
+                                }
+                                if (SelectMove.showcanPoison()) {
+                                    if (Hit) {
+                                        if ((SelectMove.showPoisonChance()) >= Math.random()) {
+                                            defender.Poison();
+                                        }
+                                    }
+                                }
+                                if ((defender.showType1().equals("Poison")) || ((defender.showType2()).equals("Poison"))) {
+                                    defender.unPoison();
+                                    System.out.println("Poison doesn't affect Poison Types!");
+                                }
+                                if ((defender.showType1().equals("Steel")) || ((defender.showType2()).equals("Steel"))) {
+                                    defender.unPoison();
+                                    System.out.println("Poison doesn't affect Steel Types!");
+                                }
+                                if (defender.showAbility().showPoison()) {
+                                    System.out.println(defender.showName() + " cannot be poisoned because of its " + defender.showAbility().showName());
+                                }
+                                if (defender.showPoisoned()) {
+                                    System.out.println(getAttackerName(defender) + " has been poisoned!");
+                                }
                             }
-                            if (defender.showParalysis()) {
-                                System.out.println(getAttackerName(defender) + " has been paralyzed!");
+                        }
+                        if (SelectMove.showcanSleep() || SelectMove.showOnlyCanSleep()) {
+                            if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
+                                this.sleepTimer = (int) (Math.random() * 4);
+                                if (defender.showAbility().getCutSleep()) {
+                                    this.sleepTimer = this.sleepTimer / defender.showAbility().getCutSleepBy();
+                                }
+                                if (SelectMove.showOnlyCanSleep()) {
+                                    if (SelectMove.showcanMiss()) {
+                                        if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
+                                            defender.Sleep();
+                                        }
+                                    }
+                                    if (!SelectMove.showcanMiss()) {
+                                        defender.Sleep();
+                                    }
+                                }
+                                if (SelectMove.showcanSleep()) {
+                                    if (Hit) {
+                                        if ((SelectMove.showSleepChance()) >= Math.random()) {
+                                            defender.Sleep();
+                                        }
+                                    }
+                                }
+                                if (defender.showAbility().showSleep()) {
+                                    System.out.println(defender.showName() + " cannot be put to sleep because of its " + defender.showAbility().showName());
+                                }
+                                if (defender.showAsleep()) {
+                                    System.out.println(getAttackerName(defender) + " has been put to sleep!");
+                                }
+                            }
+                        }
+                        if (SelectMove.getOnlyCanParalyze() || SelectMove.showcanParalyze()) {
+                            if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
+                                if (SelectMove.getOnlyCanParalyze()) {
+                                    if (SelectMove.showcanMiss()) {
+                                        if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
+                                            defender.Paralyze();
+                                        }
+                                    }
+                                    if (!SelectMove.showcanMiss()) {
+                                        defender.Paralyze();
+                                    }
+                                }
+                                if (SelectMove.showcanParalyze()) {
+                                    if (Hit) {
+                                        if (SelectMove.getParalysisTypeFail().equals(defender.showType1()) || SelectMove.getParalysisTypeFail().equals(defender.showType2())) {
+                                            System.out.println(SelectMove.showName() + " cannot paralyze " + SelectMove.getParalysisTypeFail() + " types!");
+                                        }
+                                        if (!SelectMove.getParalysisTypeFail().equals(defender.showType1()) && !SelectMove.getParalysisTypeFail().equals(defender.showType2())) {
+                                            if ((SelectMove.getParalysisChance()) >= (Math.random())) {
+                                                defender.Paralyze();
+                                            }
+                                        }
+                                    }
+                                }
+                                if (defender.showType1().equals("Ground") || defender.showType2().equals("Ground")) {
+                                    if (SelectMove.showType().equals("Electric")) {
+                                        defender.unParalyze();
+                                        System.out.println("Ground types cannot be paralyzed by electric moves!");
+                                    }
+                                }
+                                if (defender.showAbility().showParalyze()) {
+                                    System.out.println(defender.showName() + " cannot be paralyzed because of its " + defender.showAbility().showName());
+                                }
+                                if (defender.showParalysis()) {
+                                    System.out.println(getAttackerName(defender) + " has been paralyzed!");
+                                }
                             }
                         }
                     }
@@ -1466,7 +1475,7 @@ public class Battle {
                             DamageDealt = SelectMove.damageDealt(
                                     attacker, attacker, this.weather,
                                     this.PlayerPoke, this.terrain,
-                                    this.Waiting, enemyMove);
+                                    this.Waiting, enemyMove, this.isFirst);
                             System.out.println("Your " + this.PlayerPoke.showName()
                                     + " dealt " + DamageDealt + " damage!");
                             if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
@@ -1491,13 +1500,16 @@ public class Battle {
                                 DamageDealt = SelectMove.damageDealt(
                                         attacker, attacker, this.weather,
                                         this.PlayerPoke, this.terrain,
-                                        this.Waiting, enemyMove);
+                                        this.Waiting, enemyMove, this.isFirst);
                                 System.out.println("Enemy " + AIPoke.showName() +
                                         " dealt " + DamageDealt + " damage!");
                                 if (defender.showSubstituteHP() <= 0 ||
                                         SelectMove.showIgnoreSubstitute()) {
                                     defender.changeHP(DamageDealt);
                                     defender.setPreviousDamage(DamageDealt);
+                                    if(this.PlayerPoke.getBideDamage() > 0 || enemyMove.showName().equals("Bide")){
+                                        this.PlayerPoke.setBideDamage(DamageDealt);
+                                    }
                                 }
                                 if (defender.showSubstituteHP() > 0 &&
                                         !SelectMove.showIgnoreSubstitute()) {
@@ -1519,7 +1531,7 @@ public class Battle {
                         DamageDealt = SelectMove.damageDealt(
                                 attacker, attacker, this.weather,
                                 this.PlayerPoke, this.terrain,
-                                this.Waiting, enemyMove);
+                                this.Waiting, enemyMove, this.isFirst);
                         if (attacker == this.PlayerPoke) {
                             System.out.println("Your " +
                                     this.PlayerPoke.showName() +
@@ -1528,6 +1540,9 @@ public class Battle {
                                     SelectMove.showIgnoreSubstitute()) {
                                 defender.changeHP(DamageDealt);
                                 defender.setPreviousDamage(DamageDealt);
+                                if(this.AIPoke.getBideDamage() > 0 || enemyMove.showName().equals("Bide")){
+                                    this.AIPoke.setBideDamage(DamageDealt);
+                                }
                             }
                             if (defender.showSubstituteHP() > 0 &&
                                     !SelectMove.showIgnoreSubstitute()) {
@@ -1547,6 +1562,9 @@ public class Battle {
                             if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                 defender.changeHP(DamageDealt);
                                 defender.setPreviousDamage(DamageDealt);
+                                if(this.PlayerPoke.getBideDamage() > 0 || enemyMove.showName().equals("Bide")){
+                                    this.PlayerPoke.setBideDamage(DamageDealt);
+                                }
                             }
                             if (defender.showSubstituteHP() > 0 && !SelectMove.showIgnoreSubstitute()) {
                                 defender.damageSubstitute(DamageDealt);
@@ -1600,6 +1618,9 @@ public class Battle {
     private void endTurn(Pokemon defender, Pokemon attacker){
         int DamageDealt;
         if(attacker == this.PlayerPoke) {
+            if(this.AIPoke.getBideDamage() > 0){
+                this.playerFutureDamage = this.AIPoke.getBideDamage();
+            }
             if(this.playerFutureDamage != 0){
                 this.playerFutureDamageTimer -= 1;
                 if(this.playerFutureDamageTimer == 0){
@@ -1611,6 +1632,9 @@ public class Battle {
         }
         if(attacker == this.AIPoke) {
             if(this.AIFutureDamage != 0){
+                if(this.PlayerPoke.getBideDamage() > 0){
+                    this.AIFutureDamage = this.PlayerPoke.getBideDamage();
+                }
                 this.AiFutureDamageTimer -= 1;
                 if(this.AiFutureDamageTimer == 0){
                     System.out.println("The forseen damage came!");

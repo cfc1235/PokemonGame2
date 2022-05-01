@@ -5,8 +5,8 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Moveset.Steel.FlashCannon;
 import PokemonCreation.*;
-import PokemonCreation.AllAbilities.RainDish;
-import PokemonCreation.AllAbilities.Torrent;
+import PokemonCreation.AllAbilities.R.RainDish;
+import PokemonCreation.AllAbilities.T.Torrent;
 
 import java.util.Collections;
 import java.util.List;

@@ -4,8 +4,8 @@ import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.Abilities;
-import PokemonCreation.AllAbilities.Chlorophyll;
-import PokemonCreation.AllAbilities.Gluttony;
+import PokemonCreation.AllAbilities.C.Chlorophyll;
+import PokemonCreation.AllAbilities.G.Gluttony;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
 

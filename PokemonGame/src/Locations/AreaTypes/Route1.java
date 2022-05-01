@@ -14,10 +14,12 @@ public class Route1 extends AreaTypes{
         Collections.addAll(this.dayChance, new CreateOrderedMap<>(45, 16),
                 new CreateOrderedMap<>(30, 19), new CreateOrderedMap<>(20, 161),
                 new CreateOrderedMap<>(5, 162), new CreateOrderedMap<>(15, 43),
-                new CreateOrderedMap<>(15, 69));
+                new CreateOrderedMap<>(15, 69), new CreateOrderedMap<>(25, 504),
+                new CreateOrderedMap<>(25, 506), new CreateOrderedMap<>(2, 531));
         Collections.addAll(this.nightChance, new CreateOrderedMap<>(50, 19),
                 new CreateOrderedMap<>(5, 20), new CreateOrderedMap<>(45, 163),
-                new CreateOrderedMap<>(15, 43), new CreateOrderedMap<>(15, 69));
+                new CreateOrderedMap<>(15, 43), new CreateOrderedMap<>(15, 69),
+                new CreateOrderedMap<>(25, 506), new CreateOrderedMap<>(25, 504));
         Collections.addAll(this.heabuttChance, new CreateOrderedMap<>(45, 165),
                 new CreateOrderedMap<>(45, 167), new CreateOrderedMap<>(33, 204),
                 new CreateOrderedMap<>(33, 265));

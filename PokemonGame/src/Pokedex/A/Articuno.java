@@ -2,7 +2,8 @@ package Pokedex.A;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.P.Pressure;
+import PokemonCreation.AllAbilities.S.SnowCloak;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

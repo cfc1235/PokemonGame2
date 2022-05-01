@@ -1,6 +1,6 @@
 package Pokedex.B;
-import PokemonCreation.AllAbilities.Overgrowth;
-import PokemonCreation.AllAbilities.Chlorophyll;
+import PokemonCreation.AllAbilities.O.Overgrowth;
+import PokemonCreation.AllAbilities.C.Chlorophyll;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.*;

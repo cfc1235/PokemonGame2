@@ -2,8 +2,8 @@ package Pokedex.P;
 
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import PokemonCreation.AllAbilities.Overcoat;
-import PokemonCreation.AllAbilities.Sturdy;
+import PokemonCreation.AllAbilities.O.Overcoat;
+import PokemonCreation.AllAbilities.S.Sturdy;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

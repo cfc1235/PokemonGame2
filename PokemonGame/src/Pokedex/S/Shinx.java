@@ -6,7 +6,9 @@ import Items.Berries.CheriBerry;
 import Items.Consumable.SeedOfMastery;
 import Items.Consumable.SmallEXPCandy;
 import Items.Consumable.SpoiledApricorn;
-import PokemonCreation.AllAbilities.*;
+import PokemonCreation.AllAbilities.G.Guts;
+import PokemonCreation.AllAbilities.I.Intimidate;
+import PokemonCreation.AllAbilities.R.Rivalry;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

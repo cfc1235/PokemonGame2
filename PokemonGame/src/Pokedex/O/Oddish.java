@@ -4,8 +4,8 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Items.HeldItem.AbsorbBulb;
 import Items.NoItem;
-import PokemonCreation.AllAbilities.*;
-import PokemonCreation.Items;
+import PokemonCreation.AllAbilities.C.Chlorophyll;
+import PokemonCreation.AllAbilities.R.RunAway;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

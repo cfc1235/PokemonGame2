@@ -2,6 +2,7 @@ package PokemonCreation;
 
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
+import Interfaces.GetItem;
 import Weather.Weather;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,6 +107,9 @@ public class Abilities {
     protected Boolean onStatChange;
     protected Boolean onChangingStat;
     protected Boolean positiveMultChange = false;
+    protected Boolean needsSpeedTime = false;
+    protected Boolean speedTime = false;
+    protected Boolean onEndFight = false;
 
     public ArrayList<String> getCausesStatEffect(){return this.causesStatEffect;}
     public void statEffectOnDamage(Moves moves, Pokemon attacker){
@@ -178,7 +182,18 @@ public class Abilities {
     public Boolean showPoison(){return cannotPoison;}
     public Boolean getActivatesOnConfuse(){return this.activatesOnConfuse;}
 
-
+    public void resolveEndFight(Pokemon pokemon){
+        double random = new Random().nextDouble();
+        if(this.onEndFight) {
+            if (this.name.equals("Pickup")) {
+                if (random <= .1) {
+                    if(!pokemon.showItem().showName().equals("")){
+                        pokemon.giveItem(GetItem.getRandomItem());
+                    }
+                }
+            }
+        }
+    }
     public void resolveEndTurn(Pokemon attacker){
         if(this.endsEffects){
             if(this.endResolveChance >= Math.random()){
@@ -283,13 +298,14 @@ public class Abilities {
 
     public void addStageDuringDamage(Pokemon defender, Pokemon attacker,
                                      Moves moves, Weather weather,
-                                     Boolean damageTime){
+                                     Boolean damageTime, Boolean isFirst){
         //DAMAGETIME IS TRUE IF DEALING DAMAGE.
         // FALSE IF DAMAGE DEALT TO THEM
         if((this.onDealtDamage && !damageTime) ||  (this.onDealingDamage && damageTime)
             || (!this.requiresType || this.onMultTypes.contains(moves.showType()))
             || (this.WeatherReq.equals(weather) || !this.WeatherRequirement)
             || (this.hasReqsinDamage && (defender.showHP()/(double) defender.showSavedHP()) < this.HPReq)
+            || (this.needsSpeedTime && (this.speedTime = isFirst))
         ){
             doChange(attacker, defender);
         }

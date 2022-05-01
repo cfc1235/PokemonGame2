@@ -12,5 +12,6 @@ public class Frustration extends Moves {
         this.acc = 100;
         this.makesContact = true;
         this.type = "Normal";
+        this.TMNum = 321;
     }
 }

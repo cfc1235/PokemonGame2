@@ -1,6 +1,6 @@
 package Moveset.EnemyChange;
 
-import PokemonCreation.AllAbilities.Insomnia;
+import PokemonCreation.AllAbilities.I.Insomnia;
 import BattleMechanics.Moves;
 
 public class WorrySeed extends Moves {

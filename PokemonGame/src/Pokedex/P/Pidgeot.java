@@ -6,9 +6,9 @@ import Interfaces.GlobalVariables;
 import PokemonCreation.Abilities;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
-import PokemonCreation.AllAbilities.BigPecks;
-import PokemonCreation.AllAbilities.KeenEyes;
-import PokemonCreation.AllAbilities.TangledFeet;
+import PokemonCreation.AllAbilities.B.BigPecks;
+import PokemonCreation.AllAbilities.K.KeenEyes;
+import PokemonCreation.AllAbilities.T.TangledFeet;
 
 import java.util.Collections;
 import java.util.List;
