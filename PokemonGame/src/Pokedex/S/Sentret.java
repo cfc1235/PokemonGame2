@@ -38,7 +38,8 @@ public class Sentret extends Pokemon {
         this.pokedexType = this.getClass().getSimpleName();
         this.name = this.pokedexType;
         setGivesEVs(0, 1, 0, 0, 0, 0);
-        setBaseStats(34, 46, 35, 35, 45, 20, 161, 255, 13.2,
+        setBaseStats(34, 46, 35, 35, 45,
+                20, 161, 255, 13.2,
                 "Normal", "Medium Fast", level, 43);
         setTotalEXP();
         setNextLevelEXP();

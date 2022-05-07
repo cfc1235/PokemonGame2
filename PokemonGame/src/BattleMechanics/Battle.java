@@ -701,6 +701,9 @@ public class Battle {
                                             Hit = true;
                                         }
                                     }
+                                    if(DamageDealt == 0 && SelectMove.showName().equals("High Jump Kick")){
+                                        attacker.changeHP((int) (.5 * attacker.showSavedHP()));
+                                    }
                                     if (SelectMove.showName().equals("False Swipe") || defender.showEndures()) {
                                         if (defender.showHP() <= 0) {
                                             defender.setHP(1);

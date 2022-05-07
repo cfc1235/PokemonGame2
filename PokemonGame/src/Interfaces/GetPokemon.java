@@ -231,6 +231,12 @@ public interface GetPokemon {
          if(ID == 531){
              pokemon = new Audino(level, globalVariables);
          }
+         if(ID == 559){
+             pokemon = new Scraggy(level, globalVariables);
+         }
+         if(ID == 560){
+             pokemon = new Scrafty(level, globalVariables);
+         }
         return pokemon;
     }
 
@@ -401,6 +407,10 @@ public interface GetPokemon {
         }
         if(ID == 507) {
             evolution = new Stoutland(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 559) {
+            evolution = new Scrafty(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(!evolution.showOnEvol().showName().equals("Nothing") &&

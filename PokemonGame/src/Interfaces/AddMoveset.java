@@ -371,4 +371,6 @@ public interface AddMoveset {
     default Moves addSimpleBeam(){return new SimpleBeam();}
     default Moves addHealPulse(){return new HealPulse();}
     default Moves addMistyTerrain(){return new MistyTerrain();}
+    default Moves addHighJumpKick(){return new HighJumpKick();}
+    default Moves addHeadSmash(){return new HeadSmash();}
 }
