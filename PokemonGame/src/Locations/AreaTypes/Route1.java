@@ -33,6 +33,9 @@ public class Route1 extends AreaTypes{
                 new CreateOrderedMap<>(145, 1), new CreateOrderedMap<>(146, 1),
                 new CreateOrderedMap<>(149, 1));
         Collections.addAll(this.surfingChance, new CreateOrderedMap<>(100, 550));
+        Collections.addAll(this.fishingChance, new CreateOrderedMap<>(95, 550),
+                new CreateOrderedMap<>(5, 349));
+        Collections.addAll(this.fishingChampChance, new CreateOrderedMap<>(1, 350));
         createPokeChances();
     }
 }

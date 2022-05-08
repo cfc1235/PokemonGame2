@@ -135,6 +135,9 @@ public class Abilities {
                     if(effect.equals("Poison")){
                         attacker.Poison();
                     }
+                    if(effect.equals("Infatuate")){
+                        attacker.Infatuate();
+                    }
                 }
             }
         }
@@ -207,8 +210,8 @@ public class Abilities {
     }
 
     public int HealHelp(){
-        if(HealHelp){
-            return HealHelpAm;
+        if(this.HealHelp){
+            return this.HealHelpAm;
         }
         return 1;
     }

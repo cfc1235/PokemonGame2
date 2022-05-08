@@ -13,5 +13,6 @@ public class Overcoat extends Abilities {
                 "Cotton Spore", "Magic Powder",
                 "Poison Powder", "Powder", "Rage Powder",
                 "Sleep Powder", "Spore", "Stun Spore");
+        this.name = "Overcoat";
     }
 }

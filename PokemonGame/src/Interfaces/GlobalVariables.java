@@ -25,15 +25,16 @@ public class GlobalVariables {
     private Boolean hasSwarmAbility = false;
     private Boolean hasSoundAbility = false;
     private ItemInventory itemInventory = new ItemInventory();
-    private Boolean fullRandomizerOn = false;
+    private Boolean fullRandomizerOn;
     private Boolean isChampion = false;
     private Wallet wallet;
     private Boolean autoCatch;
     private Boolean shinyCheat;
+    private Boolean hasFishingRod;
 
     public GlobalVariables(Boolean isInfinteMoney, Boolean randomizer,
                            Boolean shinyCheat, Boolean autoCatch,
-                           Boolean earlyChamp){
+                           Boolean earlyChamp, Boolean fishingCheat){
         this.fullRandomizerOn = randomizer;
         this.shinyCheat = shinyCheat;
         this.autoCatch = autoCatch;
@@ -41,11 +42,15 @@ public class GlobalVariables {
         if(earlyChamp) {
             becomeChampion();
         }
+        this.hasFishingRod = fishingCheat;
     }
 
+    public Boolean getFishingRod(){return this.hasFishingRod;}
+    public void setHasFishingRod(){this.hasFishingRod = true;}
     public Wallet getWallet(){return this.wallet;}
     public void becomeChampion(){
         this.isChampion = true;
+        this.hasSwarmAbility = true;
         for(AreaTypes areaType : this.worldMap.getFullMap()){
             areaType.championPokeChances();
         }
@@ -64,7 +69,6 @@ public class GlobalVariables {
     public ItemInventory getItemInventory(){return this.itemInventory;}
     public void setHasSoundAbility(){this.hasSwarmAbility = true;}
     public Boolean getHasSoundAbility(){return this.hasSoundAbility;}
-    public void setHasSwarmAbility(){this.hasSwarmAbility = true;}
     public Boolean getHasSwarmAbility(){return this.hasSwarmAbility;}
     //DAY IS TRUE NIGHT IS FALSE
     public void setDay() {

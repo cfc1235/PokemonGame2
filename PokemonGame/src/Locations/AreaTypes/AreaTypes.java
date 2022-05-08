@@ -1,14 +1,12 @@
 package Locations.AreaTypes;
 
-import AIMechanics.AIPokeParty;
+import BattleMechanics.AIPokeParty;
 import BackgroundMusic.MusicCode.PlayTrainerBattleMusic;
-import BackgroundMusic.MusicCode.PokeCenter;
 import BackgroundMusic.MusicCode.VictoryMusic;
 import BattleMechanics.Battle;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Interfaces.WeightedEnteries;
-import Locations.WorldMap;
 import PlayerMechanics.*;
 import PokemonCreation.Pokemon;
 import UserInterfaces.ChangeAreaScreen;
@@ -46,6 +44,8 @@ public class AreaTypes {
     protected ArrayList<CreateOrderedMap<Integer, Integer>> trainerChance = new ArrayList<>();
     protected ArrayList<CreateOrderedMap<Integer, Integer>> surfingChance = new ArrayList<>();
     protected ArrayList<CreateOrderedMap<Integer, Integer>> surfingChampChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> fishingChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> fishingChampChance = new ArrayList<>();
 
     protected WeightedEnteries<Integer> pokeChanceSurfing = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> pokeChanceDay = new WeightedEnteries<>();
@@ -55,6 +55,7 @@ public class AreaTypes {
     protected WeightedEnteries<Integer> pokeChanceSound = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> pokeChanceFlight = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> trainerPokeChance = new WeightedEnteries<>();
+    protected WeightedEnteries<Integer> pokeFishingChances = new WeightedEnteries<>();
 
     public void championPokeChances(){
         this.trainerPokeChance.clearEntries();
@@ -65,6 +66,7 @@ public class AreaTypes {
         this.trainerChance.addAll(this.champSoundChance);
         this.trainerChance.addAll(this.champFlightChance);
         this.trainerChance.addAll(this.surfingChampChance);
+        this.trainerChance.addAll(this.fishingChampChance);
         for(CreateOrderedMap<Integer, Integer> day : this.champDayChance){
             this.pokeChanceDay.addEntry(day.getKey(), day.getValue());
         }
@@ -86,8 +88,11 @@ public class AreaTypes {
         for(CreateOrderedMap<Integer, Integer> sound : this.trainerChance){
             this.trainerPokeChance.addEntry(sound.getKey(), sound.getValue());
         }
-        for(CreateOrderedMap<Integer, Integer> surf : this.surfingChance){
+        for(CreateOrderedMap<Integer, Integer> surf : this.surfingChampChance){
             this.pokeChanceSurfing.addEntry(surf.getKey(), surf.getValue());
+        }
+        for(CreateOrderedMap<Integer, Integer> fishing : this.fishingChampChance){
+            this.pokeFishingChances.addEntry(fishing.getKey(), fishing.getValue());
         }
     }
     protected void createPokeChances(){
@@ -97,6 +102,8 @@ public class AreaTypes {
         this.trainerChance.addAll(this.swarmChance);
         this.trainerChance.addAll(this.soundChance);
         this.trainerChance.addAll(this.flightChance);
+        this.trainerChance.addAll(this.surfingChance);
+        this.trainerChance.addAll(this.fishingChance);
         for(CreateOrderedMap<Integer, Integer> day : this.dayChance){
             this.pokeChanceDay.addEntry(day.getKey(), day.getValue());
         }
@@ -115,6 +122,12 @@ public class AreaTypes {
         for(CreateOrderedMap<Integer, Integer> sound : this.flightChance){
             this.pokeChanceFlight.addEntry(sound.getKey(), sound.getValue());
         }
+        for(CreateOrderedMap<Integer, Integer> sound : this.surfingChance){
+            this.pokeChanceSurfing.addEntry(sound.getKey(), sound.getValue());
+        }
+        for(CreateOrderedMap<Integer, Integer> sound : this.fishingChance){
+            this.pokeFishingChances.addEntry(sound.getKey(), sound.getValue());
+        }
         for(CreateOrderedMap<Integer, Integer> sound : this.trainerChance){
             this.trainerPokeChance.addEntry(sound.getKey(), sound.getValue());
         }
@@ -125,6 +138,9 @@ public class AreaTypes {
     public WeightedEnteries<Integer>  getPokeChanceNight(){return this.pokeChanceNight;}
     public WeightedEnteries<Integer>  getPokeChanceSwarm(){return this.pokeChanceSwarm;}
     public WeightedEnteries<Integer>  getPokeChanceSound(){return this.pokeChanceSound;}
+    public WeightedEnteries<Integer>  getPokeChanceSurfing(){return this.pokeChanceSurfing;}
+    public WeightedEnteries<Integer>  getPokeChanceFlight(){return this.pokeChanceFlight;}
+    public WeightedEnteries<Integer>  getPokeFishingChances(){return this.pokeFishingChances;}
     public WeightedEnteries<Integer> getTrainerPokeChance(){return this.trainerPokeChance;}
 
     private void healPokemon(PlayerParty playerParty){

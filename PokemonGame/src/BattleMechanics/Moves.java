@@ -185,7 +185,9 @@ public class Moves {
     protected Boolean resetsType = false;
     protected Boolean setsHPTo0PostStatChange = false;
     protected Boolean causesCannotFlee = false;
+    protected double addsToHP = 0;
 
+    public double getAddsToHP(){return this.addsToHP;}
     public Boolean getCausesCannotFlee(){return this.causesCannotFlee;}
     public Boolean getResetsType(){return this.resetsType;}
     public String getResetsTypeTo(){return this.resetsTypeTo;}

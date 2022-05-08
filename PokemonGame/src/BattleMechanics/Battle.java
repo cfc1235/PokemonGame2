@@ -1299,6 +1299,9 @@ public class Battle {
                             this.affectsGround.addToPlayerSpikeLayers();
                         }
                     }
+                    if(SelectMove.getAddsToHP() > 0.0){
+                        attacker.addToHealPerTurn(SelectMove.getAddsToHP());
+                    }
                     if(SelectMove.getToxicSpikesGround()){
                         if (attacker == this.PlayerPoke) {
                             this.affectsGround.setToxicSpikeAgainstAILayer();
@@ -1652,6 +1655,7 @@ public class Battle {
                 }
             }
         }
+        attacker.endTurnHeal();
         attacker.setPreviousDamage(0);
         attacker.tickDownCannotHaveStatLowered();
         attacker.tickDownProhibitedMoves();

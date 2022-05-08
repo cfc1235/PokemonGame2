@@ -381,4 +381,6 @@ public interface AddMoveset {
     default Moves addMudShot(){return new MudShot();}
     default Moves addWaveCrash(){return new WaveCrash();}
     default Moves addOminousWind(){return new OminousWind();}
+    default Moves addSplash(){return new Splash();}
+    default Moves addAquaRing(){return new AquaRing();}
 }

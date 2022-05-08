@@ -36,6 +36,27 @@ public class PlayerParty {
         return false;
     }
 
+    public Boolean hasFly(){
+        for(Pokemon pokemon : this.CurrentParty){
+            for(Moves moves : pokemon.showMoves()){
+                if(moves.showName().equals("Fly")){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Boolean hasSurf(){
+        for(Pokemon pokemon : this.CurrentParty){
+            for(Moves moves : pokemon.showMoves()){
+                if(moves.showName().equals("Surf")){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public void seePokes(GlobalVariables globalVariables){
         for(Pokemon pokemon : this.CurrentParty){
             System.out.println(pokemon);

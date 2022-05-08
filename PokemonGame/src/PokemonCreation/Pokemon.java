@@ -160,7 +160,18 @@ public class Pokemon implements AddMoveset {
     protected Boolean isGalarian = false;
     protected Boolean isHisuian = false;
     public int recoilTotal = 0;
+    public Boolean healEveryTurn = false;
+    public double healPerTurn = 0.0;
 
+    public void endTurnHeal(){
+        if(this.healEveryTurn){
+            this.HP += this.healPerTurn * this.savedHP;
+        }
+    }
+    public void addToHealPerTurn(double HPT){
+        this.healEveryTurn = true;
+        this.healPerTurn += HPT;
+    }
     public void addToRecoilTotal(int recoil){this.recoilTotal += recoil;}
     public Boolean getIsGalarian(){return this.isGalarian;}
     public Boolean getIsHisuian(){return this.isHisuian;}
@@ -1387,6 +1398,8 @@ public class Pokemon implements AddMoveset {
         if(this.ability.showName().equals("Regenerator")){
             this.HP += this.savedHP * (1/3.0);
         }
+        this.healPerTurn = 0;
+        this.healEveryTurn = false;
     }
 
     public void resetMults(){

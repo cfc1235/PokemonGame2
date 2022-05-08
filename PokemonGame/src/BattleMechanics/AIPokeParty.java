@@ -1,4 +1,4 @@
-package AIMechanics;
+package BattleMechanics;
 
 import Interfaces.GetPokemon;
 import Interfaces.GlobalVariables;
@@ -19,7 +19,7 @@ public class AIPokeParty {
             ArrayList<Pokemon> wildTeam = new ArrayList<>();
             Pokemon pokemon = new Pokemon();
             while(pokemon.showName().equals("")){
-                ID = random.nextInt(898);
+                ID = random.nextInt(902);
                 pokemon = GetPokemon.getPokemon(level, ID, globalVariables);
             }
             wildTeam.add(pokemon);
@@ -34,7 +34,8 @@ public class AIPokeParty {
             if(confirm.equals("y")){
                 ID = currentArea.getPokeChanceHeadbutt().getRandomEntry();
             }
-        }if(globalVariables.getHasSwarmAbility() &&
+        }
+        if(globalVariables.getHasSwarmAbility() &&
             !currentArea.getPokeChanceSwarm().isEmpty() &&
             ID == 0){
             System.out.println("Would you like to use swarm for different pokemon? (y/n) ");
@@ -43,6 +44,48 @@ public class AIPokeParty {
             confirm = scanner.nextLine();
             if(confirm.equals("y")){
                 ID = currentArea.getPokeChanceSwarm().getRandomEntry();
+            }
+        }
+        if(globalVariables.getHasSoundAbility() &&
+                !currentArea.getPokeChanceSwarm().isEmpty() &&
+                ID == 0){
+            System.out.println("Would you like to use sound for different pokemon? (y/n) ");
+            String confirm;
+            Scanner scanner = new Scanner(System.in);
+            confirm = scanner.nextLine();
+            if(confirm.equals("y")){
+                ID = currentArea.getPokeChanceSound().getRandomEntry();
+            }
+        }
+        if(globalVariables.getParty().hasSurf() &&
+                !currentArea.getPokeChanceSurfing().isEmpty()){
+            System.out.println("Would you like to use surf for different pokemon? (y/n) ");
+            String confirm;
+            Scanner scanner = new Scanner(System.in);
+            confirm = scanner.nextLine();
+            if(confirm.equals("y")){
+                ID = currentArea.getPokeChanceSurfing().getRandomEntry();
+            }
+        }
+        if(globalVariables.getParty().hasFly() &&
+                !currentArea.getPokeChanceFlight().isEmpty()){
+            System.out.println("Would you like to use fly for different pokemon? (y/n) ");
+            String confirm;
+            Scanner scanner = new Scanner(System.in);
+            confirm = scanner.nextLine();
+            if(confirm.equals("y")){
+                ID = currentArea.getPokeChanceFlight().getRandomEntry();
+            }
+        }
+        if(globalVariables.getFishingRod() &&
+                !currentArea.getPokeFishingChances().isEmpty() &&
+                ID == 0){
+            System.out.println("Would you like to use fishing rod for different pokemon? (y/n) ");
+            String confirm;
+            Scanner scanner = new Scanner(System.in);
+            confirm = scanner.nextLine();
+            if(confirm.equals("y")){
+                ID = currentArea.getPokeFishingChances().getRandomEntry();
             }
         }
         if(ID == 0) {

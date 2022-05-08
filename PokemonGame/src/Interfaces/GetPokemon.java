@@ -206,6 +206,12 @@ public interface GetPokemon {
          if(ID == 312){
              pokemon = new Minun(level, globalVariables);
          }
+         if(ID == 349){
+             pokemon = new Feebas(level, globalVariables);
+         }
+         if(ID == 350) {
+             pokemon = new Milotic(level, globalVariables);
+         }
          if(ID == 403){
              pokemon = new Shinx(level, globalVariables);
          }
@@ -403,6 +409,10 @@ public interface GetPokemon {
         }
         if(ID == 268){
             evolution = new Dustox(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 349){
+            evolution = new Milotic(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(ID == 403){
