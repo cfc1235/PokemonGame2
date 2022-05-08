@@ -790,6 +790,10 @@ public class Battle {
                             if (SelectMove.getResetsTypeFrom().equals(attacker.showType2())) {
                                 attacker.setType4(SelectMove.getResetsTypeTo());
                             }
+                            if(SelectMove.getResetsTypeFrom().equals("Both")){
+                                attacker.setType3(SelectMove.getResetsTypeTo());
+                                attacker.setType4("");
+                            }
                         }
                         if(SelectMove.StatchangeEnemy) {
                             if (SelectMove.getResetsTypeFrom().equals(defender.showType1())) {
@@ -902,7 +906,9 @@ public class Battle {
                         }
                     }
                     if (SelectMove.showSelfDamage()) {
-                        attacker.changeHP(SelectMove.selfDamage(DamageDealt));
+                        int damage = SelectMove.selfDamage(DamageDealt);
+                        attacker.addToRecoilTotal(damage);
+                        attacker.changeHP(damage);
                     }
                     if(SelectMove.getFutureFallAsleep()){
                         defender.setFallAsleep(SelectMove.getFutureFallAsleepTimer());

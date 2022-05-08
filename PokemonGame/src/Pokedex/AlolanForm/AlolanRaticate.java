@@ -45,6 +45,7 @@ public class AlolanRaticate extends Pokemon {
         this.pokedexType = "Raticate";
         this.setPokeCry("020Cry_1.wav");
         this.type2 = "Dark";
+        this.isAlolan = true;
     }
 
     public AlolanRaticate(int level, List<Moves> oldMoves, String Nature, String name,

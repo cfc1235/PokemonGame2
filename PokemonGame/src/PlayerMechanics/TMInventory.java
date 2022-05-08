@@ -106,7 +106,7 @@ public class TMInventory {
         if(Selection == 50 && !this.TMInventory.contains("Bullet Seed")){this.TMInventory.add("Bullet Seed");}
         if(Selection == 51 && !this.TMInventory.contains("Icicle Spear")){this.TMInventory.add("Icicle Spear");}
         if(Selection == 52 && !this.TMInventory.contains("Bounce")){this.TMInventory.add("Bounce");}
-        if(Selection == 53 && !this.TMInventory.contains("Mud Shot")){}
+        if(Selection == 53 && !this.TMInventory.contains("Mud Shot")){this.TMInventory.add("Mud Shot");}
         if(Selection == 54 && !this.TMInventory.contains("Rock Blast")){}
         if(Selection == 55 && !this.TMInventory.contains("Brine")){this.TMInventory.add("Brine");}
         if(Selection == 56 && !this.TMInventory.contains("U-Turn")){this.TMInventory.add("U-Turn");}

@@ -18,7 +18,7 @@ public class SteelWing extends Moves {
         this.MultChange = 1;
         this.statChangeReqChance= true;
         this.StatChangeReq = 10;
-        this.changeTypeName = "defense ";
+        this.changeTypeName = " defense ";
         this.TMNum = 30;
     }
 }

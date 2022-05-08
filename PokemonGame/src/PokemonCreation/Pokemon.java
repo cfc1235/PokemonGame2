@@ -157,7 +157,13 @@ public class Pokemon implements AddMoveset {
     protected String type4 = "";
     protected String type3 = "";
     protected int bideDamage = 0;
+    protected Boolean isGalarian = false;
+    protected Boolean isHisuian = false;
+    public int recoilTotal = 0;
 
+    public void addToRecoilTotal(int recoil){this.recoilTotal += recoil;}
+    public Boolean getIsGalarian(){return this.isGalarian;}
+    public Boolean getIsHisuian(){return this.isHisuian;}
     public int getBideDamage(){return this.bideDamage;}
     public void setBideDamage(int damage){this.bideDamage += damage;}
     public void resetBideDamage(){this.bideDamage = 0;}
@@ -952,38 +958,44 @@ public class Pokemon implements AddMoveset {
         }
         int DefeatedEXP = Defeated.onDeathEXP;
         double egg = 1;
-        if(item.showName().equals("Lucky Egg")){
+        if(this.item.showName().equals("Lucky Egg")){
             egg = 1.5;
         }
         int Defeatedlevel = Defeated.level;
         double evolEXP = 1;
-        if(level>= EvolTiming){
+        if(this.level>= this.EvolTiming){
             evolEXP = 1.2;
         }
         int EXPGained = (int) Math.round((((battleType * DefeatedEXP * Defeatedlevel)/5.0) * ((double) (((2 * Defeatedlevel) + 10)/(Defeatedlevel + level + 10)^2)) + 1) * egg * evolEXP);
-        System.out.println(name + " gains " + EXPGained + " EXP!");
-        CurrentEXP += EXPGained;
-        if(CurrentEXP >= EXPNeeded) {
-            level += 1;
+        System.out.println(this.name + " gains " + EXPGained + " EXP!");
+        this.CurrentEXP += EXPGained;
+        if(this.CurrentEXP >= this.EXPNeeded) {
+            this.level += 1;
             changeBaseStats();
-            System.out.println("Your " + name + " is now level " + level);
-            System.out.println("Defense is now " + PhysDefense);
-            System.out.println("Attack is now " + PhysAttack);
-            System.out.println("Max HP is now " + savedHP);
-            System.out.println("Special Attack is now " + SpecAttack);
-            System.out.println("Special Defense is now " + SpecDefense);
-            System.out.println("Speed is now " + Speed);
+            System.out.println("Your " + this.name + " is now level " + this.level);
+            System.out.println("Defense is now " + this.PhysDefense);
+            System.out.println("Attack is now " + this.PhysAttack);
+            System.out.println("Max HP is now " + this.savedHP);
+            System.out.println("Special Attack is now " + this.SpecAttack);
+            System.out.println("Special Defense is now " + this.SpecDefense);
+            System.out.println("Speed is now " + this.Speed);
             addMoveonLevel();
-            int savedEXP = CurrentEXP - EXPNeeded;
-            CurrentEXP = 0;
+            int savedEXP = this.CurrentEXP - this.EXPNeeded;
+            this.CurrentEXP = 0;
             setTotalEXP();
             setNextLevelEXP();
             setEXPNeeded();
-            EXPNeeded += savedEXP;
-            if((level >= EvolTiming) && (!(item.showName().equals("Everstone")))){
-                return true;
+            this.EXPNeeded += savedEXP;
+            if((this.level >= this.EvolTiming) || this.getSpecialEvolReq()){
+                if(!item.showName().equals("Everstone")) {
+                    return true;
+                }
             }
         }
+        return false;
+    }
+
+    public Boolean getSpecialEvolReq(){
         return false;
     }
 

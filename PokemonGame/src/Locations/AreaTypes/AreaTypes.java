@@ -44,6 +44,10 @@ public class AreaTypes {
     protected ArrayList<CreateOrderedMap<Integer, Integer>> flightChance = new ArrayList<>();
     protected ArrayList<CreateOrderedMap<Integer, Integer>> champFlightChance = new ArrayList<>();
     protected ArrayList<CreateOrderedMap<Integer, Integer>> trainerChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> surfingChance = new ArrayList<>();
+    protected ArrayList<CreateOrderedMap<Integer, Integer>> surfingChampChance = new ArrayList<>();
+
+    protected WeightedEnteries<Integer> pokeChanceSurfing = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> pokeChanceDay = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> pokeChanceNight = new WeightedEnteries<>();
     protected WeightedEnteries<Integer> pokeChanceHeadbutt = new WeightedEnteries<>();
@@ -60,6 +64,7 @@ public class AreaTypes {
         this.trainerChance.addAll(this.champSwarmChance);
         this.trainerChance.addAll(this.champSoundChance);
         this.trainerChance.addAll(this.champFlightChance);
+        this.trainerChance.addAll(this.surfingChampChance);
         for(CreateOrderedMap<Integer, Integer> day : this.champDayChance){
             this.pokeChanceDay.addEntry(day.getKey(), day.getValue());
         }
@@ -81,7 +86,9 @@ public class AreaTypes {
         for(CreateOrderedMap<Integer, Integer> sound : this.trainerChance){
             this.trainerPokeChance.addEntry(sound.getKey(), sound.getValue());
         }
-
+        for(CreateOrderedMap<Integer, Integer> surf : this.surfingChance){
+            this.pokeChanceSurfing.addEntry(surf.getKey(), surf.getValue());
+        }
     }
     protected void createPokeChances(){
         this.trainerChance.addAll(this.dayChance);

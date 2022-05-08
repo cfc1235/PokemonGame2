@@ -10,6 +10,8 @@ import Pokedex.F.*;
 import Pokedex.G.*;
 import Pokedex.GalarianForm.*;
 import Pokedex.H.*;
+import Pokedex.HisuianForm.Basculegion;
+import Pokedex.HisuianForm.BasculinWhite;
 import Pokedex.I.*;
 import Pokedex.L.*;
 import Pokedex.M.*;
@@ -231,11 +233,25 @@ public interface GetPokemon {
          if(ID == 531){
              pokemon = new Audino(level, globalVariables);
          }
+         if(ID == 550){
+             if(regionCheck <= .33){
+                 pokemon = new BasculinBlue(level, globalVariables);
+             }
+             else if(regionCheck <= .66){
+                 pokemon = new BasculinRed(level, globalVariables);
+             }
+             else {
+                 pokemon = new BasculinWhite(level, globalVariables);
+             }
+         }
          if(ID == 559){
              pokemon = new Scraggy(level, globalVariables);
          }
          if(ID == 560){
              pokemon = new Scrafty(level, globalVariables);
+         }
+         if(ID == 902){
+             pokemon = new Basculegion(level, globalVariables);
          }
         return pokemon;
     }
@@ -407,6 +423,10 @@ public interface GetPokemon {
         }
         if(ID == 507) {
             evolution = new Stoutland(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 550){
+            evolution = new Basculegion(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(ID == 559) {

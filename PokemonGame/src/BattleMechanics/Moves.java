@@ -379,10 +379,11 @@ public class Moves {
         }
     }
     public void StatusAffectsPPChange(){
-        PP += 1;
+        this.PP += 1;
     }
+
     public int selfDamage(int DamageDealt){
-        return (int) Math.round(recoil * DamageDealt);
+        return (int) Math.round(this.recoil * DamageDealt);
     }
 
     public Boolean Hits(Pokemon attacker, Pokemon defender, Pokemon PlayerPoke, Weather weather) {
@@ -481,11 +482,13 @@ public class Moves {
     public float STABBonus(Pokemon attacker){
         float STABTotal;
         STABTotal = 1;
-        if ((attacker.showType1().equals(type)) || (attacker.showType2().equals(type))){
+        if ((attacker.showType1().equals(this.type))
+                || (attacker.showType2().equals(this.type))){
             STABTotal += .5;
         }
         if (attacker.showAbility().showName().equals("Adaptability")){
-            if ((attacker.showType1().equals(type)) || (attacker.showType2().equals(type))){
+            if ((attacker.showType1().equals(this.type))
+                    || (attacker.showType2().equals(this.type))){
                 STABTotal = 2;
             }
         }
@@ -690,25 +693,37 @@ public class Moves {
                     (((double) attacker.showHP())/
                             attacker.showSavedHP()) * 120));
         }
-        if(this.name.equals("Reversal")){
+        if(this.name.equals("Reversal") || this.name.equals("Flail")){
             double HPPerc = ((double) attacker.showHP()/attacker.showSavedHP()) * 100;
-            if(HPPerc >= 67.16){
-                this.power = 20;
+            if(this.name.equals("Reversal")) {
+                if (HPPerc >= 67.16) {
+                    this.power = 20;
+                } else if (HPPerc >= 34.38) {
+                    this.power = 40;
+                } else if (HPPerc >= 20.31) {
+                    this.power = 80;
+                } else if (HPPerc >= 9.38) {
+                    this.power = 100;
+                } else if (HPPerc >= 3.13) {
+                    this.power = 150;
+                } else {
+                    this.power = 200;
+                }
             }
-            else if(HPPerc >= 34.38){
-                this.power = 40;
-            }
-            else if(HPPerc >= 20.31){
-                this.power = 80;
-            }
-            else if(HPPerc >= 9.38){
-                this.power = 100;
-            }
-            else if(HPPerc >= 3.13){
-                this.power = 150;
-            }
-            else {
-                this.power = 200;
+            if(this.name.equals("Flail")){
+                if (HPPerc >= 68.75) {
+                    this.power = 20;
+                } else if (HPPerc >= 35.42) {
+                    this.power = 40;
+                } else if (HPPerc >= 20.83) {
+                    this.power = 80;
+                } else if (HPPerc >= 10.42) {
+                    this.power = 100;
+                } else if (HPPerc >= 4.17) {
+                    this.power = 150;
+                } else {
+                    this.power = 200;
+                }
             }
         }
         if(this.name.equals("Stored Power")){
@@ -721,6 +736,9 @@ public class Moves {
         }
         if(this.name.equals("Night Shade")){
             this.power = attacker.showLevel();
+        }
+        if(this.name.equals("Final Gambit")){
+            this.power = attacker.showHP();
         }
         if(this.name.equals("Electro Ball")){
             double targetSpeedPerc = (double) defender.showSpeed(1)/attacker.showSpeed(1);
@@ -878,6 +896,10 @@ public class Moves {
                             if(attacker.getOutrageTimer() == 1){
                                 RawDamage = RawDamage * 16;
                             }
+                        }
+                        if(attacker.showAbility().showName().equals("Reckless")
+                                && this.DamageSelf){
+                            RawDamage = RawDamage * 1.2;
                         }
                         double Weather = 1;
                         if (this.type.equals(weather.showIncreaseType())) {

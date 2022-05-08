@@ -301,13 +301,15 @@ public class Abilities {
                                      Boolean damageTime, Boolean isFirst){
         //DAMAGETIME IS TRUE IF DEALING DAMAGE.
         // FALSE IF DAMAGE DEALT TO THEM
-        if((this.onDealtDamage && !damageTime) ||  (this.onDealingDamage && damageTime)
-            || (!this.requiresType || this.onMultTypes.contains(moves.showType()))
-            || (this.WeatherReq.equals(weather) || !this.WeatherRequirement)
-            || (this.hasReqsinDamage && (defender.showHP()/(double) defender.showSavedHP()) < this.HPReq)
-            || (this.needsSpeedTime && (this.speedTime = isFirst))
-        ){
-            doChange(attacker, defender);
+        if(damageTime || !this.name.equals("Mold Breaker")) {
+            if ((this.onDealtDamage && !damageTime) || (this.onDealingDamage && damageTime)
+                    || (!this.requiresType || this.onMultTypes.contains(moves.showType()))
+                    || (this.WeatherReq.equals(weather) || !this.WeatherRequirement)
+                    || (this.hasReqsinDamage && (defender.showHP() / (double) defender.showSavedHP()) < this.HPReq)
+                    || (this.needsSpeedTime && (this.speedTime = isFirst))
+            ) {
+                doChange(attacker, defender);
+            }
         }
     }
 
@@ -320,12 +322,14 @@ public class Abilities {
         if(moves.getMultChange() < 0) {
             positiveChange = false;
         }
-        if((this.onStatChange && !damageTime) ||  (this.onChangingStat && damageTime) ||
-                ((this.requiresType && this.onMultTypes.contains(moves.showType())) || !this.requiresType)
-                || (this.WeatherReq.equals(weather) || !this.WeatherRequirement)
-        ){
-            if(this.positiveMultChange == positiveChange) {
-                doChange(attacker, defender);
+        if(damageTime || !this.name.equals("Mold Breaker")) {
+            if ((this.onStatChange && !damageTime) || (this.onChangingStat && damageTime) ||
+                    ((this.requiresType && this.onMultTypes.contains(moves.showType())) || !this.requiresType)
+                    || (this.WeatherReq.equals(weather) || !this.WeatherRequirement)
+            ) {
+                if (this.positiveMultChange == positiveChange) {
+                    doChange(attacker, defender);
+                }
             }
         }
     }

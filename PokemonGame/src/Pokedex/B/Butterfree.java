@@ -2,6 +2,7 @@ package Pokedex.B;
 
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
+import Interfaces.GetItem;
 import Interfaces.GlobalVariables;
 import Items.HeldItem.SilverPowder;
 import Items.NoItem;
@@ -79,8 +80,8 @@ public class Butterfree extends Pokemon {
         this.savedAbility = this.ability;
         setFirstEVs();
         setFullDirName("Butterfree.png", globalVariables);
-        Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(5, new SilverPowder()),
-                new CreateOrderedMap<>(95, new NoItem()));
+        Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(5, GetItem.getSilverPowder()),
+                new CreateOrderedMap<>(95, GetItem.getNoItem()));
         getWildItem();
     }
 }

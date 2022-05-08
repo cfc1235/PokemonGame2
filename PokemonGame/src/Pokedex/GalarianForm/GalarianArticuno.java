@@ -11,6 +11,7 @@ import java.util.Collections;
 public class GalarianArticuno extends Pokemon {
     public GalarianArticuno(int level, GlobalVariables globalVariables){
         this.hasGender = false;
+        this.isGalarian = true;
         setFirstEVs();
         setNature();
         setIVs();

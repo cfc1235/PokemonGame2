@@ -32,6 +32,7 @@ public class Route1 extends AreaTypes{
                 new CreateOrderedMap<>(6, 1), new CreateOrderedMap<>(144, 1),
                 new CreateOrderedMap<>(145, 1), new CreateOrderedMap<>(146, 1),
                 new CreateOrderedMap<>(149, 1));
+        Collections.addAll(this.surfingChance, new CreateOrderedMap<>(100, 550));
         createPokeChances();
     }
 }

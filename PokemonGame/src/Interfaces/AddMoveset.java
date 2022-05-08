@@ -373,4 +373,12 @@ public interface AddMoveset {
     default Moves addMistyTerrain(){return new MistyTerrain();}
     default Moves addHighJumpKick(){return new HighJumpKick();}
     default Moves addHeadSmash(){return new HeadSmash();}
+    default Moves addFlail(){return new Flail();}
+    default Moves addAquaJet(){return new AquaJet();}
+    default Moves addSoak(){return new Soak();}
+    default Moves addFinalGambit(){return new FinalGambit();}
+    default Moves addThrash(){return new Thrash();}
+    default Moves addMudShot(){return new MudShot();}
+    default Moves addWaveCrash(){return new WaveCrash();}
+    default Moves addOminousWind(){return new OminousWind();}
 }
