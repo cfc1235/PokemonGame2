@@ -8,8 +8,8 @@ public interface TypeChart {
 
     static double CalcTypeEffective(Pokemon attacker,
                                     Pokemon defender,
-                                    Moves moves){
-        String type = moves.showType();
+                                    String type,
+                                    String name){
         double TypeEffect = 1;
         if(type.equals("Normal")){
             if (defender.showType1().equals("Rock") ||
@@ -22,7 +22,7 @@ public interface TypeChart {
             }
             if (defender.showType1().equals("Ghost") ||
                 defender.showType1().equals("Ghost")){
-                    if (!moves.showName().equals("Struggle")
+                    if (!name.equals("Struggle")
                     || defender.showAbility().showName().equals("Scrappy")) {
                         TypeEffect = 0;
                     }
@@ -452,7 +452,7 @@ public interface TypeChart {
             }
             if (defender.showType1().equals("Water") ||
                 defender.showType2().equals("Water")){
-                if(moves.showName().equals("Freeze-Dry")){
+                if(name.equals("Freeze-Dry")){
                     TypeEffect = TypeEffect*2;
                 }
                 else {

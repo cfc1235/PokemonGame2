@@ -81,24 +81,25 @@ public class Items {
         this.itemUsed = true;
         return this.affectCrit;
     }
-    public void useBerry(Pokemon user){
-        this.itemUsed = true;
-        if(this.isBerry){
-            if(this.canHeal){
-                user.changeHP(-1 * this.healAm);
-            }
-            if(this.curesPoison){
-                user.unPoison();
-            }
-            if(this.curesParalysis){
-                user.unParalyze();
-            }
-            if(this.canHeal){
-                if(this.healAm > 0) {
+    public void useBerry(Pokemon user, Boolean magicRoom){
+        if(!magicRoom){
+            this.itemUsed = true;
+            if(this.isBerry){
+                if(this.canHeal){
                     user.changeHP(-1 * this.healAm);
                 }
-                else {
-                    user.changeHP(-1 * (int) (this.healByPercMax * user.showSavedHP()));
+                if(this.curesPoison){
+                    user.unPoison();
+                }
+                if(this.curesParalysis){
+                    user.unParalyze();
+                }
+                if(this.canHeal) {
+                    if (this.healAm > 0) {
+                        user.changeHP(-1 * this.healAm);
+                    } else {
+                        user.changeHP(-1 * (int) (this.healByPercMax * user.showSavedHP()));
+                    }
                 }
             }
         }
@@ -136,14 +137,17 @@ public class Items {
         return this.statMults;
     }
 
-    public Boolean getStatMultsDuringDamage(Moves moves, Pokemon pokemon){
+    public Boolean getStatMultsDuringDamage(Moves moves, Pokemon pokemon,
+                                            Boolean magicRoom){
         getStatMults();
         Boolean isUsed = false;
-        if(!pokemon.showName().equals("Klutz")){
-            for(CreateOrderedMap<String, Double> types : this.typesAffected) {
-                if (types.getKey().equals(moves.showName())) {
-                    doStatChanges(pokemon);
-                    isUsed = true;
+        if(!magicRoom){
+            if(!pokemon.showName().equals("Klutz")){
+                for(CreateOrderedMap<String, Double> types : this.typesAffected) {
+                    if (types.getKey().equals(moves.showName())) {
+                        doStatChanges(pokemon);
+                        isUsed = true;
+                    }
                 }
             }
         }

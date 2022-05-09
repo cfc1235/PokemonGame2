@@ -10,10 +10,24 @@ public class AffectsGround {
     private int spikeAgainstPlayerLayers = 0;
     private Boolean toxicSpikeAgainstAILayer = false;
     private Boolean toxicSpikeAgainstPlayerLayer = false;
+    private Boolean stealthRockAgainstPlayer = false;
+    private Boolean stealthRockAgainstAI = false;
 
     public AffectsGround() {
     }
 
+    public void setStealthRockAgainstPlayer(){
+        this.stealthRockAgainstPlayer = true;
+    }
+    public void setStealthRockAgainstAI(){
+        this.stealthRockAgainstAI = true;
+    }
+    public Boolean getStealthRockAgainstPlayer(){
+        return this.stealthRockAgainstPlayer;
+    }
+    public Boolean getStickyWebAgainstAI(){
+        return this.stealthRockAgainstAI;
+    }
     public void addToPlayerSpikeLayers() {
         if (this.spikeAgainstPlayerLayers < 3) {
             this.spikeAgainstPlayerLayers += 1;
@@ -42,7 +56,7 @@ public class AffectsGround {
         this.stickyWebAgainstAI = true;
     }
 
-    public void playerPokeGroundOnSwitch(Pokemon playerPoke) {
+    public void playerPokeGroundOnSwitch(Pokemon playerPoke, Pokemon AIPoke) {
         if (!playerPoke.showType1().equals("Flying") ||
                 !playerPoke.showType2().equals("Flying")) {
             if (this.StickyWebAgainstPlayer) {
@@ -59,7 +73,28 @@ public class AffectsGround {
                 if (this.spikeAgainstPlayerLayers == 3) {
                     damageAmount = 1.0 / 4;
                 }
-                playerPoke.changeHP((int) (playerPoke.showHP() * damageAmount));
+                playerPoke.changeHP((int) (playerPoke.showSavedHP() * damageAmount));
+            }
+            if(this.stealthRockAgainstPlayer){
+                double type = TypeChart.CalcTypeEffective(AIPoke, playerPoke,
+                        "Rock", "");
+                double damageAmount = 1;
+                if(type == .25){
+                    damageAmount = 1.0/32;
+                }
+                if(type == .5){
+                    damageAmount = 1.0/16;
+                }
+                if(type == 1){
+                    damageAmount = 1.0/8;
+                }
+                if(type == 2){
+                    damageAmount = 1.0/4;
+                }
+                if(type == 4){
+                    damageAmount = 1.0/2;
+                }
+                playerPoke.changeHP((int) (playerPoke.showSavedHP() * damageAmount));
             }
             if (this.toxicSpikeAgainstPlayerLayer) {
                 if (playerPoke.showType1().equals("Poison") ||
@@ -76,7 +111,7 @@ public class AffectsGround {
         }
     }
 
-    public void AIPokeGroundOnSwitch(Pokemon AIPoke) {
+    public void AIPokeGroundOnSwitch(Pokemon AIPoke, Pokemon playerPoke) {
         if (!AIPoke.showType1().equals("Flying") ||
                 !AIPoke.showType2().equals("Flying")) {
             if (this.stickyWebAgainstAI) {
@@ -105,6 +140,27 @@ public class AffectsGround {
                         AIPoke.Poison();
                     }
                 }
+            }
+            if(this.stealthRockAgainstPlayer){
+                double type = TypeChart.CalcTypeEffective(playerPoke, AIPoke,
+                        "Rock", "");
+                double damageAmount = 1;
+                if(type == .25){
+                    damageAmount = 1.0/32;
+                }
+                if(type == .5){
+                    damageAmount = 1.0/16;
+                }
+                if(type == 1){
+                    damageAmount = 1.0/8;
+                }
+                if(type == 2){
+                    damageAmount = 1.0/4;
+                }
+                if(type == 4){
+                    damageAmount = 1.0/2;
+                }
+                AIPoke.changeHP((int) (AIPoke.showSavedHP() * damageAmount));
             }
         }
     }

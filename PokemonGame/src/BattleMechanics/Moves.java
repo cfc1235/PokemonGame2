@@ -188,7 +188,15 @@ public class Moves {
     protected double addsToHP = 0;
     protected int usesPerBattle = -1;
     protected int usesPerBattleSaved = this.usesPerBattle;
+    protected int isDisabled = 0;
+    protected int causesDisabled = 0;
+    protected int magicRoomAdd = 0;
 
+    public int getMagicRoomAdd(){return this.magicRoomAdd;}
+    public int getCausesDisabled(){return this.causesDisabled;}
+    public void setIsDisabled(int disableTimer){this.isDisabled = disableTimer;}
+    public void tickDownDisabledTimer(){this.isDisabled -= 1;}
+    public int getIsDisabled(){return this.isDisabled;}
     public int getUsesPerBattle(){return this.usesPerBattle;}
     public double getAddsToHP(){return this.addsToHP;}
     public Boolean getCausesCannotFlee(){return this.causesCannotFlee;}
@@ -583,7 +591,8 @@ public class Moves {
     public int damageDealt(Pokemon attacker, Pokemon defender,
                            Weather weather, Pokemon PlayerPoke,
                            Terrain terrain, List<Pokemon> Waiting,
-                           Moves enemyMove, Boolean isFirst){
+                           Moves enemyMove, Boolean isFirst,
+                           Boolean magicRoom){
         int RefinedDamage;
         double RawDamage = 0;
         int savedRefinedDamage = 0;
@@ -599,7 +608,8 @@ public class Moves {
                 defender, this, weather,true, isFirst);
         defender.showAbility().addStageDuringDamage(attacker,
                 defender, this, weather,false, isFirst);
-        Boolean isUsed = defender.showItem().getStatMultsDuringDamage(this, defender);
+        Boolean isUsed = defender.showItem().getStatMultsDuringDamage(this,
+                defender, magicRoom);
         if(isUsed && defender.showItem().getIsConsumable()){
             defender.giveItem(new NoItem());
         }
@@ -665,7 +675,7 @@ public class Moves {
         }
         if(this.name.equals("Fling")){
             this.power = attacker.showItem().showFlingDamage();
-            attacker.showItem().useBerry(defender);
+            attacker.showItem().useBerry(defender, false);
         }
         if(this.name.equals("Gyro Ball")){
             this.power = 25 * (defender.showSpeed(
@@ -797,189 +807,188 @@ public class Moves {
                     return 0;
                 }
             }
-            if(Hits(attacker, defender, PlayerPoke, weather)) {
-                if (this.cutsHPTo) {
-                    if(this.name.equals("Endeavor")){
-                        savedRefinedDamage = defender.showHP() - attacker.showHP();
+            if (this.cutsHPTo) {
+                if(this.name.equals("Endeavor")){
+                    savedRefinedDamage = defender.showHP() - attacker.showHP();
+                }
+                else {
+                    savedRefinedDamage = (int) Math.ceil(defender.showHP() / cutHPBy);
+                }
+            } else {
+                int hitTimes = 1;
+                int hitTicker = 1;
+                if (this.MultHit) {
+                    int range = this.MaxHit - this.MinHit + 1;
+                    hitTimes = (int) Math.round((Math.random() * range) + MinHit);
+                }
+                while (hitTicker <= hitTimes) {
+                    if (this.isSpecial && !this.name.equals("Psyshock")) {
+                        RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2)
+                                * this.power * ((attacker.showSpecAttack() * SpecAttackCalc(attacker) *
+                                attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
+                                attacker.showItem().getStatMults()[2])  /
+                                (defender.showSpecDefense() * SpecDefCalc(defender) *
+                                defender.showAbility().getStatMults(defender, attacker, this, weather)[3] *
+                                defender.showItem().getStatMults()[2])) / 50.0) + 2);
+                        if(defender.getHasSpecWall()){
+                            RawDamage = RawDamage/2;
+                        }
                     }
-                    else {
-                        savedRefinedDamage = (int) Math.ceil(defender.showHP() / cutHPBy);
+                    if (this.isSpecial && this.name.equals("Psyshock")) {
+                        RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2)
+                                * this.power * ((attacker.showSpecAttack() * SpecAttackCalc(attacker) *
+                                attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
+                                attacker.showItem().getStatMults()[2])  /
+                                (defender.showPhysDefense() * DefCalc(defender) *
+                                        defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
+                                        defender.showItem().getStatMults()[1])) / 50.0) + 2);
+                        if(defender.getHasSpecWall()){
+                            RawDamage = RawDamage/2;
+                        }
                     }
-                } else {
-                    int hitTimes = 1;
-                    int hitTicker = 1;
-                    if (this.MultHit) {
-                        int range = this.MaxHit - this.MinHit + 1;
-                        hitTimes = (int) Math.round((Math.random() * range) + MinHit);
+                    if (!this.isSpecial && !(this.name.equals("Body Press") || this.name.equals("Foul Play"))) {
+                        RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
+                                this.power * ((attacker.showPhysAttack() * AttackCalc(attacker) *
+                                attacker.showAbility().getStatMults(attacker, defender, this, weather)[0] *
+                                attacker.showItem().getStatMults()[0]) / (defender.showPhysDefense() *
+                                DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
+                                defender.showItem().getStatMults()[1])) / 50.0) + 2);
+                        if(defender.getHasPhysWall()){
+                            RawDamage = RawDamage/2;
+                        }
                     }
-                    while (hitTicker <= hitTimes) {
-                        if (this.isSpecial && !this.name.equals("Psyshock")) {
-                            RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2)
-                                    * this.power * ((attacker.showSpecAttack() * SpecAttackCalc(attacker) *
-                                    attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
-                                    attacker.showItem().getStatMults()[2])  /
-                                    (defender.showSpecDefense() * SpecDefCalc(defender) *
-                                    defender.showAbility().getStatMults(defender, attacker, this, weather)[3] *
-                                    defender.showItem().getStatMults()[2])) / 50.0) + 2);
-                            if(defender.getHasSpecWall()){
-                                RawDamage = RawDamage/2;
-                            }
+                    if (!this.isSpecial && this.name.equals("Foul Play")) {
+                        RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
+                                this.power * ((defender.showPhysAttack() * AttackCalc(defender) *
+                                attacker.showAbility().getStatMults(attacker, defender, this, weather)[0] *
+                                attacker.showItem().getStatMults()[0]) / (defender.showPhysDefense() *
+                                DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
+                                defender.showItem().getStatMults()[1])) / 50.0) + 2);
+                        if(defender.getHasPhysWall()){
+                            RawDamage = RawDamage/2;
                         }
-                        if (this.isSpecial && this.name.equals("Psyshock")) {
-                            RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2)
-                                    * this.power * ((attacker.showSpecAttack() * SpecAttackCalc(attacker) *
-                                    attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
-                                    attacker.showItem().getStatMults()[2])  /
-                                    (defender.showPhysDefense() * DefCalc(defender) *
-                                            defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
-                                            defender.showItem().getStatMults()[1])) / 50.0) + 2);
-                            if(defender.getHasSpecWall()){
-                                RawDamage = RawDamage/2;
-                            }
+                    }
+                    if (!this.isSpecial && this.name.equals("Body Press")) {
+                        RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
+                                this.power * ((attacker.showPhysDefense() * AttackCalc(attacker) *
+                                attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
+                                attacker.showItem().getStatMults()[2]) / (defender.showPhysDefense() *
+                                DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[2]) *
+                                defender.showItem().getStatMults()[2]) / 50.0) + 2);
+                        if(defender.getHasPhysWall()){
+                            RawDamage = RawDamage/2;
                         }
-                        if (!this.isSpecial && !(this.name.equals("Body Press") || this.name.equals("Foul Play"))) {
-                            RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
-                                    this.power * ((attacker.showPhysAttack() * AttackCalc(attacker) *
-                                    attacker.showAbility().getStatMults(attacker, defender, this, weather)[0] *
-                                    attacker.showItem().getStatMults()[0]) / (defender.showPhysDefense() *
-                                    DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
-                                    defender.showItem().getStatMults()[1])) / 50.0) + 2);
-                            if(defender.getHasPhysWall()){
-                                RawDamage = RawDamage/2;
-                            }
+                    }
+                    if ((this.name.equals("Acrobatics") && attacker.showItem().showName().equals(""))
+                    || ((this.name.equals("Brine")) && (defender.showHP() * 1.0)/defender.showSavedHP() <= .5)
+                    || ((this.name.equals("Pursuit")) && defender.getJustThrown())
+                    || ((this.name.equals("Assurance") || this.name.equals("Revenge")) && defender.getTookDamage())
+                    || ((this.name.equals("Payback")) && !attacker.getIsFirst())){
+                        RawDamage = RawDamage * 2;
+                    }
+                    if(this.name.equals("Hex")){
+                        if(defender.showBurn() ||
+                        defender.showParalysis() ||
+                        defender.showPoisoned() ||
+                        defender.showFrozen() ||
+                        defender.showAsleep()){
+                            RawDamage = RawDamage*2;
                         }
-                        if (!this.isSpecial && this.name.equals("Foul Play")) {
-                            RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
-                                    this.power * ((defender.showPhysAttack() * AttackCalc(defender) *
-                                    attacker.showAbility().getStatMults(attacker, defender, this, weather)[0] *
-                                    attacker.showItem().getStatMults()[0]) / (defender.showPhysDefense() *
-                                    DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
-                                    defender.showItem().getStatMults()[1])) / 50.0) + 2);
-                            if(defender.getHasPhysWall()){
-                                RawDamage = RawDamage/2;
-                            }
-                        }
-                        if (!this.isSpecial && this.name.equals("Body Press")) {
-                            RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
-                                    this.power * ((attacker.showPhysDefense() * AttackCalc(attacker) *
-                                    attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
-                                    attacker.showItem().getStatMults()[2]) / (defender.showPhysDefense() *
-                                    DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[2]) *
-                                    defender.showItem().getStatMults()[2]) / 50.0) + 2);
-                            if(defender.getHasPhysWall()){
-                                RawDamage = RawDamage/2;
-                            }
-                        }
-                        if ((this.name.equals("Acrobatics") && attacker.showItem().showName().equals(""))
-                        || ((this.name.equals("Brine")) && (defender.showHP() * 1.0)/defender.showSavedHP() <= .5)
-                        || ((this.name.equals("Pursuit")) && defender.getJustThrown())
-                        || ((this.name.equals("Assurance") || this.name.equals("Revenge")) && defender.getTookDamage())
-                        || ((this.name.equals("Payback")) && !attacker.getIsFirst())){
+                    }
+                    if(attacker.getThrownOnFaint()){
+                        attacker.resetThrownOnFaint();
+                        if(this.name.equals("Retaliate")){
                             RawDamage = RawDamage * 2;
                         }
-                        if(this.name.equals("Hex")){
-                            if(defender.showBurn() ||
-                            defender.showParalysis() ||
-                            defender.showPoisoned() ||
-                            defender.showFrozen() ||
-                            defender.showAsleep()){
-                                RawDamage = RawDamage*2;
-                            }
+                    }
+                    if(this.name.equals("Rollout")){
+                        if(attacker.getOutrageTimer() == 4){
+                            RawDamage = RawDamage * 2;
                         }
-                        if(attacker.getThrownOnFaint()){
-                            attacker.resetThrownOnFaint();
-                            if(this.name.equals("Retaliate")){
-                                RawDamage = RawDamage * 2;
-                            }
+                        if(attacker.getOutrageTimer() == 3){
+                            RawDamage = RawDamage * 4;
                         }
-                        if(this.name.equals("Rollout")){
-                            if(attacker.getOutrageTimer() == 4){
-                                RawDamage = RawDamage * 2;
-                            }
-                            if(attacker.getOutrageTimer() == 3){
-                                RawDamage = RawDamage * 4;
-                            }
-                            if(attacker.getOutrageTimer() == 2){
-                                RawDamage = RawDamage * 8;
-                            }
-                            if(attacker.getOutrageTimer() == 1){
-                                RawDamage = RawDamage * 16;
-                            }
+                        if(attacker.getOutrageTimer() == 2){
+                            RawDamage = RawDamage * 8;
                         }
-                        if(attacker.showAbility().showName().equals("Reckless")
-                                && this.DamageSelf){
-                            RawDamage = RawDamage * 1.2;
+                        if(attacker.getOutrageTimer() == 1){
+                            RawDamage = RawDamage * 16;
                         }
-                        double Weather = 1;
-                        if (this.type.equals(weather.showIncreaseType())) {
-                            Weather = weather.showIncreaseBy();
+                    }
+                    if(attacker.showAbility().showName().equals("Reckless")
+                            && this.DamageSelf){
+                        RawDamage = RawDamage * 1.2;
+                    }
+                    double Weather = 1;
+                    if (this.type.equals(weather.showIncreaseType())) {
+                        Weather = weather.showIncreaseBy();
+                    }
+                    if (this.type.equals(weather.showDecreaseType())) {
+                        Weather = weather.showDecreasedBy();
+                    }
+                    int Crit = 1;
+                    if (isCrit(attacker) || attacker.getWillCrit()) {
+                        Crit = 2;
+                        if(attacker.showAbility().getIncreasesCritDamage()){
+                            Crit = 3;
                         }
-                        if (this.type.equals(weather.showDecreaseType())) {
-                            Weather = weather.showDecreasedBy();
+                        attacker.resetWillCrit();
+                    }
+                    RefinedDamage = (int) (Math.round((RawDamage * Weather * Crit *
+                            CalcSubtractor() * STABBonus(attacker)
+                            * TypeChart.CalcTypeEffective(attacker, defender,
+                            this.type, this.name)) * fromAbility));
+                    if (this.name.equals("Facade")) {
+                        if (attacker.showBurn() || attacker.showParalysis() || attacker.showPoisoned()) {
+                            RefinedDamage = RefinedDamage * 2;
                         }
-                        int Crit = 1;
-                        if (isCrit(attacker) || attacker.getWillCrit()) {
-                            Crit = 2;
-                            if(attacker.showAbility().getIncreasesCritDamage()){
-                                Crit = 3;
-                            }
-                            attacker.resetWillCrit();
+                    }
+                    if (this.name.equals("Venoshock")) {
+                        if (defender.showPoisoned()) {
+                            RefinedDamage = RefinedDamage * 2;
                         }
-                        RefinedDamage = (int) (Math.round((RawDamage * Weather * Crit *
-                                CalcSubtractor() * STABBonus(attacker)
-                                * TypeChart.CalcTypeEffective(attacker, defender,
-                                this)) * fromAbility));
-                        if (this.name.equals("Facade")) {
-                            if (attacker.showBurn() || attacker.showParalysis() || attacker.showPoisoned()) {
-                                RefinedDamage = RefinedDamage * 2;
-                            }
-                        }
-                        if (this.name.equals("Venoshock")) {
-                            if (defender.showPoisoned()) {
-                                RefinedDamage = RefinedDamage * 2;
-                            }
-                        }
-                        if(this.name.equals("Knock Off")){
-                            if(!defender.showItem().showName().equals("")){
-                                RefinedDamage = (int) Math.round(RefinedDamage * 1.5);
-                            }
-                        }
-                        if (terrain.showIncreaseType().equals(this.type)) {
-                            RefinedDamage = (int) Math.round(RefinedDamage * terrain.showIncreasedBy());
-                        }
-                        if (attacker.showCharged()) {
+                    }
+                    if(this.name.equals("Knock Off")){
+                        if(!defender.showItem().showName().equals("")){
                             RefinedDamage = (int) Math.round(RefinedDamage * 1.5);
                         }
-                        if (RefinedDamage == 0) {
-                            RefinedDamage = 1;
-                        }
-                        if (this.MultHit) {
-                            System.out.println("Hit " + hitTicker + " for " + RefinedDamage);
-                            savedRefinedDamage += RefinedDamage;
-                        }
-                        if (!this.MultHit) {
-                            savedRefinedDamage = RefinedDamage;
-                        }
-                        hitTicker += 1;
-                        if(this.name.equals("Fury Cutter")){
-                            this.power = this.power * 2;
-                            if(this.power >= 160){
-                                this.power = 160;
-                            }
+                    }
+                    if (terrain.showIncreaseType().equals(this.type)) {
+                        RefinedDamage = (int) Math.round(RefinedDamage * terrain.showIncreasedBy());
+                    }
+                    if (attacker.showCharged()) {
+                        RefinedDamage = (int) Math.round(RefinedDamage * 1.5);
+                    }
+                    if (RefinedDamage == 0) {
+                        RefinedDamage = 1;
+                    }
+                    if (this.MultHit) {
+                        System.out.println("Hit " + hitTicker + " for " + RefinedDamage);
+                        savedRefinedDamage += RefinedDamage;
+                    }
+                    if (!this.MultHit) {
+                        savedRefinedDamage = RefinedDamage;
+                    }
+                    hitTicker += 1;
+                    if(this.name.equals("Fury Cutter")){
+                        this.power = this.power * 2;
+                        if(this.power >= 160){
+                            this.power = 160;
                         }
                     }
                 }
-                if(!defender.showAbility().getCausesStatEffect().isEmpty()){
-                    defender.showAbility().statEffectOnDamage(this, attacker);
-                }
+            }
+            if(!defender.showAbility().getCausesStatEffect().isEmpty()){
+                defender.showAbility().statEffectOnDamage(this, attacker);
             }
         }
         if(defender.getIsProtected()){
             System.out.println("Enemy " + defender.showName() + " is protected!");
         }
-        if(name.equals("Weather Ball")){
+        if(this.name.equals("Weather Ball")){
             this.type = "Normal";
         }
+        savedRefinedDamage -= (int)  (savedRefinedDamage * defender.showAbility().getDamageReduction());
         if((defender.showSavedHP() == defender.showHP())
                 && defender.showAbility().equals("Sturdy")
                 && (savedRefinedDamage >= defender.showSavedHP())){
@@ -1216,6 +1225,7 @@ public class Moves {
     public void resetPP() {
         this.PP = this.savedPP;
         this.usesPerBattle = this.usesPerBattleSaved;
+        this.isDisabled = 0;
     }
 
     public String toString(){

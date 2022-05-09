@@ -7,5 +7,6 @@ public class CuteCharm extends Abilities {
         this.name = "Cute Charm";
         this.causesStatEffect.add("Infatuate");
         this.requiresPhys = true;
+        this.statChance = .3;
     }
 }

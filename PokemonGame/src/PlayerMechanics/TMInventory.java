@@ -125,7 +125,7 @@ public class TMInventory {
         if(Selection == 69 && !this.TMInventory.contains("Psycho Cut")){this.TMInventory.add("Psycho Cut");}
         if(Selection == 70 && !this.TMInventory.contains("Trick Room")){this.TMInventory.add("Trick Room");}
         if(Selection == 71 && !this.TMInventory.contains("Wonder Room")){}
-        if(Selection == 72 && !this.TMInventory.contains("Magic Room")){}
+        if(Selection == 72 && !this.TMInventory.contains("Magic Room")){this.TMInventory.add("Magic Room");}
         if(Selection == 73 && !this.TMInventory.contains("Cross Poison")){this.TMInventory.add("Cross Poison");}
         if(Selection == 74 && !this.TMInventory.contains("Venoshock")){this.TMInventory.add("Venoshock");}
         if(Selection == 75 && !this.TMInventory.contains("Low Sweep")){this.TMInventory.add("Low Sweep");}
@@ -172,7 +172,7 @@ public class TMInventory {
         if(Selection == 116 && !this.TMInventory.contains("Waterfall")){this.TMInventory.add("Waterfall");}
         if(Selection == 117 && !this.TMInventory.contains("Amnesia")){this.TMInventory.add("Amnesia");}
         if(Selection == 118 && !this.TMInventory.contains("Leech Life")){this.TMInventory.add("Leech Life");}
-        if(Selection == 119 && !this.TMInventory.contains("Tri Attack")){}
+        if(Selection == 119 && !this.TMInventory.contains("Tri Attack")){this.TMInventory.add("Tri Attack");}
         if(Selection == 120 && !this.TMInventory.contains("Substitute")){this.TMInventory.add("Substitute");}
         if(Selection == 121 && !this.TMInventory.contains("Reversal")){this.TMInventory.add("Reversal");}
         if(Selection == 122 && !this.TMInventory.contains("Sludge Bomb")){this.TMInventory.add("Sludge Bomb");}
@@ -229,7 +229,7 @@ public class TMInventory {
         if(Selection == 173 && !this.TMInventory.contains("Gunk Shot")){}
         if(Selection == 174 && !this.TMInventory.contains("Iron Head")){this.TMInventory.add("Iron Head");}
         if(Selection == 175 && !this.TMInventory.contains("Stone Edge")){this.TMInventory.add("Stone Edge");}
-        if(Selection == 176 && !this.TMInventory.contains("Stealth Rock")){}
+        if(Selection == 176 && !this.TMInventory.contains("Stealth Rock")){this.TMInventory.add("Stealth Rock");}
         if(Selection == 177 && !this.TMInventory.contains("Grass Knot")){this.TMInventory.add("Grass Knot");}
         if(Selection == 178 && !this.TMInventory.contains("Sludge Wave")){this.TMInventory.add("Sludge Wave");}
         if(Selection == 179 && !this.TMInventory.contains("Heavy Slam")){this.TMInventory.add("Heavy Slam");}

@@ -387,4 +387,11 @@ public interface AddMoveset {
     default Moves addSolarBlade(){return new SolarBlade();}
     default Moves addFirstImpression(){return new FirstImpression();}
     default Moves addMeteorAssault(){return new MeteorAssault();}
+    default Moves addSing(){return new Sing();}
+    default Moves addSweetKiss(){return new SweetKiss();}
+    default Moves addDisable(){return new Disable();}
+    default Moves addCovet(){return new Covet();}
+    default Moves addTriAttack(){return new TriAttack();}
+    default Moves addStealthRock(){return new StealthRock();}
+    default Moves addMagicRoom(){return new MagicRoom();}
 }

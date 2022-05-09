@@ -13,6 +13,7 @@ import Pokedex.H.*;
 import Pokedex.HisuianForm.Basculegion;
 import Pokedex.HisuianForm.BasculinWhite;
 import Pokedex.I.*;
+import Pokedex.J.Jigglypuff;
 import Pokedex.L.*;
 import Pokedex.M.*;
 import Pokedex.N.*;
@@ -94,6 +95,12 @@ public interface GetPokemon {
             else {
                 pokemon = new AlolanRaticate(level, globalVariables);
             }
+        }
+        if(ID == 39){
+            pokemon = new Jigglypuff(level, globalVariables);
+        }
+        if(ID == 40){
+            pokemon = new Wigglytuff(level, globalVariables);
         }
         if(ID == 43){
             pokemon = new Oddish(level, globalVariables);
@@ -177,6 +184,9 @@ public interface GetPokemon {
         }
          if(ID == 168){
              pokemon = new Ariados(level, globalVariables);
+         }
+         if(ID == 174){
+             pokemon = new Igglybuff(level, globalVariables);
          }
          if(ID == 182){
              pokemon = new Bellossom(level, globalVariables);
@@ -349,6 +359,10 @@ public interface GetPokemon {
                         IVs, HPMissing, Evs, Gender, ability, isShiny, items);
             }
         }
+        if(ID == 39){
+            evolution = new Wigglytuff(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
         if(ID == 43){
             evolution = new Gloom(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
@@ -400,6 +414,10 @@ public interface GetPokemon {
         }
         if(ID == 167){
             evolution = new Ariados(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 174){
+            evolution = new Jigglypuff(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(ID == 204){

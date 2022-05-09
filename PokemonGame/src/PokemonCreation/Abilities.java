@@ -112,7 +112,9 @@ public class Abilities {
     protected Boolean onEndFight = false;
     protected String onEffect = "";
     protected Boolean noFlinch = false;
+    protected double damageReduction = 0;
 
+    public double getDamageReduction(){return this.damageReduction;}
     public Boolean getNoFlinch(){return this.noFlinch;}
     public ArrayList<String> getCausesStatEffect(){return this.causesStatEffect;}
     public void statEffectOnDamage(Moves moves, Pokemon attacker){
@@ -347,13 +349,6 @@ public class Abilities {
         }
     }
 
-    public void resolveBerryCheck(Pokemon attacker){
-        if(this.usesBerry) {
-            if (attacker.showItem().getIsBerry()) {
-                attacker.showItem().useBerry(attacker);
-            }
-        }
-    }
     public Boolean getAffectsCrit(){
         return affectsCrit;
     }

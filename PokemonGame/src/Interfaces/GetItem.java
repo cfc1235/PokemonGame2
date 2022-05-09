@@ -35,10 +35,11 @@ public interface GetItem {
     static Items getOranBerry(){return new OranBerry();}
     static Items getPrismScale(){return new PrismScale();}
     static Items getLeek(){return new Leek();}
+    static Items getMoonStone(){return new MoonStone();}
 
     static Items getRandomItem(){
         Random random = new Random();
-        int rand = random.nextInt(22);
+        int rand = random.nextInt(23);
         if(rand == 0){getApricorn();}
         if (rand == 1){getCheriBerry();}
         if(rand == 2){getPechaBerry();}
@@ -61,6 +62,7 @@ public interface GetItem {
         if(rand == 19){getOranBerry();}
         if(rand == 20){getPrismScale();}
         if(rand == 21){getLeek();}
+        if(rand == 22){getMoonStone();}
         return getNoItem();
     }
 }

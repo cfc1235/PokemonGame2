@@ -15,12 +15,13 @@ public class Route1 extends AreaTypes{
                 new CreateOrderedMap<>(30, 19), new CreateOrderedMap<>(20, 161),
                 new CreateOrderedMap<>(5, 162), new CreateOrderedMap<>(15, 43),
                 new CreateOrderedMap<>(15, 69), new CreateOrderedMap<>(25, 504),
-                new CreateOrderedMap<>(25, 506), new CreateOrderedMap<>(2, 531));
+                new CreateOrderedMap<>(25, 506), new CreateOrderedMap<>(2, 531),
+                new CreateOrderedMap<>(10, 39));
         Collections.addAll(this.nightChance, new CreateOrderedMap<>(50, 19),
                 new CreateOrderedMap<>(5, 20), new CreateOrderedMap<>(45, 163),
                 new CreateOrderedMap<>(15, 43), new CreateOrderedMap<>(15, 69),
                 new CreateOrderedMap<>(25, 506), new CreateOrderedMap<>(25, 504),
-                new CreateOrderedMap<>(2, 559));
+                new CreateOrderedMap<>(5, 559), new CreateOrderedMap<>(1, 560));
         Collections.addAll(this.heabuttChance, new CreateOrderedMap<>(45, 165),
                 new CreateOrderedMap<>(45, 167), new CreateOrderedMap<>(33, 204),
                 new CreateOrderedMap<>(33, 265));
@@ -37,6 +38,9 @@ public class Route1 extends AreaTypes{
         Collections.addAll(this.fishingChance, new CreateOrderedMap<>(95, 550),
                 new CreateOrderedMap<>(5, 349));
         Collections.addAll(this.fishingChampChance, new CreateOrderedMap<>(1, 350));
+        Collections.addAll(this.champDayChance, new CreateOrderedMap<>(1, 40),
+                new CreateOrderedMap<>(1, 531));
+        Collections.addAll(this.champNightChance, new CreateOrderedMap<>(5, 508));
         createPokeChances();
     }
 }

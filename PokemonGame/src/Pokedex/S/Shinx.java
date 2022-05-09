@@ -1,11 +1,8 @@
 package Pokedex.S;
 
 import Interfaces.CreateOrderedMap;
+import Interfaces.GetItem;
 import Interfaces.GlobalVariables;
-import Items.Berries.CheriBerry;
-import Items.Consumable.SeedOfMastery;
-import Items.Consumable.SmallEXPCandy;
-import Items.Consumable.SpoiledApricorn;
 import PokemonCreation.AllAbilities.G.Guts;
 import PokemonCreation.AllAbilities.I.Intimidate;
 import PokemonCreation.AllAbilities.R.Rivalry;
@@ -56,9 +53,9 @@ public class Shinx extends Pokemon {
         setFullDirName("Shinx.png", globalVariables);
         this.EvolTiming = 15;
         this.setPokeCry("411Cry.wav");
-        Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(35, new CheriBerry()),
-                new CreateOrderedMap<>(15, new SpoiledApricorn()), new CreateOrderedMap<>(10, new SeedOfMastery()),
-                new CreateOrderedMap<>(100, new SmallEXPCandy()));
+        Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(35, GetItem.getCheriBerry()),
+                new CreateOrderedMap<>(15, GetItem.getSpoiledApricorn()), new CreateOrderedMap<>(10, GetItem.getSeedOfMastery()),
+                new CreateOrderedMap<>(100, GetItem.getSmallExpCandy()));
         getWildItem();
     }
 }
