@@ -186,7 +186,10 @@ public class Moves {
     protected Boolean setsHPTo0PostStatChange = false;
     protected Boolean causesCannotFlee = false;
     protected double addsToHP = 0;
+    protected int usesPerBattle = -1;
+    protected int usesPerBattleSaved = this.usesPerBattle;
 
+    public int getUsesPerBattle(){return this.usesPerBattle;}
     public double getAddsToHP(){return this.addsToHP;}
     public Boolean getCausesCannotFlee(){return this.causesCannotFlee;}
     public Boolean getResetsType(){return this.resetsType;}
@@ -376,8 +379,11 @@ public class Moves {
         if(defender.showAbility().showName().equals("Pressure")){
             this.PP -= 2;
         }
-        if(!defender.showAbility().showName().equals("Pressure")){
+        else{
             this.PP -= 1;
+        }
+        if(this.usesPerBattle > 0){
+            this.usesPerBattle -= 1;
         }
     }
     public void StatusAffectsPPChange(){
@@ -476,6 +482,7 @@ public class Moves {
         if (CritStage >= 4) {
             Critlev = 1;}
         if (Critlev == 1 ) {
+            attacker.addToCritTotal();
             return true;}
         else {
             return false;}
@@ -954,6 +961,12 @@ public class Moves {
                             savedRefinedDamage = RefinedDamage;
                         }
                         hitTicker += 1;
+                        if(this.name.equals("Fury Cutter")){
+                            this.power = this.power * 2;
+                            if(this.power >= 160){
+                                this.power = 160;
+                            }
+                        }
                     }
                 }
                 if(!defender.showAbility().getCausesStatEffect().isEmpty()){
@@ -971,6 +984,9 @@ public class Moves {
                 && defender.showAbility().equals("Sturdy")
                 && (savedRefinedDamage >= defender.showSavedHP())){
             savedRefinedDamage = defender.showHP() - 1;
+        }
+        if(this.name.equals("Fury Cutter")){
+            this.power = 40;
         }
         return savedRefinedDamage;
     }
@@ -1199,6 +1215,7 @@ public class Moves {
     }
     public void resetPP() {
         this.PP = this.savedPP;
+        this.usesPerBattle = this.usesPerBattleSaved;
     }
 
     public String toString(){

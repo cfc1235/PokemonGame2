@@ -65,7 +65,7 @@ public class TMInventory {
         if(Selection == 9 && !this.TMInventory.contains("Giga Impact")) { this.TMInventory.add("Giga Impact"); }
         if(Selection == 10 && !this.TMInventory.contains("Magical Leaf")) { this.TMInventory.add("Magical Leaf"); }
         if(Selection == 11 && !this.TMInventory.contains("Solar Beam")) { this.TMInventory.add("Solar Beam"); }
-        if(Selection == 12 && !this.TMInventory.contains("Solar Blade")) {}
+        if(Selection == 12 && !this.TMInventory.contains("Solar Blade")) {this.TMInventory.add("Solar Blade");}
         if(Selection == 13 && !this.TMInventory.contains("Fire Spin")) { this.TMInventory.add("Fire Spin"); }
         if(Selection == 14 && !this.TMInventory.contains("Thunder Wave")) { this.TMInventory.add("Thunder Wave");}
         if(Selection == 15 && !this.TMInventory.contains("Dig")) { this.TMInventory.add("Dig"); }

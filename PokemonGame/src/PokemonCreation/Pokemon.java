@@ -159,10 +159,12 @@ public class Pokemon implements AddMoveset {
     protected int bideDamage = 0;
     protected Boolean isGalarian = false;
     protected Boolean isHisuian = false;
-    public int recoilTotal = 0;
-    public Boolean healEveryTurn = false;
-    public double healPerTurn = 0.0;
+    protected int recoilTotal = 0;
+    protected Boolean healEveryTurn = false;
+    protected double healPerTurn = 0.0;
+    protected int critTotal = 0;
 
+    public void addToCritTotal(){this.critTotal += 1;}
     public void endTurnHeal(){
         if(this.healEveryTurn){
             this.HP += this.healPerTurn * this.savedHP;
@@ -575,26 +577,26 @@ public class Pokemon implements AddMoveset {
     }
     protected void getAbilities(){
         double abilitiy = Math.random();
-        if(possibleAbilities.size() == 1){
-            ability = possibleAbilities.get(0);
+        if(this.possibleAbilities.size() == 1){
+            this.ability = this.possibleAbilities.get(0);
         }
-        if(possibleAbilities.size() == 2){
+        if(this.possibleAbilities.size() == 2){
             if(abilitiy > .5){
-                ability = possibleAbilities.get(1);
+                this.ability = this.possibleAbilities.get(1);
             }
             if(abilitiy <= .5){
-                ability = possibleAbilities.get(0);
+                this.ability = this.possibleAbilities.get(0);
             }
         }
-        if(possibleAbilities.size() == 3){
+        if(this.possibleAbilities.size() == 3){
             if(abilitiy > .6){
-                ability = possibleAbilities.get(2);
+                this.ability = this.possibleAbilities.get(2);
             }
             if(abilitiy > .3 && abilitiy <= .6){
-                ability = possibleAbilities.get(1);
+                this.ability = this.possibleAbilities.get(1);
             }
             if(abilitiy <= .3){
-                ability = possibleAbilities.get(0);
+                this.ability = this.possibleAbilities.get(0);
             }
         }
     }
@@ -997,7 +999,7 @@ public class Pokemon implements AddMoveset {
             setNextLevelEXP();
             setEXPNeeded();
             this.EXPNeeded += savedEXP;
-            if((this.level >= this.EvolTiming) || this.getSpecialEvolReq()){
+            if(this.level >= this.EvolTiming){
                 if(!item.showName().equals("Everstone")) {
                     return true;
                 }
@@ -1357,6 +1359,7 @@ public class Pokemon implements AddMoveset {
         this.resetVortex();
         this.resetConfuseTimer();
         this.resetItem();
+        this.critTotal = 0;
         this.ability.resolveEndFight(this);
     }
 

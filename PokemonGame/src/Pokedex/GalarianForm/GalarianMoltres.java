@@ -36,7 +36,7 @@ public class GalarianMoltres extends Pokemon {
                 new CreateOrderedMap<>(60, addEndure()), new CreateOrderedMap<>(65, addMemento()),
                 new CreateOrderedMap<>(70, addSkyAttack()));
         addFirstMoves();
-        this.pokedexType = this.getClass().getSimpleName();
+        this.pokedexType = "Moltres";
         this.name = this.pokedexType;
         setGivesEVs(0, 0, 0, 3, 0, 0);
         setBaseStats(90, 85, 90, 100, 125,

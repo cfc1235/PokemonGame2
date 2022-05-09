@@ -37,7 +37,7 @@ public class GalarianArticuno extends Pokemon {
                 new CreateOrderedMap<>(60, addMindReader()), new CreateOrderedMap<>(65, addFutureSight()),
                 new CreateOrderedMap<>(70, addTrickRoom()));
         addFirstMoves();
-        this.pokedexType = this.getClass().getSimpleName();
+        this.pokedexType = "Articuno";
         this.name = this.pokedexType;
         setGivesEVs(0, 0, 3, 0, 0, 0);
         setBaseStats(85, 85, 90, 125, 100,

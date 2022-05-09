@@ -113,6 +113,14 @@ public interface GetPokemon {
         if(ID == 71){
             pokemon = new Victreebel(level, globalVariables);
         }
+        if(ID == 83){
+            if(regionCheck < .75){
+                pokemon = new Farfetchd(level, globalVariables);
+            }
+            else{
+                pokemon = new GalarianFarfetchd(level, globalVariables);
+            }
+        }
         if(ID == 144){
             if(regionCheck < .75) {
                 pokemon = new Articuno(level, globalVariables);
@@ -256,6 +264,9 @@ public interface GetPokemon {
          if(ID == 560){
              pokemon = new Scrafty(level, globalVariables);
          }
+         if(ID == 862){
+             pokemon = new Sirfetchd(level, globalVariables);
+         }
          if(ID == 902){
              pokemon = new Basculegion(level, globalVariables);
          }
@@ -280,6 +291,8 @@ public interface GetPokemon {
         Boolean isAlolan = pokemon.getIsAlolan();
         Boolean needsTime = pokemon.getTimeEvolReq();
         Boolean timeNeeded = pokemon.getTimeReqdEvol();
+        Boolean isGalarian = pokemon.getIsGalarian();
+        Boolean isHisuian = pokemon.getIsHisuian();
         double randomCheck = new Random().nextDouble();
         if(needsTime){
             if(timeNeeded != globalVariables.getTime()){
@@ -361,6 +374,10 @@ public interface GetPokemon {
                         IVs, HPMissing, Evs, Gender, ability, isShiny, new NoItem());
             }
         }
+        if(ID == 83 && isHisuian){
+            evolution = new Sirfetchd(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
         if(ID == 147){
             evolution = new Dragonair(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
@@ -435,7 +452,7 @@ public interface GetPokemon {
             evolution = new Stoutland(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
-        if(ID == 550){
+        if(ID == 550 && isHisuian){
             evolution = new Basculegion(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }

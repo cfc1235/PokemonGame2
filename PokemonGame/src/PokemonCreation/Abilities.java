@@ -110,7 +110,10 @@ public class Abilities {
     protected Boolean needsSpeedTime = false;
     protected Boolean speedTime = false;
     protected Boolean onEndFight = false;
+    protected String onEffect = "";
+    protected Boolean noFlinch = false;
 
+    public Boolean getNoFlinch(){return this.noFlinch;}
     public ArrayList<String> getCausesStatEffect(){return this.causesStatEffect;}
     public void statEffectOnDamage(Moves moves, Pokemon attacker){
         if(!this.causesStatEffect.isEmpty()) {
@@ -334,6 +337,13 @@ public class Abilities {
                     doChange(attacker, defender);
                 }
             }
+        }
+    }
+
+    public void addStageDuringEffect(Pokemon attacker, Pokemon defender,
+                                     String effect){
+        if(this.onEffect.equals(effect)){
+            doChange(attacker, defender);
         }
     }
 

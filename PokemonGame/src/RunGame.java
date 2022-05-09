@@ -24,7 +24,6 @@ public class RunGame {
             playIntroMusic.interrupt();
         } catch (Exception e) {
         }
-        System.out.println(currentArea.getName());
         TimeChange timeChange = new TimeChange(globalVariables);
         timeChange.start();
         while (true) {

@@ -38,7 +38,7 @@ public class GalarianZapdos extends Pokemon {
                 new CreateOrderedMap<>(60, addDetect()), new CreateOrderedMap<>(65, addCloseCombat()),
                 new CreateOrderedMap<>(70, addReversal()));
         addFirstMoves();
-        this.pokedexType = this.getClass().getSimpleName();
+        this.pokedexType = "Zapdos";
         this.name = this.pokedexType;
         setGivesEVs(0, 3, 0, 0, 0, 0);
         setBaseStats(90, 125, 90, 85, 90,

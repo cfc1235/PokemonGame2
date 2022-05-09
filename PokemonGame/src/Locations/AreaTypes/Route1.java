@@ -24,7 +24,8 @@ public class Route1 extends AreaTypes{
         Collections.addAll(this.heabuttChance, new CreateOrderedMap<>(45, 165),
                 new CreateOrderedMap<>(45, 167), new CreateOrderedMap<>(33, 204),
                 new CreateOrderedMap<>(33, 265));
-        Collections.addAll(this.swarmChance, new CreateOrderedMap<>(33, 261));
+        Collections.addAll(this.swarmChance, new CreateOrderedMap<>(33, 261),
+                new CreateOrderedMap<>(40, 83));
         Collections.addAll(this.soundChance, new CreateOrderedMap<>(20, 311),
                 new CreateOrderedMap<>(20, 312), new CreateOrderedMap<>(40, 403));
         Collections.addAll(this.champFlightChance, new CreateOrderedMap<>(55, 16),

@@ -466,12 +466,12 @@ public class Battle {
         if(this.type.equals("Trainer")) {
             System.out.println("Enemy throws out " + this.AIPoke.showName());
         }
-        if(type.equals("Wild")) {
-            System.out.println("A Wild " + AIPoke.showName() + " appeared!");
+        if(this.type.equals("Wild")) {
+            System.out.println("A Wild " + this.AIPoke.showName() + " appeared!");
         }
-        ExpLineUp.add(PlayerPoke);
-        while ((!Waiting.isEmpty()) && (!AIParty.isEmpty())) {
-            while ((PlayerPoke.showHP() > 0) && (AIPoke.showHP() > 0)) {
+       this.ExpLineUp.add(this.PlayerPoke);
+        while ((!this.Waiting.isEmpty()) && (!this.AIParty.isEmpty())) {
+            while ((this.PlayerPoke.showHP() > 0) && (this.AIPoke.showHP() > 0)) {
                 ticker += 1;
                 System.out.println("");
                 System.out.println("Round Number: " + ticker);
@@ -533,16 +533,16 @@ public class Battle {
                 }
                 this.isTrickRoom -= 1;
             }
-            if (PlayerPoke.showHP() <= 0) {
+            if (this.PlayerPoke.showHP() <= 0) {
                 this.AIPoke.showAbility().addStageOnDeath(this.AIPoke);
-                Waiting.remove(PlayerPoke);
-                Graveyard.add(PlayerPoke);
-                if (!Waiting.isEmpty()) {
-                    PlayerPoke = ThrowPoke();
+                this.Waiting.remove(this.PlayerPoke);
+                this.Graveyard.add(this.PlayerPoke);
+                if (!this.Waiting.isEmpty()) {
+                    this.PlayerPoke = ThrowPoke();
                 }
-                ExpLineUp.remove(PlayerPoke);
+                this.ExpLineUp.remove(this.PlayerPoke);
             }
-            if (AIPoke.showHP() <= 0) {
+            if (this.AIPoke.showHP() <= 0) {
                 this.PlayerPoke.showAbility().addStageOnDeath(this.PlayerPoke);
                 this.AIParty.remove(this.AIPoke);
                 for (Pokemon pokemon : this.ExpLineUp){
@@ -554,7 +554,7 @@ public class Battle {
                         System.out.println(pokemon.showName() + " can evolve. Do you accept?");
                         String Ev = scan.nextLine();
                         if (Ev.equals("y")) {
-                            this.PlayerPoke = evolvePoke(globalVariables, this.PlayerPoke);
+                            this.PlayerPoke = evolvePoke(this.globalVariables, this.PlayerPoke);
                             this.Waiting.remove(pokemon);
                             this.Waiting.add(this.PlayerPoke);
                             System.out.println(pokemon.showName() + " has evolved!");
@@ -1317,7 +1317,7 @@ public class Battle {
                         }
                     }
                     if (SelectMove.showCanFlinch() || defender.showAbility().showName().equals("Stench")) {
-                        if (Hit) {
+                        if (Hit && !defender.showAbility().getNoFlinch()) {
                             Boolean abilityAffected = false;
                             if (defender.showAbility().showName().equals("Stench")) {
                                 if (SelectMove.showFlinchChance() == 0) {
@@ -1328,6 +1328,7 @@ public class Battle {
                             if ((SelectMove.showFlinchChance() / 100.0) >= Math.random()) {
                                 defender.Flinch();
                                 System.out.println(defender.showName() + " is flinching!");
+                                defender.showAbility().addStageDuringEffect(defender, attacker, "Flinch");
                             }
                             if (abilityAffected) {
                                 SelectMove.resetFlinchChance();
@@ -1641,6 +1642,17 @@ public class Battle {
                     this.playerFutureDamage = 0;
                 }
             }
+            if(attacker.getSpecialEvolReq()){
+                Scanner scan = new Scanner(System.in);
+                System.out.println(attacker.showName() + " can evolve. Do you accept?");
+                String Ev = scan.nextLine();
+                if (Ev.equals("y")) {
+                    this.PlayerPoke = evolvePoke(this.globalVariables, this.PlayerPoke);
+                    this.Waiting.remove(attacker);
+                    this.Waiting.add(this.PlayerPoke);
+                    System.out.println(attacker.showName() + " has evolved!");
+                }
+            }
         }
         if(attacker == this.AIPoke) {
             if(this.AIFutureDamage != 0){
@@ -1701,13 +1713,13 @@ public class Battle {
             System.out.println("No longer enduring!");
         }
         attacker.unCharge();
-        if(terrainTicker == 0){
+        if(this.terrainTicker == 0){
             System.out.println("The terrain wore off! The terrain is returning to " + savedTerrain.showName());
-            terrain = savedTerrain;
+            this.terrain = this.savedTerrain;
         }
-        weatherTicker -= 1;
-        if(weatherTicker == 0){
-            weather = savedWeather;
+        this.weatherTicker -= 1;
+        if(this.weatherTicker == 0){
+            this.weather = this.savedWeather;
             System.out.println("Weather is back to " + weather.showName());
         }
         if(attacker.showStatChangeTimer() == 0){
@@ -1879,6 +1891,7 @@ public class Battle {
         for (int i = 0; i < MoveList.size(); ++i) {
             if(MoveList.get(i).showPP() == 0 ||
             (this.AIPoke.getIsImprisoned() && this.PlayerPoke.showMoves().contains(MoveList.get(i)))
+            || (MoveList.get(i).getUsesPerBattle() == 0)
             || (this.AIPoke.getProhibitedMoves().contains(MoveList.get(i).showName()))){
                 out += 1;
             }

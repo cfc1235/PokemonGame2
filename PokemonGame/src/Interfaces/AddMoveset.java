@@ -383,4 +383,8 @@ public interface AddMoveset {
     default Moves addOminousWind(){return new OminousWind();}
     default Moves addSplash(){return new Splash();}
     default Moves addAquaRing(){return new AquaRing();}
+    default Moves addFuryCutter(){return new FuryCutter();}
+    default Moves addSolarBlade(){return new SolarBlade();}
+    default Moves addFirstImpression(){return new FirstImpression();}
+    default Moves addMeteorAssault(){return new MeteorAssault();}
 }
