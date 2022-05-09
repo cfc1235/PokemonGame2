@@ -2,7 +2,6 @@ package Locations.AreaTypes;
 
 import Interfaces.CreateOrderedMap;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 public class Route1 extends AreaTypes{
