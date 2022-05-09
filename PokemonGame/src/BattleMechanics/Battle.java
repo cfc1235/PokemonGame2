@@ -592,6 +592,10 @@ public class Battle {
     }
 
     private void Turn(Pokemon attacker, Pokemon defender, Moves SelectMove) {
+        double outOfReqChance = 100;
+        if(attacker.showAbility().showName().equals("Serene Grace")){
+            outOfReqChance = 50;
+        }
         Boolean magicRoom = magicRoomTimer > 0;
         this.magicRoomTimer -= 1;
         Moves enemyMove = this.PlayerSelectedMove;
@@ -827,13 +831,13 @@ public class Battle {
                                 attacker.setHasElectricCharge();
                             }
                             if (SelectMove.showTerrainChange()) {
-                                terrain = SelectMove.getToTerrain();
+                                this.terrain = SelectMove.getToTerrain();
                                 System.out.println("The terrain has changed to " + SelectMove.getToTerrain().showName());
-                                terrainTicker = 5;
+                                this.terrainTicker = 5;
                             }
                             if (SelectMove.showHeal()) {
                                 int CurrentHP = attacker.showHP();
-                                SelectMove.showHealAm(weather, attacker);
+                                SelectMove.showHealAm(this.weather, attacker);
                                 if (attacker.showHP() > attacker.showSavedHP()) {
                                     attacker.resetHP();
                                 }
@@ -890,7 +894,7 @@ public class Battle {
                                     Succeeds = SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather);
                                 }
                                 if (SelectMove.showStatChangeReqChance()) {
-                                    if (((SelectMove.showStatChangeReq() / 100) < Math.random())) {
+                                    if (((SelectMove.showStatChangeReq() / outOfReqChance) < Math.random())) {
                                         Succeeds = false;
                                     }
                                 }
@@ -1120,7 +1124,7 @@ public class Battle {
                                         }
                                     }
                                   if (SelectMove.showcanBurn()) {
-                                        if ((SelectMove.showBurnChance() / 100) >= Math.random()) {
+                                        if ((SelectMove.showBurnChance() / outOfReqChance) >= Math.random()) {
                                             defender.Burn();
                                         }
                                     }
@@ -1326,7 +1330,7 @@ public class Battle {
                                             abilityAffected = true;
                                         }
                                     }
-                                    if ((SelectMove.showFlinchChance() / 100.0) >= Math.random()) {
+                                    if ((SelectMove.showFlinchChance() / outOfReqChance) >= Math.random()) {
                                         defender.Flinch();
                                         System.out.println(defender.showName() + " is flinching!");
                                         defender.showAbility().addStageDuringEffect(defender, attacker, "Flinch");

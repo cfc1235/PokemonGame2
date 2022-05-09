@@ -197,6 +197,9 @@ public interface GetPokemon {
          if(ID == 205){
              pokemon = new Forretress(level, globalVariables);
          }
+         if(ID == 206){
+             pokemon = new Dunsparce(level, globalVariables);
+         }
          if(ID == 261){
              pokemon = new Poochyena(level, globalVariables);
          }

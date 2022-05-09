@@ -394,4 +394,6 @@ public interface AddMoveset {
     default Moves addTriAttack(){return new TriAttack();}
     default Moves addStealthRock(){return new StealthRock();}
     default Moves addMagicRoom(){return new MagicRoom();}
+    default Moves addGlare(){return new Glare();}
+    default Moves addDrillRun(){return new DrillRun();}
 }

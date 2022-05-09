@@ -240,7 +240,7 @@ public class TMInventory {
         if(Selection == 184 && !this.TMInventory.contains("Scald")){this.TMInventory.add("Scald");}
         if(Selection == 185 && !this.TMInventory.contains("Work Up")){this.TMInventory.add("Work Up");}
         if(Selection == 186 && !this.TMInventory.contains("Wild Charge")){this.TMInventory.add("Wild Charge");}
-        if(Selection == 187 && !this.TMInventory.contains("Drill Run")){}
+        if(Selection == 187 && !this.TMInventory.contains("Drill Run")){this.TMInventory.add("Drill Run");}
         if(Selection == 188 && !this.TMInventory.contains("Heat Crash")){this.TMInventory.add("Heat Crash");}
         if(Selection == 189 && !this.TMInventory.contains("Hurricane")){this.TMInventory.add("Hurricane");}
         if(Selection == 190 && !this.TMInventory.contains("Play Rough")){this.TMInventory.add("Play Rough");}
