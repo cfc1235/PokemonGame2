@@ -11,7 +11,8 @@ import java.util.Collections;
 public class Caterpie extends Pokemon {
     public Caterpie(int level, GlobalVariables globalVariables){
         setGivesEVs(0, 0, 0, 0, 0, 1);
-        setBaseStats(35, 30, 45, 20, 20, 45, 10, 255, 6.4,
+        setBaseStats(35, 30, 45, 20, 20,
+                45, 10, 255, 6.4,
                 "Bug", "Medium Fast", level, 39);
         this.pokedexType = this.getClass().getSimpleName();
         this.name = "Caterpie";

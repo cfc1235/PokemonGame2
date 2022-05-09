@@ -113,7 +113,10 @@ public class Abilities {
     protected String onEffect = "";
     protected Boolean noFlinch = false;
     protected double damageReduction = 0;
+    protected Boolean powersRawDamage = false;
+    protected Boolean attackerNoSecondary = false;
 
+    public Boolean getAttackerNoSecondary(){return this.attackerNoSecondary;}
     public double getDamageReduction(){return this.damageReduction;}
     public Boolean getNoFlinch(){return this.noFlinch;}
     public ArrayList<String> getCausesStatEffect(){return this.causesStatEffect;}
@@ -235,10 +238,14 @@ public class Abilities {
     }
 
     public double affectedOnDamage(Moves move){
+        double damage = 1;
         if(this.onMove && this.affectedMoveList.contains(move.showName())){
-            return this.onMoveAddDamage;
+            damage += this.onMoveAddDamage;
         }
-        else return 1;
+        if(this.powersRawDamage){
+            damage += this.onMoveAddDamage;
+        }
+        return damage;
     }
 
 

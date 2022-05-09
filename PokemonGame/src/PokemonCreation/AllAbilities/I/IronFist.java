@@ -17,7 +17,7 @@ public class IronFist extends Abilities {
                 "Mach Punch", "Mega Punch", "Meteor Mash",
                 "Power-Up Punch", "Shadow Punch",
                 "Sky Uppercut", "Thunderpunch");
-        this.onMoveAddDamage = 1.2;
+        this.onMoveAddDamage = .2;
         this.onMove = true;
     }
 }

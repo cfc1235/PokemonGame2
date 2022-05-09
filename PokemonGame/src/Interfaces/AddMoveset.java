@@ -396,4 +396,8 @@ public interface AddMoveset {
     default Moves addMagicRoom(){return new MagicRoom();}
     default Moves addGlare(){return new Glare();}
     default Moves addDrillRun(){return new DrillRun();}
+    default Moves addFuryAttack(){return new FuryAttack();}
+    default Moves addFlameCharge(){return new FlameCharge();}
+    default Moves addRockBlast(){return new RockBlast();}
+    default Moves addSmackDown(){return new SmackDown();}
 }

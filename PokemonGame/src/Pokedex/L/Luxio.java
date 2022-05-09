@@ -56,7 +56,7 @@ public class Luxio extends Pokemon {
         if (name.equals("Shinx")){
             this.name = "Luxio";
         }
-        if (!(name.equals("Shinx"))){
+        else{
             this.name = name;
         }
         this.moves = oldMoves;

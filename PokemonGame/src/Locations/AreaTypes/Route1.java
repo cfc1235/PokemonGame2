@@ -15,13 +15,15 @@ public class Route1 extends AreaTypes{
                 new CreateOrderedMap<>(5, 162), new CreateOrderedMap<>(15, 43),
                 new CreateOrderedMap<>(15, 69), new CreateOrderedMap<>(25, 504),
                 new CreateOrderedMap<>(25, 506), new CreateOrderedMap<>(2, 531),
-                new CreateOrderedMap<>(10, 39));
+                new CreateOrderedMap<>(10, 39), new CreateOrderedMap<>(10, 10),
+                new CreateOrderedMap<>(15, 731));
         Collections.addAll(this.nightChance, new CreateOrderedMap<>(50, 19),
                 new CreateOrderedMap<>(5, 20), new CreateOrderedMap<>(45, 163),
                 new CreateOrderedMap<>(15, 43), new CreateOrderedMap<>(15, 69),
                 new CreateOrderedMap<>(25, 506), new CreateOrderedMap<>(25, 504),
                 new CreateOrderedMap<>(5, 559), new CreateOrderedMap<>(1, 560),
-                new CreateOrderedMap<>(5, 206));
+                new CreateOrderedMap<>(5, 206), new CreateOrderedMap<>(10, 10),
+                new CreateOrderedMap<>(15, 731));
         Collections.addAll(this.heabuttChance, new CreateOrderedMap<>(45, 165),
                 new CreateOrderedMap<>(45, 167), new CreateOrderedMap<>(33, 204),
                 new CreateOrderedMap<>(33, 265));

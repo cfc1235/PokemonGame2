@@ -36,7 +36,8 @@ public class Ledyba extends Pokemon {
         this.pokedexType = this.getClass().getSimpleName();
         this.name = this.pokedexType;
         setGivesEVs(0, 0, 1, 0, 0, 0);
-        setBaseStats(30, 20, 40, 40, 80, 55, 165, 255,
+        setBaseStats(30, 20, 40, 40, 80,
+                55, 165, 255,
                 23.8, "Bug", "Fast", level, 52);
         this.type2 = "Flying";
         setTotalEXP();

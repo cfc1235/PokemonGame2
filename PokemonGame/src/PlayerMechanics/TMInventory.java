@@ -107,7 +107,7 @@ public class TMInventory {
         if(Selection == 51 && !this.TMInventory.contains("Icicle Spear")){this.TMInventory.add("Icicle Spear");}
         if(Selection == 52 && !this.TMInventory.contains("Bounce")){this.TMInventory.add("Bounce");}
         if(Selection == 53 && !this.TMInventory.contains("Mud Shot")){this.TMInventory.add("Mud Shot");}
-        if(Selection == 54 && !this.TMInventory.contains("Rock Blast")){}
+        if(Selection == 54 && !this.TMInventory.contains("Rock Blast")){this.TMInventory.add("Rock Blast");}
         if(Selection == 55 && !this.TMInventory.contains("Brine")){this.TMInventory.add("Brine");}
         if(Selection == 56 && !this.TMInventory.contains("U-Turn")){this.TMInventory.add("U-Turn");}
         if(Selection == 57 && !this.TMInventory.contains("Payback")){this.TMInventory.add("Payback");}
@@ -277,11 +277,10 @@ public class TMInventory {
         if(Selection == 297 && !this.TMInventory.contains("Defog")){this.TMInventory.add("Defog");}
         if(Selection == 298 && !this.TMInventory.contains("Rock Smash")){this.TMInventory.add("Rock Smash");}
         if(Selection == 300 && !this.TMInventory.contains("Rock Climb")){}
-        if(Selection == 310 && !this.TMInventory.contains("Hidden Power")){}
         if(Selection == 321 && !this.TMInventory.contains("Frustration")){this.TMInventory.add("Frustration");}
-        if(Selection == 323 && !this.TMInventory.contains("Smack Down")){}
+        if(Selection == 323 && !this.TMInventory.contains("Smack Down")){this.TMInventory.add("Smack Down");}
         if(Selection == 327 && !this.TMInventory.contains("Return")){this.TMInventory.add("Return");}
-        if(Selection == 343 && !this.TMInventory.contains("Flame Charge")){}
+        if(Selection == 343 && !this.TMInventory.contains("Flame Charge")){this.TMInventory.add("Flame Charge");}
         if(Selection == 349 && !this.TMInventory.contains("Echoed Voice")){this.TMInventory.add("Echoed Voice");}
         if(Selection == 358 && !this.TMInventory.contains("Sky Drop")){}
         if(Selection == 360 && !this.TMInventory.contains("Quash")){this.TMInventory.add("Quash");}

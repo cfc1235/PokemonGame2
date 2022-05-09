@@ -818,8 +818,13 @@ public class Moves {
                 int hitTimes = 1;
                 int hitTicker = 1;
                 if (this.MultHit) {
-                    int range = this.MaxHit - this.MinHit + 1;
-                    hitTimes = (int) Math.round((Math.random() * range) + MinHit);
+                    if(attacker.showAbility().showName().equals("Skill Link")){
+                        hitTimes = 5;
+                    }
+                    else {
+                        int range = this.MaxHit - this.MinHit + 1;
+                        hitTimes = (int) Math.round((Math.random() * range) + this.MinHit);
+                    }
                 }
                 while (hitTicker <= hitTimes) {
                     if (this.isSpecial && !this.name.equals("Psyshock")) {

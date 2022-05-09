@@ -21,6 +21,8 @@ import Pokedex.O.*;
 import Pokedex.P.*;
 import Pokedex.R.*;
 import Pokedex.S.*;
+import Pokedex.T.Toucannon;
+import Pokedex.T.Trumbeak;
 import Pokedex.V.*;
 import Pokedex.W.*;
 import Pokedex.Z.*;
@@ -277,6 +279,15 @@ public interface GetPokemon {
          if(ID == 560){
              pokemon = new Scrafty(level, globalVariables);
          }
+         if(ID == 731){
+             pokemon = new Pikipek(level, globalVariables);
+         }
+         if(ID == 732){
+             pokemon = new Trumbeak(level, globalVariables);
+         }
+         if(ID == 733){
+             pokemon = new Toucannon(level, globalVariables);
+         }
          if(ID == 862){
              pokemon = new Sirfetchd(level, globalVariables);
          }
@@ -479,6 +490,14 @@ public interface GetPokemon {
         }
         if(ID == 559) {
             evolution = new Scrafty(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 731){
+            evolution = new Trumbeak(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 732) {
+            evolution = new Toucannon(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(!evolution.showOnEvol().showName().equals("Nothing") &&

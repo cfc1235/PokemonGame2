@@ -23,7 +23,7 @@ public interface TypeChart {
             if (defender.showType1().equals("Ghost") ||
                 defender.showType1().equals("Ghost")){
                     if (!name.equals("Struggle")
-                    || defender.showAbility().showName().equals("Scrappy")) {
+                    || !defender.showAbility().showName().equals("Scrappy")) {
                         TypeEffect = 0;
                     }
             }
@@ -137,7 +137,9 @@ public interface TypeChart {
                 defender.showType2().equals("Flying") ||
                 defender.getLevitates() ||
                 defender.getFakeLevitates()){
-                    TypeEffect = 0;
+                    if(!defender.getIsSmackDown()) {
+                        TypeEffect = 0;
+                    }
             }
             if (defender.showType1().equals("Poison") ||
                 defender.showType2().equals("Poison")){

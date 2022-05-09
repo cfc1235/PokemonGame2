@@ -45,6 +45,7 @@ public class Items {
     protected boolean curesParalysis = false;
     protected boolean forcesEvol = false;
     protected double healByPercMax = 0;
+    protected Boolean curesBurn = false;
 
     public Boolean getForcesEvol(){return this.forcesEvol;}
     public ArrayList<CreateOrderedMap<String, Double>> getTypesAffected(){return this.typesAffected;}
@@ -93,6 +94,9 @@ public class Items {
                 }
                 if(this.curesParalysis){
                     user.unParalyze();
+                }
+                if(this.curesBurn){
+                    user.unBurn();
                 }
                 if(this.canHeal) {
                     if (this.healAm > 0) {

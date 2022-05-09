@@ -10,5 +10,7 @@ public class OranBerry extends Items {
         this.flingDamage = 10;
         this.healAm = 10;
         this.canHeal = true;
+        this.purchasePrice = 20;
+        this.sellPrice = 10;
     }
 }

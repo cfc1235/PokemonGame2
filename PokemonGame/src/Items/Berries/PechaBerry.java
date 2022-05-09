@@ -10,5 +10,7 @@ public class PechaBerry extends Items {
         this.isConsumable = true;
         this.flingDamage = 10;
         this.curesPoison = true;
+        this.purchasePrice = 20;
+        this.sellPrice = 10;
     }
 }

@@ -774,7 +774,9 @@ public class Battle {
                         if (SelectMove.showName().equals("Snore")) {
                             System.out.println("Snore only works when the user is asleep!");
                         }
-                            if(DamageDealt <= 0 || !defender.showAbility().showNoSecondary()){
+                        if(DamageDealt <= 0
+                        || !defender.showAbility().showNoSecondary()
+                        || !attacker.showAbility().getAttackerNoSecondary()){
                             if (SelectMove.showEnemyKnockOffItem()) {
                                 if(SelectMove.showName().equals("Incinerate") &&
                                 defender.showItem().getIsBerry()){
@@ -1157,13 +1159,13 @@ public class Battle {
                                 attacker.setHasQuickGaurd();
                             }
                             if (SelectMove.getUsesSpentItem()) {
-                                if (attacker == PlayerPoke) {
-                                    if (playerItemUsed != null) {
+                                if (attacker == this.PlayerPoke) {
+                                    if (this.playerItemUsed != null) {
                                         System.out.println("WRITE CODE TO USE ITEM");
                                     }
                                 }
-                                if (attacker == AIPoke) {
-                                    if (AIItemUsed != null) {
+                                if (attacker == this.AIPoke) {
+                                    if (this.AIItemUsed != null) {
                                         System.out.println("WRITE CODE TO USE ITEM");
                                     }
                                 }
@@ -1273,6 +1275,9 @@ public class Battle {
                                         System.out.println("Both pokemon must have a gender!");
                                     }
                                 }
+                            }
+                            if(SelectMove.showName().equals("Smack Down")){
+                                defender.smackDown();
                             }
                             if(!SelectMove.getProhibitsMoves().isEmpty()){
                                 defender.setProhibitedMoves(SelectMove.getProhibitsMoves());

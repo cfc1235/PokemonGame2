@@ -163,7 +163,10 @@ public class Pokemon implements AddMoveset {
     protected Boolean healEveryTurn = false;
     protected double healPerTurn = 0.0;
     protected int critTotal = 0;
+    protected Boolean isSmackDown = false;
 
+    public void smackDown(){this.isSmackDown = true;}
+    public Boolean getIsSmackDown(){return this.isSmackDown;}
     public void addToCritTotal(){this.critTotal += 1;}
     public void endTurnHeal(){
         if(this.healEveryTurn){
