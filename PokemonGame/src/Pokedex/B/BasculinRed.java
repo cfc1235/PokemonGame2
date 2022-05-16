@@ -15,7 +15,7 @@ public class BasculinRed extends Pokemon {
         this.setFirstEVs();
         this.setGivesEVs(0, 0, 0, 0, 2, 0);
         this.setBaseStats(65, 92, 70, 80,
-                55, 98, 550, 25, 39.7,
+                55, 98, 550, 255, 39.7,
                 "Water","Medium Fast", level, 161);
         this.pokedexType = "Basculin";
         this.name = this.pokedexType;

@@ -41,7 +41,8 @@ public class AlolanRattata extends Pokemon {
         this.name = this.pokedexType;
         setGivesEVs(0, 0, 0, 0, 1, 0);
         this.EvolTiming = 20;
-        setBaseStats(35, 56, 30, 25, 35, 72, 19, 255, 7.7,
+        setBaseStats(35, 56, 30, 25, 35,
+                72, 19, 255, 7.7,
                 "Normal", "Medium Fast", level, 51);
         setTotalEXP();
         setNextLevelEXP();
