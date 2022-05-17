@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def dataToCSV(data):
+def createCSV(data):
     readFile = pd.read_excel(data + '\\Data\\CSVs\\CurrentPokeEditable.xlsx').fillna(value = 0.0)
     readFile.to_csv(data + '\\Data\\CSVs\\CurrentPokeCSV.csv', header=True, index=False)
 
@@ -9,4 +9,3 @@ def dataToCSV(data):
 
 
 
-dataToCSV(data='C:\\Users\\chris\\IdeaProjects\\PokemonGame2\\PokemonGame\\src\\CreateNewPokeAI')
