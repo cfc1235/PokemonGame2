@@ -10,12 +10,13 @@ import java.util.Collections;
 
 public class Squirtle extends Pokemon {
     public Squirtle(int level, GlobalVariables globalVariables) {
-        setBaseStats(65, 48, 44, 50, 64, 43, 7, 45, 18.7, "Water",
-                "Medium Slow", level, 63);
-        possibleAbilities.add(new Torrent());
-        possibleAbilities.add(new RainDish());
+        setBaseStats(65, 48, 44, 50,
+                64, 43, 7, 45, 18.7,
+                "Water", "Medium Slow", level, 63);
+        this.possibleAbilities.add(new Torrent());
+        this.possibleAbilities.add(new RainDish());
         getAbilities();
-        savedAbility = ability;
+        this.savedAbility = this.ability;
         Collections.addAll(this.learnedMoves, new CreateOrderedMap<>(0, addTackle()),
                 new CreateOrderedMap<>(0, addTailWhip()), new CreateOrderedMap<>(3, addWaterGun()),
                 new CreateOrderedMap<>(6, addWithdraw()), new CreateOrderedMap<>(9, addRapidSpin()),
@@ -26,7 +27,7 @@ public class Squirtle extends Pokemon {
                 new CreateOrderedMap<>(36, addSkullBash()));
         addFirstMoves();
         setFirstEVs();
-        Collections.addAll(TMmoves, addMegaKick(), addMegaPunch(), addIcePunch(), addDig(), addRest(), addSnore(),
+        Collections.addAll(this.TMmoves, addMegaKick(), addMegaPunch(), addIcePunch(), addDig(), addRest(), addSnore(),
                 addProtect(), addIcyWind(), addAttract(), addRainDance(), addHail(), addWhirlpool(), addFacade(),
                 addHelpingHand(), addBrickBreak(), addDive(), addWeatherBall(), addRockTomb(), addBrine(), addFling(),
                 addRound(), addFalseSwipe(), addBodySlam(), addHydroPump(), addSurf(), addIceBeam(), addBlizzard(),
@@ -39,10 +40,10 @@ public class Squirtle extends Pokemon {
         setTotalEXP();
         setNextLevelEXP();
         setEXPNeeded();
-        EvolTiming = 16;
+        this.EvolTiming = 16;
         setGivesEVs(0, 0, 0, 1, 0, 0);
-        HP = savedHP;
-        pokedexType = this.getClass().getSimpleName();
+        this.HP = this.savedHP;
+        this.pokedexType = this.getClass().getSimpleName();
         this.name = this.pokedexType;
         setFullDirName("Squirtly.png", globalVariables);
         this.setPokeCry("007Cry.wav");

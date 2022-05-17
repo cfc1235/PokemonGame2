@@ -21,7 +21,8 @@ public class Venusaur extends Pokemon {
                 addGrassyTerrain(), addFalseSwipe(), addStompingTantrum(), addSwordsDance(), addBodySlam(), addAmnesia(),
                 addSubstitute(), addSludgeBomb(), addOutrage(), addEndure(), addSleepTalk(), addEnergyBall(), addEarthPower(),
                 addLeafStorm(), addPowerWhip(), addGrassKnot(), addWorkUp());
-        setBaseStats(83, 82, 80, 100, 100, 80, 3, 45, 220.5,
+        setBaseStats(83, 82, 80, 100,
+                100, 80, 3, 45, 220.5,
                 "Grass", "Medium Slow", level, 263);
         this.type2 = "Poison";
         this.pokedexType = this.getClass().getSimpleName();

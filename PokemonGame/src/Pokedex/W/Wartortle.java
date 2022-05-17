@@ -14,8 +14,9 @@ public class Wartortle extends Pokemon {
 
     public void Initialize(int level){
         setGivesEVs(1, 0, 0, 1, 0, 0);
-        setBaseStats(80, 63, 59, 65, 80, 58, 8, 45, 49.6,
-                "Water", "Medium Slow", level, 142);
+        setBaseStats(80, 63, 59, 65, 80,
+                58, 8, 45, 49.6, "Water",
+                "Medium Slow", level, 142);
         this.pokedexType = this.getClass().getSimpleName();
         Collections.addAll(this.TMmoves, addMegaPunch(), addMegaKick(), addIcePunch(), addDig(), addRest(), addSnore(), addProtect(),
                 addIcyWind(), addAttract(), addRainDance(), addHail(), addWhirlpool(), addFacade(), addHelpingHand(),
