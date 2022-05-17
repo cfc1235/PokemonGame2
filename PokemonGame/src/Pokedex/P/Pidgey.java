@@ -32,7 +32,8 @@ public class Pidgey extends Pokemon {
         setGivesEVs(0, 0, 0, 0, 1, 0);
         this.EvolTiming = 18;
         this.type2 = "Flying";
-        setBaseStats(40, 45, 40, 35, 35, 56, 16, 255, 4.0,
+        setBaseStats(40, 45, 40, 35,
+                35, 56, 16, 255, 4.0,
                 "Normal", "Medium Slow", level, 55);
         setFirstEVs();
         setNature();

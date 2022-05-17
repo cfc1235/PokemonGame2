@@ -33,8 +33,10 @@ public class Pidgeot extends Pokemon {
                 new CreateOrderedMap<>(56, addMirrorMoves()), new CreateOrderedMap<>(62, addAirSlash()),
                 new CreateOrderedMap<>(68, addHurricane()));
         setGivesEVs(0, 0, 0, 0, 3, 0);
-        setBaseStats(75, 80, 83, 70, 70, 101, 18, 45, 111.3,
-                "Normal", "Medium Slow", level, 172);
+        setBaseStats(75, 80, 83, 70,
+                70, 101, 18, 45,
+                111.3, "Normal", "Medium Slow",
+                level, 172);
         this.setPokeCry("017Cry.wav");
     }
 

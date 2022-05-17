@@ -14,12 +14,13 @@ import java.util.List;
 public class Charizard extends Pokemon {
 
     private void Initialize(int level){
-        OnEvol = new AirSlash();
+        this.OnEvol = new AirSlash();
         this.setGivesEVs(0, 0 ,3, 0, 0, 0);
-        this.setBaseStats(78, 84, 78, 109, 85, 100, 6, 45, 199.5,
+        this.setBaseStats(78, 84, 78, 109,
+                85, 100, 6, 45, 199.5,
                 "Fire", "Medium Slow", level, 267);
         this.type2 = "Flying";
-        Collections.addAll(TMmoves, addMegaPunch(), addMegaKick(), addFirePunch(), addThunderPunch(), addFly(), addHyperBeam(),
+        Collections.addAll(this.TMmoves, addMegaPunch(), addMegaKick(), addFirePunch(), addThunderPunch(), addFly(), addHyperBeam(),
                 addGigaImpact(), addSolarBeam(), addFireSpin(), addDig(), addRest(), addRockSlide(), addSnore(), addProtect(),
                 addScaryFace(), addSteelWing(), addAttract(), addSunnyDay(), addBeatUp(), addWillOWisp(), addFacade(), addSwift(),
                 addHelpingHand(), addBrickBreak(), addRockTomb(), addFling(), addShadowClaw(), addFireFang(), addRound(),
@@ -27,7 +28,7 @@ public class Charizard extends Pokemon {
                 addSwordsDance(), addBodySlam(), addFlamethrower(), addEarthquake(), addFireBlast(), addSubstitute(), addOutrage(),
                 addEndure(), addSleepTalk(), addIronTail(), addCrunch(), addHeatWave(), addBlazeKick(), addOverheat(), addDragonClaw(),
                 addDragonDance(), addFlareBlitz(), addDragonPulse(), addFocusBlast(), addWorkUp(), addHeatCrash(), addHurricane());
-        Collections.addAll(learnedMoves, new CreateOrderedMap<>(0, addAirSlash()),
+        Collections.addAll(this.learnedMoves, new CreateOrderedMap<>(0, addAirSlash()),
                 new CreateOrderedMap<>(0, addDragonClaw()), new CreateOrderedMap<>(0, addScratch()),
                 new CreateOrderedMap<>(0, addGrowl()), new CreateOrderedMap<>(0, addEmber()),
                 new CreateOrderedMap<>(0, addSmokescreen()), new CreateOrderedMap<>(12, addDragonBreath()),

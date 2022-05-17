@@ -35,7 +35,8 @@ public class Rattata extends Pokemon {
         pokedexType = this.getClass().getSimpleName();
         this.name = this.pokedexType;
         setGivesEVs(0, 0, 0, 0, 1, 0);
-        setBaseStats(35, 56, 30, 25, 35, 72, 19, 255, 7.7,
+        setBaseStats(35, 56, 30, 25,
+                35, 72, 19, 255, 7.7,
                 "Normal", "Medium Fast", level, 51);
         setTotalEXP();
         setNextLevelEXP();

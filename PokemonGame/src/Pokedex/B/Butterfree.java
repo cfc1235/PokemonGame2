@@ -17,8 +17,9 @@ import java.util.List;
 public class Butterfree extends Pokemon {
 
     public void Initialize(int level){
-        Collections.addAll(GivesEVs, 2, 0, 0, 1, 0, 0);
-        setBaseStats(50, 45, 60, 90, 80, 70, 12, 45, 70.5,
+        this.setGivesEVs(2, 0, 0, 1, 0, 0);
+        setBaseStats(50, 45, 60, 90,
+                80, 70, 12, 45, 70.5,
                 "Bug","Medium Fast", level, 198);
         this.type2 = "Flying";
         this.pokedexType = this.getClass().getSimpleName();

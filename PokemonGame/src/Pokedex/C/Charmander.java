@@ -28,7 +28,8 @@ public class Charmander extends Pokemon {
                 addDig(), addRest(),addRockSlide(), addSnore(), addProtect(), addScaryFace(), addAttract(), addBeatUp(),
                 addWillOWisp(),addFacade(), addSwift(), addHelpingHand(), addBrickBreak(), addRockTomb(), addFling(),
                 addShadowClaw(),addFireFang());
-        setBaseStats(43, 52, 39, 60, 50, 65, 4, 45, 18.7,
+        setBaseStats(43, 52, 39, 60,
+                50, 65, 4, 45, 18.7,
                 "Fire", "Medium Slow", level, 62);
         setNature();
         setIVs();

@@ -13,7 +13,8 @@ public class Ivysaur extends Pokemon {
 
     public void Initialize(int level){
         setGivesEVs(0, 0, 1, 1, 0, 0);
-        setBaseStats(63, 62, 60, 80, 80, 60, 2, 45, 28.7,
+        setBaseStats(63, 62, 60, 80,
+                80, 60, 2, 45, 28.7,
                 "Grass", "Medium Slow", level, 142);
         this.type2 = "Poison";
         this.pokedexType = this.getClass().getSimpleName();

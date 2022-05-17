@@ -13,17 +13,18 @@ import java.util.List;
 public class Charmeleon extends Pokemon {
 
     public void Initialize(int level){
-        Collections.addAll(GivesEVs, 0, 0, 1, 0, 1, 0);
-        setBaseStats(58, 64, 58, 80, 65, 80, 5, 45, 41.5,
+        this.setGivesEVs(0, 0, 1, 0, 1, 0);
+        setBaseStats(58, 64, 58, 80,
+                65, 80, 5, 45, 41.5,
                 "Fire", "Medium Slow", level, 142);
-        Collections.addAll(TMmoves, addMegaPunch(), addMegaKick(), addFirePunch(), addThunderPunch(), addFireSpin(),
+        Collections.addAll(this.TMmoves, addMegaPunch(), addMegaKick(), addFirePunch(), addThunderPunch(), addFireSpin(),
                 addDig(), addRest(), addRockSlide(), addSnore(), addProtect(), addScaryFace(), addAttract(),
                 addBeatUp(), addWillOWisp(), addFacade(), addSwift(), addHelpingHand(), addBrickBreak(),
                 addRockTomb(), addFling(), addShadowClaw(), addFireFang(), addRound(), addAcrobatics(), addFalseSwipe(),
                 addSwordsDance(), addBodySlam(), addFlamethrower(), addFireBlast(), addSubstitute(), addOutrage(),
                 addEndure(), addSleepTalk(), addIronTail(), addCrunch(), addHeatWave(), addOverheat(), addDragonClaw(),
                 addDragonDance(), addFlareBlitz(), addDragonPulse(), addWorkUp());
-        Collections.addAll(learnedMoves, new CreateOrderedMap<>(0, addScratch()),
+        Collections.addAll(this.learnedMoves, new CreateOrderedMap<>(0, addScratch()),
                 new CreateOrderedMap<>(0, addGrowl()), new CreateOrderedMap<>(0, addEmber()),
                 new CreateOrderedMap<>(0, addSmokescreen()), new CreateOrderedMap<>(12, addDragonBreath()),
                 new CreateOrderedMap<>(19, addFireFang()), new CreateOrderedMap<>(24, addSlash()),

@@ -39,8 +39,10 @@ public class Hoothoot extends Pokemon {
         this.pokedexType = this.getClass().getSimpleName();
         this.name = this.pokedexType;
         setGivesEVs(0, 0, 0, 0, 0, 1);
-        setBaseStats(30, 30, 60, 36, 56, 50, 163, 255,
-                46.7, "Normal", "Medium Fast", level, 52);
+        setBaseStats(30, 30, 60, 36,
+                56, 50, 163, 255,
+                46.7, "Normal", "Medium Fast", level,
+                52);
         this.type2 = "Flying";
         setTotalEXP();
         setNextLevelEXP();

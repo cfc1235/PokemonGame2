@@ -33,7 +33,8 @@ public class Pidgeotto extends Pokemon {
                 new CreateOrderedMap<>(52, addMirrorMoves()), new CreateOrderedMap<>(57, addAirSlash()),
                 new CreateOrderedMap<>(62, addHurricane()));
         setGivesEVs(0, 0, 0, 0, 2, 0);
-        setBaseStats(55, 60, 63, 50, 50, 71, 17, 120, 66.1,
+        setBaseStats(55, 60, 63, 50,
+                50, 71, 17, 120, 66.1,
                 "Normal", "Medium Slow", level, 113);
         setPokeCry("018.wav");
     }

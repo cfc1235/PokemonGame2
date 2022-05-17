@@ -23,8 +23,8 @@ public class Blastoise extends Pokemon {
                 addWaterfall(), addSubstitute(), addEndure(), addSleepTalk(), addIronTail(), addMuddyWater(),
                 addIronDefense(), addGyroBall(), addAuraSphere(), addDragonPulse(), addZenHeadbutt(),
                 addFlashCannon(), addScald(), addWorkUp(), addLiquidation(), addBodyPress());
-        setBaseStats(100, 83, 79, 85, 105, 78, 9, 45,
-                188.5, "Water", "Medium Slow", level, 142);
+        setBaseStats(100, 83, 79, 85, 105, 78,
+                9, 45, 188.5, "Water", "Medium Slow", level, 142);
         Collections.addAll(this.learnedMoves, new CreateOrderedMap<>(0, addFlashCannon()), new CreateOrderedMap<>(0, addTackle()),
                 new CreateOrderedMap<>(0, addTailWhip()), new CreateOrderedMap<>(0, addWaterGun()),
                 new CreateOrderedMap<>(0, addWithdraw()), new CreateOrderedMap<>(9, addRapidSpin()),
