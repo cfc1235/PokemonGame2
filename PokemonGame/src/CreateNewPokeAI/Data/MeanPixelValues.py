@@ -15,7 +15,7 @@ with open('C:\\Users\\chris\\IdeaProjects\\PokemonGame2\\PokemonGame\\'
     file = csv.reader(csvFile)
     again = True
     while again:
-        again = False
+
         for row in file:
             print(row)
             name = row[0]
