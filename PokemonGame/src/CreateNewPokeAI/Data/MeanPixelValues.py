@@ -14,8 +14,9 @@ with open('C:\\Users\\chris\\IdeaProjects\\PokemonGame2\\PokemonGame\\'
           'src\\CreateNewPokeAI\\Data\\CSVs\\CurrentPokeCSV.csv') as csvFile:
     file = csv.reader(csvFile)
     again = True
+    run = 0
     while again:
-
+        again = False
         for row in file:
             print(row)
             name = row[0]
@@ -30,4 +31,7 @@ with open('C:\\Users\\chris\\IdeaProjects\\PokemonGame2\\PokemonGame\\'
                 image = 'C:\\Users\\chris\\IdeaProjects\\PokemonGame2\\PokemonGame' \
                         '\\src\\GraphicalImages\\Pokemon\\NonShiny\\' + imName
                 pickle.dump(getRGB(image), open(featureArray, 'wb'))
+                again = True
+            print("RUN " + str(run) + " is done")
+        print("Feature set built")
 
