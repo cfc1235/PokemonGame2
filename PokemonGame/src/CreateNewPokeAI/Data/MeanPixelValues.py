@@ -18,9 +18,8 @@ def getGrey(image, featureArray):
     pickle.dump(features, open(featureArray, 'wb'))
     return True
 
-def createBasePixelVals():
-    with open('C:\\Users\\chris\\IdeaProjects\\PokemonGame2\\PokemonGame\\'
-              'src\\CreateNewPokeAI\\Data\\CSVs\\CurrentPokeCSV.csv') as csvFile:
+def createBasePixelVals(base):
+    with open(base + 'CreateNewPokeAI\\Data\\CSVs\\CurrentPokeCSV.csv') as csvFile:
         file = csv.reader(csvFile)
         again = True
         run = 0
@@ -31,18 +30,18 @@ def createBasePixelVals():
                 if 'Name' in row:
                     continue
                 imName = row[1]
-                image = 'C:\\Users\\chris\\IdeaProjects\\PokemonGame2\\PokemonGame' \
-                        '\\src\\GraphicalImages\\Pokemon\\NonShiny\\' + imName
-                featureArray = 'ImageFeatures\\RGBBase' + name + "RGBFeatures.data"
+                image = base + 'GraphicalImages\\Pokemon\\NonShiny\\' + imName
+                featureArray = base + 'CreateNewPokeAI\\Data\\ImageFeatures\\RGBBase\\' + name + "RGBFeatures.data"
                 try:
                     pickle.load(open(featureArray, 'rb'))
                 except FileNotFoundError:
                     again = getRGB(image, featureArray)
-                featureArray = 'ImageFeatures\\GreyBase' + name + "GreyFeatures.data"
+                featureArray = base + 'CreateNewPokeAI\\Data\\ImageFeatures\\GreyBase\\' + name + "GreyFeatures.data"
                 try:
                     pickle.load(open(featureArray, 'rb'))
                 except FileNotFoundError:
                     again = getGrey(image, featureArray)
-                print("RUN " + str(run) + " is done")
+            print("RUN " + str(run) + " is done")
+            run += 1
         print("Feature set built")
 

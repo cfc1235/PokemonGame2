@@ -1,5 +1,8 @@
 import dataToCSV
 import MeanPixelValues
+import getTensors
 
-dataToCSV.createCSV(data='C:\\Users\\chris\\IdeaProjects\\PokemonGame2\\PokemonGame\\src\\CreateNewPokeAI')
-MeanPixelValues.createBasePixelVals()
+base='C:\\Users\\chris\\IdeaProjects\\PokemonGame2\\PokemonGame\\src\\'
+dataToCSV.createCSV(base)
+MeanPixelValues.createBasePixelVals(base)
+getTensors.getTensors(base)
