@@ -82,8 +82,8 @@ public class Items {
         this.itemUsed = true;
         return this.affectCrit;
     }
-    public void useBerry(Pokemon user, Boolean magicRoom){
-        if(!magicRoom){
+    public void useBerry(Pokemon user, Boolean magicRoom, String enemyAbility){
+        if(!magicRoom && !enemyAbility.equals("Unnerve")){
             this.itemUsed = true;
             if(this.isBerry){
                 if(this.canHeal){

@@ -1,9 +1,7 @@
 package BattleMechanics;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
+import Interfaces.AddMoveset;
 import Interfaces.GlobalVariables;
 import Moveset.OtherDamage.ConfusionDamage;
 import Moveset.OtherDamage.NoMove;
@@ -15,10 +13,9 @@ import PokemonCreation.Pokemon;
 import Terrain.Terrain;
 import Weather.Weather;
 import Items.NoItem;
-
 import static Interfaces.GetPokemon.evolvePoke;
 
-public class Battle {
+public class Battle implements AddMoveset {
     private String type;
     private List<Pokemon> CurrentParty;
     private List<Pokemon> Graveyard = new ArrayList<>();
@@ -56,6 +53,9 @@ public class Battle {
     private int isTrickRoom = 0;
     private Boolean isFirst = false;
     private int magicRoomTimer = 0;
+    private int isWonderRoom = 0;
+    private Pokemon playerTrueSelf = new Pokemon();
+    private Pokemon AITrueSelf = new Pokemon();
 
     public Battle(GlobalVariables globalVariables, String type, ArrayList<Pokemon> AIParty) {
         this.type = type;
@@ -64,8 +64,8 @@ public class Battle {
         this.ballInventory = globalVariables.getBallInventory();
         for (Pokemon pokemon : CurrentParty){
             if(pokemon.showHP() <= 0){
-                CurrentParty.remove(pokemon);
-                Graveyard.add(pokemon);
+                this.CurrentParty.remove(pokemon);
+                this.Graveyard.add(pokemon);
             }
         }
         this.Waiting = this.CurrentParty;
@@ -254,19 +254,20 @@ public class Battle {
             }
         }
         if(choice.equals("7")){
-            PlayerSelectedMove = playerForcedMove;
+           this.PlayerSelectedMove = this.playerForcedMove;
         }
-        if(PlayerSelectedMove.getDoesEnemyMove()) {
-            double poweredUp = PlayerSelectedMove.getPoweredUp();
-            PlayerSelectedMove = AISelectedMove;
-            PlayerSelectedMove.changePower(poweredUp);
+        if(this.PlayerSelectedMove.getDoesEnemyMove()) {
+            double poweredUp = this.PlayerSelectedMove.getPoweredUp();
+            this.PlayerSelectedMove = AISelectedMove;
+            this.PlayerSelectedMove.changePower(poweredUp);
         }
         if(AISelectedMove.getDoesEnemyMove()){
             double poweredUp = AISelectedMove.getPoweredUp();
-            AISelectedMove = PlayerSelectedMove;
+            AISelectedMove = this.PlayerSelectedMove;
             AISelectedMove.changePower(poweredUp);
         }
-        PlayerSelectedMove.changePP(AIPoke);
+        this.PlayerSelectedMove.changePP(this.AIPoke);
+        this.PlayerSelectedMove = this.PlayerSelectedMove.resolveMetronome();
         if(this.PlayerSelectedMove.showName().equals("Copycat")){
             this.PlayerSelectedMove = this.AIForcedMove;
         }
@@ -415,26 +416,29 @@ public class Battle {
 
     private void victoryReset() {
         int x = 0;
-        for (Pokemon pokemon : Graveyard) {
-            pokemon.resetForWin();
+        int winnings = 0;
+        for (Pokemon pokemon : this.Graveyard) {
+            winnings += pokemon.resetForWin();
             try {
-                CurrentParty.set(x, pokemon);
+                this.CurrentParty.set(x, pokemon);
                 x += 1;
             } catch (Exception e) {
-                CurrentParty.add(x, pokemon);
+                this.CurrentParty.add(x, pokemon);
                 x += 1;
             }
         }
-        for (Pokemon pokemon : Waiting) {
-            pokemon.resetForWin();
+        for (Pokemon pokemon : this.Waiting) {
+            winnings += pokemon.resetForWin();
             try {
-                CurrentParty.set(x, pokemon);
+                this.CurrentParty.set(x, pokemon);
                 x += 1;
             } catch (Exception e) {
-                CurrentParty.add(x, pokemon);
+                this.CurrentParty.add(x, pokemon);
                 x += 1;
             }
         }
+        System.out.println("Coins: $" + winnings);
+        this.globalVariables.getWallet().addWinnings(winnings);
     }
     private Boolean Flee(int Attempts){
         if(this.PlayerPoke.showAbility().showAlwaysFlee()){
@@ -479,14 +483,15 @@ public class Battle {
                 System.out.println("Round Number: " + ticker);
                 System.out.println("Enemy " + AIPoke.showName() + " is at " + AIPoke.showHP() + " HP!");
                 System.out.println("Your " + PlayerPoke.showName() + " is at " + PlayerPoke.showHP() + " HP!");
-                terrainTicker -= 1;
+                this.terrainTicker -= 1;
                 Moves AISelectedMove = AISelectMoves();
-                AISelectedMove.changePP(PlayerPoke);
+                AISelectedMove.changePP(this.PlayerPoke);
+                AISelectedMove = AISelectedMove.resolveMetronome();
                 if(AISelectedMove.showName().equals("Copycat")){
                     AISelectedMove = this.playerForcedMove;
                 }
                 String choice = "";
-                if(playerChargeTimer <= 0) {
+                if(this.playerChargeTimer <= 0) {
                     choice = selectAction();
                     if (choice.equals("1")) {
                         useMove(AISelectedMove, choice);
@@ -497,6 +502,7 @@ public class Battle {
                     if (choice.equals("3")) {
                         System.out.println("Switching Pokemon!");
                         this.PlayerPoke = ThrowNew();
+                        this.playerTrueSelf = this.PlayerPoke;
                         this.ExpLineUp.add(this.PlayerPoke);
                     }
                     if (choice.equals("4")) {
@@ -534,8 +540,13 @@ public class Battle {
                     }
                 }
                 this.isTrickRoom -= 1;
+                this.isWonderRoom -= 1;
             }
             if (this.PlayerPoke.showHP() <= 0) {
+                if(this.PlayerPoke != this.playerTrueSelf){
+                    this.playerTrueSelf.setHP(0);
+                    this.PlayerPoke = this.playerTrueSelf;
+                }
                 this.AIPoke.showAbility().addStageOnDeath(this.AIPoke);
                 this.Waiting.remove(this.PlayerPoke);
                 this.Graveyard.add(this.PlayerPoke);
@@ -545,6 +556,10 @@ public class Battle {
                 this.ExpLineUp.remove(this.PlayerPoke);
             }
             if (this.AIPoke.showHP() <= 0) {
+                if(this.AIPoke != this.AITrueSelf){
+                    this.AITrueSelf.setHP(0);
+                    this.AIPoke = this.AITrueSelf;
+                }
                 this.PlayerPoke.showAbility().addStageOnDeath(this.PlayerPoke);
                 this.AIParty.remove(this.AIPoke);
                 for (Pokemon pokemon : this.ExpLineUp){
@@ -596,7 +611,7 @@ public class Battle {
         if(attacker.showAbility().showName().equals("Serene Grace")){
             outOfReqChance = 50;
         }
-        Boolean magicRoom = magicRoomTimer > 0;
+        Boolean magicRoom = this.magicRoomTimer > 0;
         this.magicRoomTimer -= 1;
         Moves enemyMove = this.PlayerSelectedMove;
         if(attacker == this.PlayerPoke){
@@ -644,9 +659,9 @@ public class Battle {
                             SelectMove = new ConfusionDamage();
                             DamageDealt = SelectMove.damageDealt(
                                     attacker, attacker, this.weather,
-                                    this.PlayerPoke, this.terrain,
-                                    this.Waiting, enemyMove, this.isFirst,
-                                    magicRoom);
+                                    this.terrain, this.Waiting,
+                                    enemyMove, this.isFirst,
+                                    magicRoom, this.isTrickRoom>0);
                             attacker.changeHP(DamageDealt);
                             System.out.println(getAttackerName(attacker) +
                                     " dealt " + DamageDealt +
@@ -686,9 +701,9 @@ public class Battle {
                                         (playerChargeTimer <= 0)) {
                                     DamageDealt = SelectMove.damageDealt(
                                             attacker, attacker, this.weather,
-                                            this.PlayerPoke, this.terrain,
-                                            this.Waiting, enemyMove, this.isFirst,
-                                            magicRoom);
+                                            this.terrain, this.Waiting,
+                                            enemyMove, this.isFirst,
+                                            magicRoom, this.isTrickRoom>0);
                                     if (!SelectMove.getDealsFutureDamage()) {
                                         System.out.println("Your " +
                                                 this.PlayerPoke.showName() + " dealt " +
@@ -739,9 +754,9 @@ public class Battle {
                                 if (!SelectMove.getRequiresSleep() || defender.showAsleep()) {
                                     DamageDealt = SelectMove.damageDealt(
                                             attacker, attacker, this.weather,
-                                            this.PlayerPoke, this.terrain,
-                                            this.Waiting, enemyMove, this.isFirst,
-                                            magicRoom);
+                                            this.terrain, this.Waiting,
+                                            enemyMove, this.isFirst,
+                                            magicRoom, this.isTrickRoom>0);
                                     System.out.println("Enemy " + this.AIPoke.showName() +
                                             " dealt " + DamageDealt + " damage!");
                                     if (defender.showSubstituteHP() <= 0 ||
@@ -788,6 +803,10 @@ public class Battle {
                             }
                             if(SelectMove.getResetsType()){
                                 if(SelectMove.StateChangeAlly) {
+                                    if(SelectMove.showName().equals("Reflect Type")){
+                                        attacker.setType3(defender.showType1());
+                                        attacker.setType4(defender.showType2());
+                                    }
                                     if (SelectMove.getResetsTypeFrom().equals(attacker.showType1())) {
                                         attacker.setType3(SelectMove.getResetsTypeTo());
                                     }
@@ -813,6 +832,11 @@ public class Battle {
                                     attacker.giveItem(defender.showItem());
                                     defender.giveItem(new NoItem());
                                 }
+                            }
+                            if(SelectMove.showName().equals("Trick")){
+                                Items attackerItem = attacker.showItem();
+                                attacker.giveItem(defender.showItem());
+                                defender.giveItem(attackerItem);
                             }
                             if (SelectMove.getCreatesPhysWall()) {
                                 attacker.setHasPhysWall(SelectMove.getPhysWallTimer());
@@ -869,6 +893,14 @@ public class Battle {
                             }
                             if (SelectMove.showaffectsAbilities()) {
                                 defender.changeAbilities(SelectMove.showtoAbility());
+                            }
+                            if(SelectMove.showName().equals("Transform")){
+                                if(attacker == this.PlayerPoke){
+                                    this.PlayerPoke = this.AIPoke.clone();
+                                }
+                                if(attacker == this.AIPoke) {
+                                    this.AIPoke = this.PlayerPoke.clone();
+                                }
                             }
                             if (SelectMove.showAbilitySwap()) {
                                 Abilities attackerAbility = attacker.showAbility();
@@ -928,17 +960,9 @@ public class Battle {
                             }
                             if (SelectMove.showcanSeed()) {
                                 if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
-                                    if (SelectMove.showcanMiss()) {
-                                        if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
-                                            defender.Seed();
-                                        }
-                                    }
-                                    if (!SelectMove.showcanMiss()) {
+                                    if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
+                                            !SelectMove.showcanMiss()) {
                                         defender.Seed();
-                                    }
-                                    if ((defender.showType1().equals("Grass")) || ((defender.showType2()).equals("Grass"))) {
-                                        defender.resetSeed();
-                                        System.out.println("Leech Seed doesn't affect Grass Types!");
                                     }
                                 }
                             }
@@ -946,12 +970,8 @@ public class Battle {
                                 if (SelectMove.showCanConfuse() || SelectMove.showCanOnlyConfuse()) {
                                     if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                         if (SelectMove.showCanOnlyConfuse()) {
-                                            if (SelectMove.showcanMiss()) {
-                                                if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
-                                                    defender.Confuse(attacker);
-                                                }
-                                            }
-                                            if (!SelectMove.showcanMiss()) {
+                                            if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
+                                                    !SelectMove.showcanMiss()) {
                                                 defender.Confuse(attacker);
                                             }
                                         }
@@ -968,30 +988,21 @@ public class Battle {
                                 if (SelectMove.showcanPoison() || SelectMove.showOnlyCanPoison()) {
                                     if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                         if (SelectMove.showOnlyCanPoison()) {
-                                            if (SelectMove.showcanMiss()) {
-                                                if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
-                                                    defender.Poison();
-                                                }
-                                            }
-                                            if (!SelectMove.showcanMiss()) {
+                                            if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)
+                                            || !SelectMove.showcanMiss()) {
                                                 defender.Poison();
+                                                if(defender.showAbility().showName().equals("Synchronize")){
+                                                    attacker.Poison();
+                                                }
                                             }
                                         }
                                     if (SelectMove.showcanPoison()) {
                                             if ((SelectMove.showPoisonChance()) >= Math.random()) {
                                                 defender.Poison();
+                                                if(defender.showAbility().showName().equals("Synchronize")){
+                                                    attacker.Poison();
+                                                }
                                             }
-                                        }
-                                        if ((defender.showType1().equals("Poison")) || ((defender.showType2()).equals("Poison"))) {
-                                            defender.unPoison();
-                                            System.out.println("Poison doesn't affect Poison Types!");
-                                        }
-                                        if ((defender.showType1().equals("Steel")) || ((defender.showType2()).equals("Steel"))) {
-                                            defender.unPoison();
-                                            System.out.println("Poison doesn't affect Steel Types!");
-                                        }
-                                        if (defender.showAbility().showPoison()) {
-                                            System.out.println(defender.showName() + " cannot be poisoned because of its " + defender.showAbility().showName());
                                         }
                                         if (defender.showPoisoned()) {
                                             System.out.println(getAttackerName(defender) + " has been poisoned!");
@@ -1005,12 +1016,8 @@ public class Battle {
                                             this.sleepTimer = this.sleepTimer / defender.showAbility().getCutSleepBy();
                                         }
                                         if (SelectMove.showOnlyCanSleep()) {
-                                            if (SelectMove.showcanMiss()) {
-                                                if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
-                                                    defender.Sleep();
-                                                }
-                                            }
-                                            if (!SelectMove.showcanMiss()) {
+                                            if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
+                                                    !SelectMove.showcanMiss()) {
                                                 defender.Sleep();
                                             }
                                         }
@@ -1018,9 +1025,6 @@ public class Battle {
                                             if ((SelectMove.showSleepChance()) >= Math.random()) {
                                                 defender.Sleep();
                                             }
-                                        }
-                                        if (defender.showAbility().showSleep()) {
-                                            System.out.println(defender.showName() + " cannot be put to sleep because of its " + defender.showAbility().showName());
                                         }
                                         if (defender.showAsleep()) {
                                             System.out.println(getAttackerName(defender) + " has been put to sleep!");
@@ -1030,33 +1034,23 @@ public class Battle {
                                 if (SelectMove.getOnlyCanParalyze() || SelectMove.showcanParalyze()) {
                                     if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                         if (SelectMove.getOnlyCanParalyze()) {
-                                            if (SelectMove.showcanMiss()) {
-                                                if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
-                                                    defender.Paralyze();
+                                            if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
+                                                    !SelectMove.showcanMiss()) {
+                                                defender.Paralyze(SelectMove.showType(), SelectMove.getParalysisTypeFail(),
+                                                        SelectMove.showName());
+                                                if(defender.showAbility().showName().equals("Synchronize")){
+                                                    attacker.Paralyze("","","");
                                                 }
-                                            }
-                                            if (!SelectMove.showcanMiss()) {
-                                                defender.Paralyze();
                                             }
                                         }
                                         if (SelectMove.showcanParalyze()) {
-                                            if (SelectMove.getParalysisTypeFail().equals(defender.showType1()) || SelectMove.getParalysisTypeFail().equals(defender.showType2())) {
-                                                System.out.println(SelectMove.showName() + " cannot paralyze " + SelectMove.getParalysisTypeFail() + " types!");
-                                            }
-                                            if (!SelectMove.getParalysisTypeFail().equals(defender.showType1()) && !SelectMove.getParalysisTypeFail().equals(defender.showType2())) {
-                                                if ((SelectMove.getParalysisChance()) >= (Math.random())) {
-                                                    defender.Paralyze();
+                                            if ((SelectMove.getParalysisChance()) >= (Math.random())) {
+                                                defender.Paralyze(SelectMove.showType(), SelectMove.getParalysisTypeFail(),
+                                                        SelectMove.showName());
+                                                if(defender.showAbility().showName().equals("Synchronize")){
+                                                    attacker.Paralyze("","","");
                                                 }
                                             }
-                                        }
-                                        if (defender.showType1().equals("Ground") || defender.showType2().equals("Ground")) {
-                                            if (SelectMove.showType().equals("Electric")) {
-                                                defender.unParalyze();
-                                                System.out.println("Ground types cannot be paralyzed by electric moves!");
-                                            }
-                                        }
-                                        if (defender.showAbility().showParalyze()) {
-                                            System.out.println(defender.showName() + " cannot be paralyzed because of its " + defender.showAbility().showName());
                                         }
                                         if (defender.showParalysis()) {
                                             System.out.println(getAttackerName(defender) + " has been paralyzed!");
@@ -1072,7 +1066,7 @@ public class Battle {
                                     defender.Poison();
                                 }
                                 if (attacker.showParalysis()) {
-                                    defender.Paralyze();
+                                    defender.Paralyze("","","");
                                 }
                                 if (attacker.showAsleep()) {
                                     defender.Sleep();
@@ -1087,12 +1081,8 @@ public class Battle {
                             if (SelectMove.showcanFreeze() || SelectMove.showOnlyCanSleep()) {
                                 if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                     if (SelectMove.showOnlyCanFreeze()) {
-                                        if (SelectMove.showcanMiss()) {
-                                            if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)) {
-                                                defender.Freeze();
-                                            }
-                                        }
-                                        if (!SelectMove.showcanMiss()) {
+                                        if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
+                                                !SelectMove.showcanMiss()) {
                                             defender.Freeze();
                                         }
                                     }
@@ -1100,13 +1090,6 @@ public class Battle {
                                         if ((SelectMove.getFreezeChance()) >= Math.random()) {
                                             defender.Freeze();
                                         }
-                                    }
-                                    if ((defender.showType1().equals("Ice")) || ((defender.showType2()).equals("Ice"))) {
-                                        defender.unPoison();
-                                        System.out.println("Freeze doesn't affect Ice Types!");
-                                    }
-                                    if (defender.showAbility().showFreeze()) {
-                                        System.out.println(defender.showName() + " cannot be frozen because of its " + defender.showAbility().showName());
                                     }
                                     if (defender.showFrozen()) {
                                         System.out.println(getAttackerName(defender) + " has been frozen!");
@@ -1116,26 +1099,21 @@ public class Battle {
                             if (SelectMove.showcanBurn() || SelectMove.showOnlyCanBurn()) {
                                 if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                     if (SelectMove.showOnlyCanBurn()) {
-                                        if (SelectMove.showcanMiss()) {
-                                            if (SelectMove.Hits(attacker, defender, PlayerPoke, weather)) {
-                                                defender.Burn();
-                                            }
-                                        }
-                                        if (!SelectMove.showcanMiss()) {
+                                        if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
+                                            !SelectMove.showcanMiss()) {
                                             defender.Burn();
+                                            if(defender.showAbility().showName().equals("Synchronize")){
+                                                attacker.Burn();
+                                            }
                                         }
                                     }
                                   if (SelectMove.showcanBurn()) {
                                         if ((SelectMove.showBurnChance() / outOfReqChance) >= Math.random()) {
                                             defender.Burn();
+                                            if(defender.showAbility().showName().equals("Synchronize")){
+                                                attacker.Burn();
+                                            }
                                         }
-                                    }
-                                    if (defender.showType1().equals("Fire")) {
-                                        defender.unPoison();
-                                        System.out.println("Burn doesn't affect Fire Types!");
-                                    }
-                                    if (defender.showAbility().showBurn()) {
-                                        System.out.println(defender.showName() + " cannot be burned because of its " + defender.showAbility().showName());
                                     }
                                     if (defender.showBurn()) {
                                         System.out.println(getAttackerName(defender) + " has been burned!");
@@ -1148,11 +1126,11 @@ public class Battle {
                                 System.out.println(getAttackerName(defender) + " cannot be affected by status changes!");
                             }
                             if (SelectMove.showUsesBerry()) {
-                                attacker.showItem().useBerry(attacker, magicRoom);
-                                if (attacker == PlayerPoke) {
-                                    playerItemUsed = attacker.showItem();
+                                attacker.showItem().useBerry(attacker, magicRoom, defender.showAbility().showName());
+                                if (attacker == this.PlayerPoke) {
+                                    this.playerItemUsed = attacker.showItem();
                                 } else {
-                                    AIItemUsed = attacker.showItem();
+                                    this.AIItemUsed = attacker.showItem();
                                 }
                             }
                             if(SelectMove.showName().equals("Quick Guard")){
@@ -1348,6 +1326,9 @@ public class Battle {
                             if(SelectMove.getCreatesTrickRoom() > 0){
                                 this.isTrickRoom = SelectMove.getCreatesTrickRoom();
                             }
+                            if(SelectMove.getCreatesWonderRoom() > 0){
+                                this.isWonderRoom = SelectMove.getCreatesWonderRoom();
+                            }
                             if (SelectMove.showCreatesSubstitute()) {
                                 attacker.createSubstitute();
                             }
@@ -1399,6 +1380,7 @@ public class Battle {
                         if (defender == this.PlayerPoke) {
                             if (this.Waiting.size() > 1) {
                                 this.PlayerPoke = ThrowNew();
+                                this.playerTrueSelf = this.PlayerPoke;
                                 this.PlayerPoke.setThrownOnFaint();
                                 this.PlayerPoke.showAbility().resolveStart(
                                         this.PlayerPoke, this.AIPoke, this.weather);
@@ -1422,6 +1404,7 @@ public class Battle {
                         if (defender == this.PlayerPoke) {
                             if (this.Waiting.size() > 1) {
                                 this.PlayerPoke = ThrowNew();
+                                this.playerTrueSelf = this.PlayerPoke;
                                 this.PlayerPoke.showAbility().resolveStart(
                                         this.PlayerPoke, this.AIPoke, this.weather);
                             }
@@ -1442,11 +1425,13 @@ public class Battle {
                             if (this.Waiting.size() > 1) {
                                 this.PlayerPoke.setSubstituteHP(0);
                                 this.PlayerPoke = ThrowNew();
+                                this.playerTrueSelf = this.PlayerPoke;
                             }
                             if (this.Waiting.size() <= 1) {
                                 System.out.println("You do not have another pokemon to switch out with!");
                             }
                             this.PlayerPoke = ThrowNew();
+                            this.playerTrueSelf = this.PlayerPoke;
                             this.PlayerPoke.showAbility().resolveStart(
                                     this.PlayerPoke, this.AIPoke, this.weather);
                         }
@@ -1499,9 +1484,9 @@ public class Battle {
                         if (attacker == this.PlayerPoke) {
                             DamageDealt = SelectMove.damageDealt(
                                     attacker, attacker, this.weather,
-                                    this.PlayerPoke, this.terrain,
-                                    this.Waiting, enemyMove, this.isFirst,
-                                    magicRoom);
+                                    this.terrain, this.Waiting,
+                                    enemyMove, this.isFirst,
+                                    magicRoom, this.isTrickRoom>0);
                             System.out.println("Your " + this.PlayerPoke.showName()
                                     + " dealt " + DamageDealt + " damage!");
                             if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
@@ -1525,9 +1510,9 @@ public class Battle {
                                     (this.AIChargeTimer <= 0)) {
                                 DamageDealt = SelectMove.damageDealt(
                                         attacker, attacker, this.weather,
-                                        this.PlayerPoke, this.terrain,
-                                        this.Waiting, enemyMove, this.isFirst,
-                                        magicRoom);
+                                        this.terrain, this.Waiting,
+                                        enemyMove, this.isFirst,
+                                        magicRoom, this.isTrickRoom>0);
                                 System.out.println("Enemy " + AIPoke.showName() +
                                         " dealt " + DamageDealt + " damage!");
                                 if (defender.showSubstituteHP() <= 0 ||
@@ -1557,9 +1542,9 @@ public class Battle {
                     if (SelectMove.showName().equals("Snore")) {
                         DamageDealt = SelectMove.damageDealt(
                                 attacker, attacker, this.weather,
-                                this.PlayerPoke, this.terrain,
-                                this.Waiting, enemyMove, this.isFirst,
-                                magicRoom);
+                                this.terrain, this.Waiting,
+                                enemyMove, this.isFirst,
+                                magicRoom, this.isTrickRoom>0);
                         if (attacker == this.PlayerPoke) {
                             System.out.println("Your " +
                                     this.PlayerPoke.showName() +
@@ -2015,11 +2000,13 @@ public class Battle {
 
     private Boolean isFirst() {
         Boolean first = null;
-        if(this.PlayerSelectedMove.getGoesFirst()){
-            return true;
-        }
-        if(this.AISelectedMove.getGoesFirst()){
-            return false;
+        if(!this.terrain.showName().equals("Psychic")) {
+            if (this.PlayerSelectedMove.getGoesFirst()) {
+                return true;
+            }
+            if (this.AISelectedMove.getGoesFirst()) {
+                return false;
+            }
         }
         if (this.PlayerPoke.showSpeed(
                 this.PlayerSelectedMove.getSpeedPriority())
@@ -2072,5 +2059,6 @@ public class Battle {
         this.AIPoke.setThrownOnFaint();
         this.affectsGround.AIPokeGroundOnSwitch(this.AIPoke,
                 this.PlayerPoke);
+        this.AITrueSelf = this.AIPoke;
     }
 }

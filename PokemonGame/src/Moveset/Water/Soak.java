@@ -12,5 +12,6 @@ public class Soak extends Moves {
         this.type = "Water";
         this.savedPP = this.PP;
         this.ignoreSubstitute = true;
+        this.StatchangeEnemy = true;
     }
 }

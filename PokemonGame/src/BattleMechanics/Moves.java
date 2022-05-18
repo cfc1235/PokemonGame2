@@ -191,7 +191,17 @@ public class Moves {
     protected int isDisabled = 0;
     protected int causesDisabled = 0;
     protected int magicRoomAdd = 0;
+    protected int coins = 0;
+    protected int createsWonderRoom = 0;
 
+    public int getCoins(){
+        int batCoins = this.coins;
+        this.coins = 0;
+        return batCoins;
+    }
+
+    public Moves resolveMetronome(){return this;}
+    public int getCreatesWonderRoom(){return this.createsWonderRoom;}
     public int getMagicRoomAdd(){return this.magicRoomAdd;}
     public int getCausesDisabled(){return this.causesDisabled;}
     public void setIsDisabled(int disableTimer){this.isDisabled = disableTimer;}
@@ -589,10 +599,10 @@ public class Moves {
     }
 
     public int damageDealt(Pokemon attacker, Pokemon defender,
-                           Weather weather, Pokemon PlayerPoke,
-                           Terrain terrain, List<Pokemon> Waiting,
-                           Moves enemyMove, Boolean isFirst,
-                           Boolean magicRoom){
+                           Weather weather, Terrain terrain,
+                           List<Pokemon> Waiting, Moves enemyMove,
+                           Boolean isFirst, Boolean magicRoom,
+                           Boolean wonderRoom){
         int RefinedDamage;
         double RawDamage = 0;
         int savedRefinedDamage = 0;
@@ -675,7 +685,7 @@ public class Moves {
         }
         if(this.name.equals("Fling")){
             this.power = attacker.showItem().showFlingDamage();
-            attacker.showItem().useBerry(defender, false);
+            attacker.showItem().useBerry(defender, false, defender.showAbility().showName());
         }
         if(this.name.equals("Gyro Ball")){
             this.power = 25 * (defender.showSpeed(
@@ -812,7 +822,7 @@ public class Moves {
                     savedRefinedDamage = defender.showHP() - attacker.showHP();
                 }
                 else {
-                    savedRefinedDamage = (int) Math.ceil(defender.showHP() / cutHPBy);
+                    savedRefinedDamage = (int) Math.ceil(defender.showHP() / this.cutHPBy);
                 }
             } else {
                 int hitTimes = 1;
@@ -827,63 +837,51 @@ public class Moves {
                     }
                 }
                 while (hitTicker <= hitTimes) {
-                    if (this.isSpecial && !this.name.equals("Psyshock")) {
-                        RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2)
-                                * this.power * ((attacker.showSpecAttack() * SpecAttackCalc(attacker) *
-                                attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
-                                attacker.showItem().getStatMults()[2])  /
-                                (defender.showSpecDefense() * SpecDefCalc(defender) *
-                                defender.showAbility().getStatMults(defender, attacker, this, weather)[3] *
-                                defender.showItem().getStatMults()[2])) / 50.0) + 2);
+                    double attack = 0;
+                    double defense = 0;
+                    if (this.isSpecial) {
+                        attack = getSpecAttack(attacker, defender, weather);
+                        if(this.name.equals("Psyshock") || this.name.equals("Psystrike")){
+                            if(wonderRoom){
+                                defense = getSpecDef(attacker, defender, weather);
+                            }
+                            else {
+                                defense = getPhysDef(attacker, defender, weather);
+                            }
+                        }
+                        else {
+                            if(wonderRoom){
+                                defense = getPhysDef(attacker, defender, weather);
+                            }
+                            else {
+                                defense = getSpecDef(attacker, defender, weather);
+                            }
+                        }
                         if(defender.getHasSpecWall()){
-                            RawDamage = RawDamage/2;
+                            defense = defense*2;
                         }
                     }
-                    if (this.isSpecial && this.name.equals("Psyshock")) {
-                        RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2)
-                                * this.power * ((attacker.showSpecAttack() * SpecAttackCalc(attacker) *
-                                attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
-                                attacker.showItem().getStatMults()[2])  /
-                                (defender.showPhysDefense() * DefCalc(defender) *
-                                        defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
-                                        defender.showItem().getStatMults()[1])) / 50.0) + 2);
-                        if(defender.getHasSpecWall()){
-                            RawDamage = RawDamage/2;
+                    if (!this.isSpecial) {
+                        if(wonderRoom){
+                            defense = getSpecDef(attacker, defender, weather);
                         }
-                    }
-                    if (!this.isSpecial && !(this.name.equals("Body Press") || this.name.equals("Foul Play"))) {
-                        RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
-                                this.power * ((attacker.showPhysAttack() * AttackCalc(attacker) *
-                                attacker.showAbility().getStatMults(attacker, defender, this, weather)[0] *
-                                attacker.showItem().getStatMults()[0]) / (defender.showPhysDefense() *
-                                DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
-                                defender.showItem().getStatMults()[1])) / 50.0) + 2);
+                        else {
+                            defense = getPhysDef(attacker, defender, weather);
+                        }
                         if(defender.getHasPhysWall()){
-                            RawDamage = RawDamage/2;
+                            defense = defense * 2;
+                        }
+                        if(this.name.equals("Foul Play")){
+                            attack = getAttackFoulPlay(attacker, defender, weather);
+                        }
+                        else if(this.name.equals("Body Press")){
+                            attack = getAttackBodyPress(attacker, defender, weather);
+                        }
+                        else {
+                            attack = getPhysAttack(attacker, defender, weather);
                         }
                     }
-                    if (!this.isSpecial && this.name.equals("Foul Play")) {
-                        RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
-                                this.power * ((defender.showPhysAttack() * AttackCalc(defender) *
-                                attacker.showAbility().getStatMults(attacker, defender, this, weather)[0] *
-                                attacker.showItem().getStatMults()[0]) / (defender.showPhysDefense() *
-                                DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
-                                defender.showItem().getStatMults()[1])) / 50.0) + 2);
-                        if(defender.getHasPhysWall()){
-                            RawDamage = RawDamage/2;
-                        }
-                    }
-                    if (!this.isSpecial && this.name.equals("Body Press")) {
-                        RawDamage = (((((2 * attacker.showLevel()) / 5.0) + 2) *
-                                this.power * ((attacker.showPhysDefense() * AttackCalc(attacker) *
-                                attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
-                                attacker.showItem().getStatMults()[2]) / (defender.showPhysDefense() *
-                                DefCalc(defender) * defender.showAbility().getStatMults(defender, attacker, this, weather)[2]) *
-                                defender.showItem().getStatMults()[2]) / 50.0) + 2);
-                        if(defender.getHasPhysWall()){
-                            RawDamage = RawDamage/2;
-                        }
-                    }
+                    RawDamage = attack / defense;
                     if ((this.name.equals("Acrobatics") && attacker.showItem().showName().equals(""))
                     || ((this.name.equals("Brine")) && (defender.showHP() * 1.0)/defender.showSavedHP() <= .5)
                     || ((this.name.equals("Pursuit")) && defender.getJustThrown())
@@ -924,6 +922,7 @@ public class Moves {
                             && this.DamageSelf){
                         RawDamage = RawDamage * 1.2;
                     }
+                    RawDamage += 2;
                     double Weather = 1;
                     if (this.type.equals(weather.showIncreaseType())) {
                         Weather = weather.showIncreaseBy();
@@ -981,6 +980,9 @@ public class Moves {
                             this.power = 160;
                         }
                     }
+                    if(this.name.equals("Pay Day")){
+                        this.coins += 2*attacker.showLevel();
+                    }
                 }
             }
             if(!defender.showAbility().getCausesStatEffect().isEmpty()){
@@ -1003,6 +1005,52 @@ public class Moves {
             this.power = 40;
         }
         return savedRefinedDamage;
+    }
+
+    private double getAttackBodyPress(Pokemon attacker, Pokemon defender,
+                                     Weather weather){
+        return (((2 * attacker.showLevel()) / 5.0) + 2) *
+                this.power * attacker.showPhysDefense() * AttackCalc(attacker) *
+                attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
+                attacker.showItem().getStatMults()[2];
+    }
+
+    private double getAttackFoulPlay(Pokemon attacker, Pokemon defender,
+                                     Weather weather){
+        return (((2 * attacker.showLevel()) / 5.0) + 2) *
+                this.power * defender.showPhysAttack() * AttackCalc(defender) *
+                attacker.showAbility().getStatMults(attacker, defender, this, weather)[0] *
+                attacker.showItem().getStatMults()[0];
+    }
+
+    private double getPhysAttack(Pokemon attacker, Pokemon defender,
+                                     Weather weather){
+        return (((2 * attacker.showLevel()) / 5.0) + 2) *
+                this.power * attacker.showPhysAttack() * AttackCalc(defender) *
+                attacker.showAbility().getStatMults(attacker, defender, this, weather)[0] *
+                attacker.showItem().getStatMults()[0];
+    }
+
+    private double getSpecAttack(Pokemon attacker, Pokemon defender,
+                                 Weather weather){
+        return (((2 * attacker.showLevel()) / 5.0) + 2)
+                * this.power * attacker.showSpecAttack() * SpecAttackCalc(attacker) *
+                attacker.showAbility().getStatMults(attacker, defender, this, weather)[2] *
+                attacker.showItem().getStatMults()[2];
+    }
+
+    private double getPhysDef(Pokemon attacker, Pokemon defender,
+                              Weather weather){
+        return defender.showPhysDefense() * DefCalc(defender) *
+                defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
+                defender.showItem().getStatMults()[1] * 50.0;
+    }
+
+    private double getSpecDef(Pokemon attacker, Pokemon defender,
+                              Weather weather){
+        return defender.showSpecDefense() * SpecDefCalc(defender) *
+                defender.showAbility().getStatMults(defender, attacker, this, weather)[3] *
+                defender.showItem().getStatMults()[2] * 50.0;
     }
 
     public void swapPowers(Pokemon attacker, Pokemon defender){

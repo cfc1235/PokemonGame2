@@ -13,7 +13,7 @@ public class GlobalVariables {
     private final int[] battleCount = new int[898];
     private final GameScreen gameScreen = new GameScreen();
     private final WorldMap worldMap = new WorldMap();
-    private PlayerMechanics.TMInventory TMInventory = new TMInventory();
+    private Interfaces.TMInventory TMInventory = new TMInventory();
     private BallInventory ballInventory = new BallInventory();
     private PlayerParty party = new PlayerParty();
     private Computer computer = new Computer();

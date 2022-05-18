@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class Pokemon implements AddMoveset {
+public class Pokemon implements AddMoveset, Cloneable {
     protected CreateOrderedMap<Integer, Integer> PLACEHOLDER = new CreateOrderedMap<>(0, 0);
     protected List<Integer> EVs = new ArrayList<>();
     protected List<Integer> GivesEVs = new ArrayList<>();
@@ -199,6 +199,16 @@ public class Pokemon implements AddMoveset {
         this.type2 = this.type4;
         this.type4 = "";
     }
+
+    public Pokemon clone() {
+        try {
+            return (Pokemon) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
     public void setThrownOnFaint(){this.thrownOnFaint = true;}
     public void resetThrownOnFaint(){this.thrownOnFaint = false;}
     public Boolean getThrownOnFaint(){return this.thrownOnFaint;}
@@ -605,52 +615,96 @@ public class Pokemon implements AddMoveset {
     }
 
     public int getCaptureRate(){
-        return captureRate;
+        return this.captureRate;
     }
     public double showWeight(){
-        return Weight;
+        return this.Weight;
     }
     public Boolean showFrozen(){
-        return isFrozen;
+        return this.isFrozen;
     }
     public void Freeze(){
-        isFrozen = true;
+        if (this.type1.equals("Ice") || this.type2.equals("Ice")) {
+            System.out.println("Freeze doesn't affect Ice Types!");
+        }
+        else if (this.showAbility().showFreeze()) {
+            System.out.println(this.name + " cannot be frozen because of its " + this.ability.showName());
+        }
+        else {
+            this.isFrozen = true;
+        }
     }
     public void unFreeze(){
-        isFrozen = false;
+        this.isFrozen = false;
     }
     public void Sleep(){
-        isFrozen = true;
+        if(this.ability.showSleep()) {
+            System.out.println(this.name + " cannot be put to sleep because of its " + this.ability.showName());
+        }
+        else {
+            this.isAsleep = true;
+        }
     }
     public void Wake(){
-        isFrozen = false;
+        this.isAsleep = false;
     }
-    public void Paralyze(){
-        isParalyzed = true;
+    public void Paralyze(String moveType, String failType, String moveName){
+        if (failType.equals(this.type1) || failType.equals(this.type2)) {
+            System.out.println(moveName + " cannot paralyze " + failType + " types!");
+        }
+        else if (this.type1.equals("Ground") || this.type2.equals("Ground")) {
+            if (moveType.equals("Electric")) {
+                System.out.println("Ground types cannot be paralyzed by electric moves!");
+            }
+        }
+        else if (this.ability.showParalyze()) {
+            System.out.println(this.name + " cannot be paralyzed because of its " + this.ability.showName());
+        }
+        else {
+            this.isParalyzed = true;
+        }
     }
     public void unParalyze(){
-        isParalyzed = false;
+        this.isParalyzed = false;
     }
     public void Burn(){
-        isBurned = true;
+        if (this.type1.equals("Fire") || this.type2.equals("Fire")) {
+            System.out.println("Burn doesn't affect Fire Types!");
+        }
+        else if (this.ability.showBurn()) {
+            System.out.println(this.name + " cannot be burned because of its " + this.ability.showName());
+        }
+        else {
+            this.isBurned = true;
+        }
     }
     public void unBurn(){
-        isBurned = false;
+        this.isBurned = false;
     }
     public Boolean showAsleep(){
-        return isAsleep;
+        return this.isAsleep;
     }
     public Boolean showParalysis(){
-        return isParalyzed;
+        return this.isParalyzed;
     }
     public Boolean showBurn(){
-        return isBurned;
+        return this.isBurned;
     }
     public Boolean showPoisoned(){
-        return isPoisoned;
+        return this.isPoisoned;
     }
     public void Poison(){
-        isPoisoned = true;
+        if (!(this.type1.equals("Poison") || this.type2.equals("Poison") ||
+                this.type1.equals("Steel")) || this.type2.equals("Steel")) {
+            if (this.ability.showPoison()) {
+                System.out.println(this.name + " cannot be poisoned because of its " + this.ability.showName());
+            } else {
+                this.isPoisoned = true;
+            }
+        }
+        else {
+            System.out.println("Poison doesn't affect Poison and Steel Types!");
+        }
     }
     public void unPoison(){
         isPoisoned = false;
@@ -892,7 +946,12 @@ public class Pokemon implements AddMoveset {
         HP = savedHP;
     }
     public void Seed(){
-        isSeeded = true;
+        if(this.type1.equals("Grass") || this.type2.equals("Grass")){
+            System.out.println("Leech Seed doesn't affect Grass Types!");
+        }
+        else {
+            this.isSeeded = true;
+        }
     }
     public void resetSeed(){
         isSeeded = false;
@@ -1165,7 +1224,7 @@ public class Pokemon implements AddMoveset {
         List<String> AvailableTMs = new ArrayList<>();
         boolean AcceptableMove = false;
         boolean removeLearned = false;
-        for(Moves PotMoves : TMmoves) {
+        for(Moves PotMoves : this.TMmoves) {
             Movenames.add(PotMoves.showName());
             if (CurrentTMs.contains(PotMoves.showName())) {
                 AvailableTMs.add(PotMoves.showName());
@@ -1356,7 +1415,7 @@ public class Pokemon implements AddMoveset {
         }
     }
 
-    public void resetForWin(){
+    public int resetForWin(){
         this.resetForThrow();
         this.ridStatusEffects();
         this.resetVortex();
@@ -1364,6 +1423,11 @@ public class Pokemon implements AddMoveset {
         this.resetItem();
         this.critTotal = 0;
         this.ability.resolveEndFight(this);
+        int coins = 0;
+        for(Moves moves : this.moves){
+            coins += moves.getCoins();
+        }
+        return coins;
     }
 
     public void ridStatusEffects(){

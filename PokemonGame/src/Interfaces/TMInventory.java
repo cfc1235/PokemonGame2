@@ -1,7 +1,8 @@
-package PlayerMechanics;
+package Interfaces;
 
 import BattleMechanics.Moves;
 import Interfaces.GlobalVariables;
+import PlayerMechanics.PlayerParty;
 import PokemonCreation.Pokemon;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class TMInventory {
         int currentSize = this.TMInventory.size();
         if(Selection == 0 && !this.TMInventory.contains("Mega Punch")) { this.TMInventory.add("Mega Punch"); }
         if(Selection == 1 && !this.TMInventory.contains("Mega Kick")) { this.TMInventory.add("Mega Kick"); }
-        if(Selection == 2 && !this.TMInventory.contains("Pay Day")) {}
+        if(Selection == 2 && !this.TMInventory.contains("Pay Day")) {this.TMInventory.add("Pay Day");}
         if(Selection == 3 && !this.TMInventory.contains("Fire Punch")) { this.TMInventory.add("Fire Punch"); }
         if(Selection == 4 && !this.TMInventory.contains("Ice Punch")) { this.TMInventory.add("Ice Punch"); }
         if(Selection == 5 && !this.TMInventory.contains("Thunder Punch")) { this.TMInventory.add("Thunder Punch"); }
@@ -115,7 +116,7 @@ public class TMInventory {
         if(Selection == 59 && !this.TMInventory.contains("Fling")){this.TMInventory.add("Fling");}
         if(Selection == 60 && !this.TMInventory.contains("Power Swap")){this.TMInventory.add("Power Swap");}
         if(Selection == 61 && !this.TMInventory.contains("Guard Swap")){this.TMInventory.add("Guard Swap");}
-        if(Selection == 62 && !this.TMInventory.contains("Speed Swap")){}
+        if(Selection == 62 && !this.TMInventory.contains("Speed Swap")){this.TMInventory.add("Speed Swap");}
         if(Selection == 63 && !this.TMInventory.contains("Drain Punch")){this.TMInventory.add("Drain Punch");}
         if(Selection == 64 && !this.TMInventory.contains("Avalanche")){this.TMInventory.add("Avalanche");}
         if(Selection == 65 && !this.TMInventory.contains("Shadow Claw")){this.TMInventory.add("Shadow Claw");}
@@ -124,7 +125,7 @@ public class TMInventory {
         if(Selection == 68 && !this.TMInventory.contains("Fire Fang")){this.TMInventory.add("Fire Fang");}
         if(Selection == 69 && !this.TMInventory.contains("Psycho Cut")){this.TMInventory.add("Psycho Cut");}
         if(Selection == 70 && !this.TMInventory.contains("Trick Room")){this.TMInventory.add("Trick Room");}
-        if(Selection == 71 && !this.TMInventory.contains("Wonder Room")){}
+        if(Selection == 71 && !this.TMInventory.contains("Wonder Room")){this.TMInventory.add("Wonder Room");}
         if(Selection == 72 && !this.TMInventory.contains("Magic Room")){this.TMInventory.add("Magic Room");}
         if(Selection == 73 && !this.TMInventory.contains("Cross Poison")){this.TMInventory.add("Cross Poison");}
         if(Selection == 74 && !this.TMInventory.contains("Venoshock")){this.TMInventory.add("Venoshock");}
@@ -144,7 +145,7 @@ public class TMInventory {
         if(Selection == 88 && !this.TMInventory.contains("Grassy Terrain")){this.TMInventory.add("Grassy Terrain");}
         if(Selection == 89 && !this.TMInventory.contains("Misty Terrain")){this.TMInventory.add("Misty Terrain");}
         if(Selection == 90 && !this.TMInventory.contains("Electric Terrain")){this.TMInventory.add("Electric Terrain");}
-        if(Selection == 91 && !this.TMInventory.contains("Pyschic Terrain")){}
+        if(Selection == 91 && !this.TMInventory.contains("Pyschic Terrain")){this.TMInventory.add("Psychic Terrain");}
         if(Selection == 92 && !this.TMInventory.contains("Mystic Fire")){this.TMInventory.add("Mystic Fire");}
         if(Selection == 93 && !this.TMInventory.contains("Eerie Impulse")){this.TMInventory.add("Eerie Impulse");}
         if(Selection == 94 && !this.TMInventory.contains("False Swipe")){this.TMInventory.add("False Swipe");}
@@ -167,7 +168,7 @@ public class TMInventory {
         if(Selection == 111 && !this.TMInventory.contains("Psychic")){this.TMInventory.add("Psychic");}
         if(Selection == 112 && !this.TMInventory.contains("Agility")){this.TMInventory.add("Agility");}
         if(Selection == 113 && !this.TMInventory.contains("Focus Energy")){this.TMInventory.add("Focus Energy");}
-        if(Selection == 114 && !this.TMInventory.contains("Metronome")){}
+        if(Selection == 114 && !this.TMInventory.contains("Metronome")){this.TMInventory.add("Metronome");}
         if(Selection == 115 && !this.TMInventory.contains("Fire Blast")){this.TMInventory.add("Fire Blast");}
         if(Selection == 116 && !this.TMInventory.contains("Waterfall")){this.TMInventory.add("Waterfall");}
         if(Selection == 117 && !this.TMInventory.contains("Amnesia")){this.TMInventory.add("Amnesia");}
@@ -191,7 +192,7 @@ public class TMInventory {
         if(Selection == 135 && !this.TMInventory.contains("Uproar")){this.TMInventory.add("Uproar");}
         if(Selection == 136 && !this.TMInventory.contains("Heat Wave")){this.TMInventory.add("Heat Wave");}
         if(Selection == 137 && !this.TMInventory.contains("Taunt")){this.TMInventory.add("Taunt");}
-        if(Selection == 138 && !this.TMInventory.contains("Trick")){}
+        if(Selection == 138 && !this.TMInventory.contains("Trick")){this.TMInventory.add("Trick");}
         if(Selection == 139 && !this.TMInventory.contains("Superpower")){this.TMInventory.add("Superpower");}
         if(Selection == 140 && !this.TMInventory.contains("Skill Swap")){}
         if(Selection == 141 && !this.TMInventory.contains("Blaze Kick")){this.TMInventory.add("Blaze Kick");}
@@ -276,7 +277,7 @@ public class TMInventory {
         if(Selection == 296 && !this.TMInventory.contains("Strength")){this.TMInventory.add("Strength");}
         if(Selection == 297 && !this.TMInventory.contains("Defog")){this.TMInventory.add("Defog");}
         if(Selection == 298 && !this.TMInventory.contains("Rock Smash")){this.TMInventory.add("Rock Smash");}
-        if(Selection == 300 && !this.TMInventory.contains("Rock Climb")){}
+        if(Selection == 299 && !this.TMInventory.contains("Rock Climb")){this.TMInventory.add("Rock Climb");}
         if(Selection == 321 && !this.TMInventory.contains("Frustration")){this.TMInventory.add("Frustration");}
         if(Selection == 323 && !this.TMInventory.contains("Smack Down")){this.TMInventory.add("Smack Down");}
         if(Selection == 327 && !this.TMInventory.contains("Return")){this.TMInventory.add("Return");}

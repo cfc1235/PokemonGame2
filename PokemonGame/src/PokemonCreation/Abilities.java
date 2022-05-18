@@ -135,7 +135,7 @@ public class Abilities {
                         attacker.Sleep();
                     }
                     if(effect.equals("Paralysis")){
-                        attacker.Paralyze();
+                        attacker.Paralyze("","","");
                     }
                     if(effect.equals("Freeze")){
                         attacker.Freeze();

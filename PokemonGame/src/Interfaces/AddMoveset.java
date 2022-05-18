@@ -26,7 +26,6 @@ import Moveset.SwitchPoke.*;
 import Moveset.Water.*;
 
 public interface AddMoveset {
-
     default Moves addTwister(){return new Twister();}
     default Moves addPound(){ return new Pound(); }
     default Moves addTackle() { return new Tackle(); }
@@ -400,4 +399,13 @@ public interface AddMoveset {
     default Moves addFlameCharge(){return new FlameCharge();}
     default Moves addRockBlast(){return new RockBlast();}
     default Moves addSmackDown(){return new SmackDown();}
+    default Moves addPsystrike(){return new Psystrike();}
+    default Moves addPayDay(){return new Payday();}
+    default Moves addSpeedSwap(){return new SpeedSwap();}
+    default Moves addWonderRoom(){return new WonderRoom();}
+    default Moves addPsychicTerrain(){return new PsychicTerrain();}
+    default Moves addMetronome(){return new Metronome();}
+    default Moves addTrick(){return new Trick();}
+    default Moves addReflectType(){return new ReflectType();}
+    default Moves addTransform(){return new Transform();}
 }

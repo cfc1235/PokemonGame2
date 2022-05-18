@@ -15,5 +15,6 @@ public class BurnUp extends Moves {
         this.isSpecial = true;
         this.resetsType = true;
         this.resetsTypeFrom = "Fire";
+        this.StateChangeAlly = true;
     }
 }
