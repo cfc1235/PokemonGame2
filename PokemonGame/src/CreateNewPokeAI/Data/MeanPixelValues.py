@@ -6,16 +6,24 @@ import pickle
 
 def getRGB(image, featureArray):
     readImage = imread(image)
-    features = np.reshape(readImage,
-        (readImage.shape[2] * readImage.shape[1] * readImage.shape[0]))
-    pickle.dump(features, open(featureArray, 'wb'))
+    print(readImage.shape)
+    resized = np.resize(readImage, (250, 250, 4))
+    features = np.reshape(resized,
+        (resized.shape[2] * resized.shape[1] * resized.shape[0]))
+    print(features.shape)
+    print(features)
+    np.save(file=featureArray, arr=features)
     return True
 
 def getGrey(image, featureArray):
     readImage = imread(image, as_gray=True)
-    features = np.reshape(readImage,
-        (readImage.shape[0] * readImage.shape[1]))
-    pickle.dump(features, open(featureArray, 'wb'))
+    resized = np.resize(readImage, (250, 250))
+    print(readImage.shape)
+    features = np.reshape(resized,
+        (resized.shape[0] * resized.shape[1]))
+    print(features.shape)
+    print(features)
+    np.save(file=featureArray, arr=features)
     return True
 
 def createBasePixelVals(base):
@@ -31,14 +39,14 @@ def createBasePixelVals(base):
                     continue
                 imName = row[1]
                 image = base + 'GraphicalImages\\Pokemon\\NonShiny\\' + imName
-                featureArray = base + 'CreateNewPokeAI\\Data\\ImageFeatures\\RGBBase\\' + name + "RGBFeatures.data"
+                featureArray = base + 'CreateNewPokeAI\\Data\\ImageFeatures\\RGBBase\\' + name + "RGBFeatures.npy"
                 try:
-                    pickle.load(open(featureArray, 'rb'))
+                    np.load(featureArray)
                 except FileNotFoundError:
                     again = getRGB(image, featureArray)
-                featureArray = base + 'CreateNewPokeAI\\Data\\ImageFeatures\\GreyBase\\' + name + "GreyFeatures.data"
+                featureArray = base + 'CreateNewPokeAI\\Data\\ImageFeatures\\GreyBase\\' + name + "GreyFeatures.npy"
                 try:
-                    pickle.load(open(featureArray, 'rb'))
+                    np.load(featureArray)
                 except FileNotFoundError:
                     again = getGrey(image, featureArray)
             print("RUN " + str(run) + " is done")

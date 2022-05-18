@@ -4,6 +4,7 @@ import pickle
 import torch
 from torchvision import transforms
 from PIL import Image
+import numpy as np
 
 def getTensors(base):
     with open(base + 'CreateNewPokeAI\\Data\\CSVs\\CurrentPokeCSV.csv') as csvFile:
@@ -18,13 +19,13 @@ def getTensors(base):
                 if 'Name' in row:
                     continue
                 imName = row[1]
-                featureArray = base + 'CreateNewPokeAI\\Data\\ImageFeatures\\TensorsBase\\' + name + "TensorsFeatures.data"
+                featureArray = base + 'CreateNewPokeAI\\Data\\ImageFeatures\\TensorsBase\\' + name + "TensorsFeatures.npy"
                 try:
-                    pickle.load(open(featureArray, 'rb'))
+                    np.load(featureArray)
                 except FileNotFoundError:
                     image = Image.open(base + 'GraphicalImages\\Pokemon\\NonShiny\\' + imName)
                     tensors = convertTensor(image)
-                    pickle.dump(tensors, open(featureArray, 'wb'))
+                    np.save(file=featureArray, arr=tensors)
                     again = True
             print("RUN " + str(run) + " is done")
             run += 1
