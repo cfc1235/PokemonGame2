@@ -4,7 +4,6 @@ import Interfaces.CreateOrderedMap;
 import Interfaces.GetItem;
 import Interfaces.GlobalVariables;
 import PokemonCreation.AllAbilities.R.Rattled;
-import PokemonCreation.AllAbilities.R.Reckless;
 import PokemonCreation.AllAbilities.R.RockHead;
 import PokemonCreation.AllAbilities.S.Sturdy;
 import PokemonCreation.Pokemon;
