@@ -25,6 +25,7 @@ import Pokedex.T.Toucannon;
 import Pokedex.T.Trumbeak;
 import Pokedex.V.*;
 import Pokedex.W.*;
+import Pokedex.Y.Yungoos;
 import Pokedex.Z.*;
 import PokemonCreation.*;
 import Items.NoItem;
@@ -96,6 +97,17 @@ public interface GetPokemon {
             }
             else {
                 pokemon = new AlolanRaticate(level, globalVariables);
+            }
+        }
+        if(ID == 25){
+            pokemon = new Pikachu(level, globalVariables);
+        }
+        if(ID == 26){
+            if(regionCheck < .75) {
+                pokemon = new Raichu(level, globalVariables);
+            }
+            else {
+                pokemon = new AlolanRaichu(level, globalVariables);
             }
         }
         if(ID == 39){
@@ -186,6 +198,9 @@ public interface GetPokemon {
         }
          if(ID == 168){
              pokemon = new Ariados(level, globalVariables);
+         }
+         if(ID == 172){
+             pokemon = new Pichu(level, globalVariables);
          }
          if(ID == 174){
              pokemon = new Igglybuff(level, globalVariables);
@@ -288,6 +303,12 @@ public interface GetPokemon {
          if(ID == 733){
              pokemon = new Toucannon(level, globalVariables);
          }
+         if(ID == 734){
+             pokemon = new Yungoos(level, globalVariables);
+         }
+         if(ID == 735){
+             pokemon = new Gumshoos(level, globalVariables);
+         }
          if(ID == 862){
              pokemon = new Sirfetchd(level, globalVariables);
          }
@@ -373,6 +394,16 @@ public interface GetPokemon {
                         IVs, HPMissing, Evs, Gender, ability, isShiny, items);
             }
         }
+        if(ID == 25){
+            if(isAlolan){
+                evolution = new AlolanRaichu(level, moves, nature, name,
+                        IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+            }
+            else {
+                evolution = new Raichu(level, moves, nature, name,
+                        IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+            }
+        }
         if(ID == 39){
             evolution = new Wigglytuff(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
@@ -429,6 +460,11 @@ public interface GetPokemon {
         if(ID == 167){
             evolution = new Ariados(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 172){
+            evolution = new Pikachu(level, moves, nature, name, IVs,
+                    HPMissing, Evs, Gender, ability, isShiny, items,
+                    isAlolan);
         }
         if(ID == 174){
             evolution = new Jigglypuff(level, moves, nature, name,
@@ -498,6 +534,10 @@ public interface GetPokemon {
         }
         if(ID == 732) {
             evolution = new Toucannon(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 734){
+            evolution = new Gumshoos(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(!evolution.showOnEvol().showName().equals("Nothing") &&

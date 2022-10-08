@@ -72,12 +72,12 @@ public class Pidgeot extends Pokemon {
         else {
             this.name = name;
         }
-        moves = oldMoves;
-        EVs = OldEVs;
+        this.moves = oldMoves;
+        this.EVs = OldEVs;
         this.ability = ability;
         changeBaseStats();
-        HP = (int) Math.round(savedHP * HPmissing);
-        savedAbility = ability;
+        this.HP = (int) Math.round(this.savedHP * HPmissing);
+        this.savedAbility = ability;
         setFullDirNameEvolution(isShiny, "Pidgeot.png");
         this.savedItem = items;
         this.item = this.savedItem;

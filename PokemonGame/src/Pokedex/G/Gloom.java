@@ -4,6 +4,7 @@ import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import Items.HeldItem.AbsorbBulb;
+import Items.NoItem;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.C.Chlorophyll;
 import PokemonCreation.AllAbilities.S.Stench;
@@ -79,7 +80,9 @@ public class Gloom extends Pokemon {
         changeBaseStats();
         this.HP = this.savedHP;
         setFullDirName("Gloom.png", globalVariables);
-        this.possibleWildItems.add(new CreateOrderedMap<>(5, new AbsorbBulb()));
+        Collections.addAll(this.possibleWildItems,
+                new CreateOrderedMap<>(5, new AbsorbBulb()),
+                new CreateOrderedMap<>(95, new NoItem()));
         getWildItem();
     }
 }

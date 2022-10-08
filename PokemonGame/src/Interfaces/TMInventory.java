@@ -103,7 +103,7 @@ public class TMInventory {
         if(Selection == 46 && !this.TMInventory.contains("Weather Ball")){this.TMInventory.add("Weather Ball");}
         if(Selection == 47 && !this.TMInventory.contains("Fake Tears")){this.TMInventory.add("Fake Tears");}
         if(Selection == 48 && !this.TMInventory.contains("Rock Tomb")){this.TMInventory.add("Rock Tomb");}
-        if(Selection == 49 && !this.TMInventory.contains("Sand Tomb")){}
+        if(Selection == 49 && !this.TMInventory.contains("Sand Tomb")){this.TMInventory.add("Sand Tomb");}
         if(Selection == 50 && !this.TMInventory.contains("Bullet Seed")){this.TMInventory.add("Bullet Seed");}
         if(Selection == 51 && !this.TMInventory.contains("Icicle Spear")){this.TMInventory.add("Icicle Spear");}
         if(Selection == 52 && !this.TMInventory.contains("Bounce")){this.TMInventory.add("Bounce");}

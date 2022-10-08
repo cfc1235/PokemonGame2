@@ -1,7 +1,7 @@
 package Locations.AreaTypes;
 
-import BattleMechanics.AIPokeParty;
-import BackgroundMusic.MusicCode.PlayTrainerBattleMusic;
+import Interfaces.AIPokeParty;
+import BackgroundMusic.MusicCode.PlayBattleMusic;
 import BackgroundMusic.MusicCode.VictoryMusic;
 import BattleMechanics.Battle;
 import Interfaces.CreateOrderedMap;
@@ -288,18 +288,43 @@ public class AreaTypes {
     }
 
     private Boolean resolveBattle(GlobalVariables globalVariables) throws InterruptedException {
-        PlayTrainerBattleMusic TrainerMusic;
+        PlayBattleMusic TrainerMusic;
         Battle battle;
-        if(new Random().nextInt(4) > 2) {
-            TrainerMusic = new PlayTrainerBattleMusic("Trainer");
-            TrainerMusic.start();
-            battle = new Battle(globalVariables, "Trainer", AIPokeParty.chooseTrainerAIPoke(this, globalVariables));
+        Boolean devTrainer = false;
+        Boolean devWild = false;
+        Boolean trueDev = false;
+        if(globalVariables.getDevTools()){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("DEV TOOL: WILD TRAINER DEV");
+            String dev = scanner.nextLine();
+            if(dev.equals("WILD")){
+                devWild = true;
+            }
+            if(dev.equals("DEV")){
+                trueDev = true;
+            }
+            else {
+                devTrainer = true;
+            }
+        }
+        String type;
+        ArrayList<Pokemon> AIteam;
+        if (trueDev){
+            AIteam = AIPokeParty.devWild(globalVariables);
+            type = "Wild";
         }
         else {
-            TrainerMusic = new PlayTrainerBattleMusic("Wild");
-            TrainerMusic.start();
-            battle = new Battle(globalVariables, "Wild", AIPokeParty.chooseWildAIPoke(this, globalVariables));
+            if ((new Random().nextInt(4) > 2 || devTrainer) && !devWild) {
+                AIteam = AIPokeParty.chooseTrainerAIPoke(this, globalVariables);
+                type = "Trainer";
+            } else {
+                AIteam = AIPokeParty.chooseWildAIPoke(this, globalVariables);
+                type = "Wild";
+            }
         }
+        TrainerMusic = new PlayBattleMusic(type);
+        TrainerMusic.start();
+        battle = new Battle(globalVariables, type, AIteam);
         Boolean battleResult = battle.CompleteFight();
         try {
             TrainerMusic.interrupt();

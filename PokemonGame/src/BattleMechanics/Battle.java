@@ -2,6 +2,7 @@ package BattleMechanics;
 import java.util.*;
 
 import Interfaces.AddMoveset;
+import Interfaces.AddNewPokeToTeam;
 import Interfaces.GlobalVariables;
 import Moveset.OtherDamage.ConfusionDamage;
 import Moveset.OtherDamage.NoMove;
@@ -271,10 +272,22 @@ public class Battle implements AddMoveset {
         if(this.PlayerSelectedMove.showName().equals("Copycat")){
             this.PlayerSelectedMove = this.AIForcedMove;
         }
+        if(this.PlayerSelectedMove.showName().equals("Mimic")){
+            int i = this.PlayerPoke.showMoves().indexOf(this.PlayerSelectedMove);
+            this.PlayerPoke.showMoves().remove(this.PlayerSelectedMove);
+            this.PlayerPoke.showMoves().add(i, this.AIForcedMove);
+            this.PlayerSelectedMove.reduceMimicPP();
+            int mimicPP = this.PlayerSelectedMove.showPP();
+            this.PlayerSelectedMove = this.AIForcedMove;
+            this.PlayerPoke.showMoves().get(i).resetPP();
+            this.PlayerPoke.showMoves().get(i).setMimicPP(mimicPP);
+            this.PlayerPoke.showMoves().get(i).setMimic();
+        }
+
         Scanner scan = new Scanner(System.in);
         if (this.isFirst || PlayerSelectedMove.showName().equals("Quash")) {
             System.out.println("You First!");
-            if(PlayerSelectedMove.showaffectsBoth()) {
+            if(this.PlayerSelectedMove.showaffectsBoth()) {
                 System.out.println("This move can target yourself or the enemy. Who would you like to target? (E for enemy)");
                 String target = scan.nextLine();
                 if (target.equals("e")) {
@@ -789,7 +802,7 @@ public class Battle implements AddMoveset {
                         if (SelectMove.showName().equals("Snore")) {
                             System.out.println("Snore only works when the user is asleep!");
                         }
-                        if(DamageDealt <= 0
+                        if(DamageDealt >= 0
                         || !defender.showAbility().showNoSecondary()
                         || !attacker.showAbility().getAttackerNoSecondary()){
                             if (SelectMove.showEnemyKnockOffItem()) {
@@ -845,10 +858,6 @@ public class Battle implements AddMoveset {
                             if (SelectMove.getCreatesSpecWall()) {
                                 attacker.setHasSpecWall(SelectMove.getSpecWallTimer());
                                 System.out.println(attacker.showName() + " has built a special wall!");
-                            }
-                            if (SelectMove.getBreaksBarriers()) {
-                                defender.breakBarriers();
-                                System.out.println("Barriers Broken!");
                             }
                             if(SelectMove.getMagicRoomAdd() > 0){
                                 this.magicRoomTimer += SelectMove.getMagicRoomAdd();
@@ -951,9 +960,15 @@ public class Battle implements AddMoveset {
                                 }
                             }
                             if (SelectMove.showSelfDamage()) {
-                                int damage = SelectMove.selfDamage(DamageDealt);
-                                attacker.addToRecoilTotal(damage);
-                                attacker.changeHP(damage);
+                                if(attacker.showAbility().getNoRecoil()){
+                                    System.out.println(attacker.showAbility().showName() +
+                                            " protects from recoil!");
+                                }
+                                else {
+                                    int damage = SelectMove.selfDamage(DamageDealt);
+                                    attacker.addToRecoilTotal(damage);
+                                    attacker.changeHP(damage);
+                                }
                             }
                             if(SelectMove.getFutureFallAsleep()){
                                 defender.setFallAsleep(SelectMove.getFutureFallAsleepTimer());
@@ -1077,6 +1092,9 @@ public class Battle implements AddMoveset {
                             }
                             if(SelectMove.getSwapPower()){
                                 SelectMove.swapPowers(attacker, defender);
+                            }
+                            if(SelectMove.showName().equals("Odor Sleuth")){
+                                defender.odorSleuth();
                             }
                             if (SelectMove.showcanFreeze() || SelectMove.showOnlyCanSleep()) {
                                 if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {

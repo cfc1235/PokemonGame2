@@ -172,7 +172,7 @@ public interface AddMoveset {
     default Moves addThief(){return new Thief();}
     default Moves addUTurn(){return new UTurn();}
     default Moves addDrainingKiss(){return new DrainingKiss();}
-    default Moves addPsychic(){return new Psychic();}
+    default Moves addPsychic(){return new PsychicMove();}
     default Moves addBatonPass(){return new BatonPass();}
     default Moves addShadowBall(){return new ShadowBall();}
     default Moves addSkillSwap(){return new SkillSwap();}
@@ -408,4 +408,10 @@ public interface AddMoveset {
     default Moves addTrick(){return new Trick();}
     default Moves addReflectType(){return new ReflectType();}
     default Moves addTransform(){return new Transform();}
+    default Moves addOdorSleuth(){return new OdorSlueth();}
+    default Moves addFeint(){return new Feint();}
+    default Moves addRockThrow(){return new RockThrow();}
+    default Moves addMimic(){return new Mimic();}
+    default Moves addTearfulLook(){return new TearfulLook();}
+    default Moves addSandTomb(){return new SandTomb();}
 }

@@ -30,7 +30,7 @@ public class Plusle extends Pokemon {
                 new CreateOrderedMap<>(40, addLastResort()),  new CreateOrderedMap<>(43, addThunder()),
                 new CreateOrderedMap<>(46, addNastyPlot()), new CreateOrderedMap<>(49, addEntrainment()));
         addFirstMoves();
-        pokedexType = this.getClass().getSimpleName();
+        this.pokedexType = this.getClass().getSimpleName();
         this.name = this.pokedexType;
         setGivesEVs(0, 0, 0, 0, 1, 0);
         setBaseStats(40, 50, 60, 85,

@@ -164,7 +164,10 @@ public class Pokemon implements AddMoveset, Cloneable {
     protected double healPerTurn = 0.0;
     protected int critTotal = 0;
     protected Boolean isSmackDown = false;
+    protected Boolean isOdorSleuth = false;
 
+    public void odorSleuth(){this.isOdorSleuth = true;}
+    public Boolean getIsOdorSleuth(){return this.isOdorSleuth;}
     public void smackDown(){this.isSmackDown = true;}
     public Boolean getIsSmackDown(){return this.isSmackDown;}
     public void addToCritTotal(){this.critTotal += 1;}
@@ -354,7 +357,7 @@ public class Pokemon implements AddMoveset, Cloneable {
     public void tickDownOutrageTimer(){this.outrageTimer -= 1;}
     public void resetOutrageTimer(){this.outrageTimer = 0;}
 
-    public Boolean getHasSpecWall(){return hasSpecWall;}
+    public Boolean getHasSpecWall(){return this.hasSpecWall;}
     public void setHasSpecWall(int specWallTimer){
         this.hasSpecWall = true;
         this.specWallTimer = specWallTimer;}
@@ -1459,6 +1462,7 @@ public class Pokemon implements AddMoveset, Cloneable {
         this.resetCannotFlee();
         this.resetProhibitedMoves();
         this.resetCannotHaveStatLowered();
+        this.isOdorSleuth = false;
         if(!this.type4.equals("")){
             this.resetType4();
         }
@@ -1472,6 +1476,19 @@ public class Pokemon implements AddMoveset, Cloneable {
         this.healEveryTurn = false;
     }
 
+    public void checkMimic(){
+        int i = 0;
+        for (Moves move : this.moves){
+            if(move.getIsMimic()){
+                int savedPP = move.getMimicPP();
+                Moves newMove = addMimic();
+                newMove.setOutMimicPP(savedPP);
+                this.moves.remove(move);
+                this.moves.add(i, newMove);
+            }
+        i += 1;
+        }
+    }
     public void resetMults(){
         this.resetAccMult();
         this.resetAttMult();

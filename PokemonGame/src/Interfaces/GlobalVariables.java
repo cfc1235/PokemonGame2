@@ -31,6 +31,7 @@ public class GlobalVariables {
     private Boolean autoCatch;
     private Boolean shinyCheat;
     private Boolean hasFishingRod;
+    private Boolean devTools;
 
     public GlobalVariables(Boolean isInfinteMoney, Boolean randomizer,
                            Boolean shinyCheat, Boolean autoCatch,
@@ -43,8 +44,10 @@ public class GlobalVariables {
             becomeChampion();
         }
         this.hasFishingRod = fishingCheat;
+        this.devTools = true;
     }
 
+    public Boolean getDevTools(){return this.devTools;}
     public Boolean getFishingRod(){return this.hasFishingRod;}
     public void setHasFishingRod(){this.hasFishingRod = true;}
     public Wallet getWallet(){return this.wallet;}

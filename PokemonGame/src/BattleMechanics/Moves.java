@@ -193,13 +193,28 @@ public class Moves {
     protected int magicRoomAdd = 0;
     protected int coins = 0;
     protected int createsWonderRoom = 0;
+    protected Boolean isMimic = false;
 
+    public void reduceMimicPP(){
+        this.PP -= 1;
+    }
+    public void setMimicPP(int mimicPP){
+        this.PP = mimicPP;
+    }
+    public void setMimic(){
+        this.isMimic = true;
+    }
+    public Boolean getIsMimic(){
+        return this.isMimic;
+    }
+    public void setOutMimicPP(int oldMimicPP){
+        this.PP = oldMimicPP;
+    }
     public int getCoins(){
         int batCoins = this.coins;
         this.coins = 0;
         return batCoins;
     }
-
     public Moves resolveMetronome(){return this;}
     public int getCreatesWonderRoom(){return this.createsWonderRoom;}
     public int getMagicRoomAdd(){return this.magicRoomAdd;}
@@ -238,7 +253,6 @@ public class Moves {
     public Boolean getIsSpecial(){return isSpecial;}
     public Boolean getDealsFutureDamage(){return dealsFutureDamage;}
     public int getTimeToFutureDamage(){return timeToFutureDamage;}
-    public Boolean getBreaksBarriers(){return breaksBarriers;}
     public Boolean getCreatesSpecWall(){return createsSpecWall;}
     public int getSpecWallTimer(){return specWallTimer;}
     public Boolean getCopiesStatChanges(){return copiesStatChanges;}
@@ -825,6 +839,10 @@ public class Moves {
                     savedRefinedDamage = (int) Math.ceil(defender.showHP() / this.cutHPBy);
                 }
             } else {
+                if (this.breaksBarriers) {
+                    defender.breakBarriers();
+                    System.out.println("Barriers Broken!");
+                }
                 int hitTimes = 1;
                 int hitTicker = 1;
                 if (this.MultHit) {
@@ -884,7 +902,7 @@ public class Moves {
                     RawDamage = attack / defense;
                     if ((this.name.equals("Acrobatics") && attacker.showItem().showName().equals(""))
                     || ((this.name.equals("Brine")) && (defender.showHP() * 1.0)/defender.showSavedHP() <= .5)
-                    || ((this.name.equals("Pursuit")) && defender.getJustThrown())
+                    || ((this.name.equals("Pursuit") || attacker.showAbility().showName().equals("Stakeout")) && defender.getJustThrown())
                     || ((this.name.equals("Assurance") || this.name.equals("Revenge")) && defender.getTookDamage())
                     || ((this.name.equals("Payback")) && !attacker.getIsFirst())){
                         RawDamage = RawDamage * 2;

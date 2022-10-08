@@ -115,7 +115,9 @@ public class Abilities {
     protected double damageReduction = 0;
     protected Boolean powersRawDamage = false;
     protected Boolean attackerNoSecondary = false;
+    protected Boolean noRecoil = false;
 
+    public Boolean getNoRecoil(){return this.noRecoil;}
     public Boolean getAttackerNoSecondary(){return this.attackerNoSecondary;}
     public double getDamageReduction(){return this.damageReduction;}
     public Boolean getNoFlinch(){return this.noFlinch;}
@@ -247,7 +249,6 @@ public class Abilities {
         }
         return damage;
     }
-
 
     public void setStatMults(Pokemon defender, Pokemon attacker,
                              Moves moves, Weather weather) {
