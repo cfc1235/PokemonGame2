@@ -414,4 +414,7 @@ public interface AddMoveset {
     default Moves addMimic(){return new Mimic();}
     default Moves addTearfulLook(){return new TearfulLook();}
     default Moves addSandTomb(){return new SandTomb();}
+    default Moves addHammerArm(){return new HammerArm();}
+    default Moves addWoodHammer(){return new WoodHammer();}
+    default Moves addBlock(){return new Block();}
 }

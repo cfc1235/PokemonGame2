@@ -431,7 +431,7 @@ public class Battle implements AddMoveset {
         int x = 0;
         int winnings = 0;
         for (Pokemon pokemon : this.Graveyard) {
-            winnings += pokemon.resetForWin();
+            pokemon = pokemon.resetForWin(this.globalVariables);
             try {
                 this.CurrentParty.set(x, pokemon);
                 x += 1;
@@ -441,7 +441,7 @@ public class Battle implements AddMoveset {
             }
         }
         for (Pokemon pokemon : this.Waiting) {
-            winnings += pokemon.resetForWin();
+            pokemon = pokemon.resetForWin(this.globalVariables);
             try {
                 this.CurrentParty.set(x, pokemon);
                 x += 1;
@@ -460,7 +460,8 @@ public class Battle implements AddMoveset {
         if(this.PlayerPoke.getCannotFlee()){
             return false;
         }
-        double escape = (((this.PlayerPoke.showSpeed(1)) * 128.0)/AIPoke.showSpeed(1)) + 30 * Attempts;
+        double escape = (((this.PlayerPoke.showSpeed(1)) * 128.0) /
+                this.AIPoke.showSpeed(1)) + 30 * Attempts;
         int odds = (int) (Math.random() * 256);
         if(odds < escape){
             return true;
@@ -578,7 +579,7 @@ public class Battle implements AddMoveset {
                 for (Pokemon pokemon : this.ExpLineUp){
                     pokemon.addEVs(this.PlayerPoke, this.AIPoke);
                     System.out.println("");
-                    Boolean EvolTime = this.Waiting.get(this.Waiting.indexOf(pokemon)).LevelUp(type, AIPoke);
+                    Boolean EvolTime = this.Waiting.get(this.Waiting.indexOf(pokemon)).LevelUp(this.type, this.AIPoke);
                     if(EvolTime) {
                         Scanner scan = new Scanner(System.in);
                         System.out.println(pokemon.showName() + " can evolve. Do you accept?");
@@ -598,21 +599,21 @@ public class Battle implements AddMoveset {
                 }
             }
         }
-        if (Waiting.isEmpty()) {
+        if (this.Waiting.isEmpty()) {
             int x = 0;
-            for (Pokemon pokemon : Graveyard) {
-                pokemon.resetForWin();
+            for (Pokemon pokemon : this.Graveyard) {
+                pokemon = pokemon.resetForWin(this.globalVariables);
                 try {
-                    CurrentParty.set(x, pokemon);
+                    this.CurrentParty.set(x, pokemon);
                     x += 1;
                 } catch (Exception e) {
-                    CurrentParty.add(x, pokemon);
+                    this.CurrentParty.add(x, pokemon);
                     x += 1;
                 }
             }
             return false;
         }
-        if (AIParty.isEmpty()) {
+        if (this.AIParty.isEmpty()) {
             victoryReset();
             return true;
         }
@@ -1658,17 +1659,6 @@ public class Battle implements AddMoveset {
                     System.out.println("The forseen damage came!");
                     attacker.changeHP(this.playerFutureDamage);
                     this.playerFutureDamage = 0;
-                }
-            }
-            if(attacker.getSpecialEvolReq()){
-                Scanner scan = new Scanner(System.in);
-                System.out.println(attacker.showName() + " can evolve. Do you accept?");
-                String Ev = scan.nextLine();
-                if (Ev.equals("y")) {
-                    this.PlayerPoke = evolvePoke(this.globalVariables, this.PlayerPoke);
-                    this.Waiting.remove(attacker);
-                    this.Waiting.add(this.PlayerPoke);
-                    System.out.println(attacker.showName() + " has evolved!");
                 }
             }
         }

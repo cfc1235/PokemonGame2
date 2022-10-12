@@ -13,6 +13,8 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+import static Interfaces.GetPokemon.evolvePoke;
+
 public class Pokemon implements AddMoveset, Cloneable {
     protected CreateOrderedMap<Integer, Integer> PLACEHOLDER = new CreateOrderedMap<>(0, 0);
     protected List<Integer> EVs = new ArrayList<>();
@@ -1073,7 +1075,7 @@ public class Pokemon implements AddMoveset, Cloneable {
         return false;
     }
 
-    public Boolean getSpecialEvolReq(){
+    protected Boolean getSpecialEvolReq(){
         return false;
     }
 
@@ -1179,7 +1181,7 @@ public class Pokemon implements AddMoveset, Cloneable {
         }
     }
     public void learnMovefromEvol(){
-        moves.add(OnEvol);
+        this.moves.add(this.OnEvol);
         boolean removeLearned = false;
         Scanner scan = new Scanner(System.in);
         if (moves.size() > 4) {
@@ -1418,7 +1420,8 @@ public class Pokemon implements AddMoveset, Cloneable {
         }
     }
 
-    public int resetForWin(){
+    public Pokemon resetForWin(GlobalVariables globalVariables){
+        Pokemon pokemon = this;
         this.resetForThrow();
         this.ridStatusEffects();
         this.resetVortex();
@@ -1428,9 +1431,18 @@ public class Pokemon implements AddMoveset, Cloneable {
         this.ability.resolveEndFight(this);
         int coins = 0;
         for(Moves moves : this.moves){
-            coins += moves.getCoins();
+            globalVariables.getWallet().addWinnings(moves.getCoins());
         }
-        return coins;
+        if(getSpecialEvolReq()){
+            Scanner scan = new Scanner(System.in);
+            System.out.println(this.name + " can evolve. Do you accept?");
+            String Ev = scan.nextLine();
+            if (Ev.equals("y")) {
+                pokemon = evolvePoke(globalVariables, this);
+                System.out.println(this.name + " has evolved!");
+            }
+        }
+        return pokemon;
     }
 
     public void ridStatusEffects(){
@@ -1480,7 +1492,7 @@ public class Pokemon implements AddMoveset, Cloneable {
         int i = 0;
         for (Moves move : this.moves){
             if(move.getIsMimic()){
-                int savedPP = move.getMimicPP();
+                int savedPP = move.showPP();
                 Moves newMove = addMimic();
                 newMove.setOutMimicPP(savedPP);
                 this.moves.remove(move);

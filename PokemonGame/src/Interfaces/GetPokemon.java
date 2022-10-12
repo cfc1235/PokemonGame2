@@ -208,6 +208,9 @@ public interface GetPokemon {
          if(ID == 182){
              pokemon = new Bellossom(level, globalVariables);
          }
+         if(ID == 185){
+             pokemon = new Sudowoodo(level, globalVariables);
+         }
          if(ID == 204){
              pokemon = new Pineco(level, globalVariables);
          }
@@ -258,6 +261,9 @@ public interface GetPokemon {
          }
          if(ID == 405){
              pokemon = new Luxray(level, globalVariables);
+         }
+         if(ID == 438){
+             pokemon = new Bonsly(level, globalVariables);
          }
          if(ID == 504){
              pokemon = new Patrat(level, globalVariables);
@@ -506,6 +512,10 @@ public interface GetPokemon {
         }
         if(ID == 404) {
             evolution = new Luxray(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 438){
+            evolution = new Sudowoodo(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(ID == 504) {

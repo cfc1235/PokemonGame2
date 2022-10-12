@@ -1,5 +1,6 @@
 package Pokedex.B;
 
+import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GetItem;
 import Interfaces.GlobalVariables;
@@ -11,12 +12,12 @@ import PokemonCreation.Pokemon;
 import java.util.Collections;
 
 public class Bonsly extends Pokemon {
-    public Bonsly(int level, GlobalVariables globalVariables){
+    public Bonsly(int level, GlobalVariables globalVariables) {
         this.setFirstEVs();
         this.setGivesEVs(1, 0, 0, 0, 0, 0);
         this.setBaseStats(95, 80, 50, 10,
                 45, 10, 438, 255, 33.1,
-                "Rock","Medium Fast", level, 68);
+                "Rock", "Medium Fast", level, 68);
         this.pokedexType = this.getClass().getSimpleName();
         this.name = this.pokedexType;
         Collections.addAll(this.possibleAbilities, new Rattled(),
@@ -46,10 +47,20 @@ public class Bonsly extends Pokemon {
         setTotalEXP();
         setNextLevelEXP();
         setEXPNeeded();
-        this.setFullDirName("BasculinRed.png", globalVariables);
-        this.setPokeCry("550Cry.wav");
+        this.setFullDirName("Bonsly.png", globalVariables);
+        this.setPokeCry("438Cry.wav");
         Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(100, GetItem.getSmallExpCandy()),
-                new CreateOrderedMap<>(10, GetItem.getSeedOfMastery()));
+                new CreateOrderedMap<>(10, GetItem.getSeedOfMastery()), new CreateOrderedMap<>(15, GetItem.getMudBall()),
+                new CreateOrderedMap<>(25, GetItem.getBlackTumblestone()));
         getWildItem();
+    }
+
+    protected Boolean getSpecialEvolReq() {
+        for (Moves moves : this.moves){
+            if (moves.showName().equals("Mimic")){
+                return true;
+            }
+        }
+        return false;
     }
 }

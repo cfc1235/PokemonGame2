@@ -37,6 +37,8 @@ public interface GetItem {
     static Items getLeek(){return new Leek();}
     static Items getMoonStone(){return new MoonStone();}
     static Items getRawstBerry(){return new RawstBerry();}
+    static Items getMudBall(){return new MudBall();}
+    static Items getBlackTumblestone(){return new BlackTumblestone();}
 
     static Items getRandomItem(){
         Random random = new Random();
