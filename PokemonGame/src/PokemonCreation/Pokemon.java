@@ -7,6 +7,7 @@ import BattleMechanics.BaseVortex;
 import BattleMechanics.Moves;
 import BattleMechanics.Vortex.NoVortex;
 import PokemonCreation.AllAbilities.E.Empty;
+import Weather.Weather;
 
 import javax.swing.*;
 import java.awt.*;
@@ -167,7 +168,17 @@ public class Pokemon implements AddMoveset, Cloneable {
     protected int critTotal = 0;
     protected Boolean isSmackDown = false;
     protected Boolean isOdorSleuth = false;
+    protected Boolean useBerry = false;
+    protected Boolean isCursed = false;
 
+    public void setIsCured(){this.isCursed = true;}
+    public void resolveCurse(){
+        if(this.isCursed){
+            this.HP -= (this.savedHP * .25);
+    }
+    }
+    public void setUseBerry(){this.useBerry = true;}
+    public Boolean getUseBerry(){return this.useBerry;}
     public void odorSleuth(){this.isOdorSleuth = true;}
     public Boolean getIsOdorSleuth(){return this.isOdorSleuth;}
     public void smackDown(){this.isSmackDown = true;}
@@ -308,13 +319,13 @@ public class Pokemon implements AddMoveset, Cloneable {
         this.fallAsleep = true;
         this.fallAsleepTimer = sleepTimer;
     }
-    public void tickDownSetFallAsleep(){
+    public void tickDownSetFallAsleep(Weather weather){
         if(this.fallAsleep){
             this.fallAsleepTimer -= 1;
         }
         if(this.fallAsleepTimer == 0){
             this.fallAsleep = false;
-            this.Sleep();
+            this.Sleep(weather);
         }
     }
     private void resetFallAsleep(){
@@ -510,74 +521,79 @@ public class Pokemon implements AddMoveset, Cloneable {
     public void Flinch(){isFlinched = true;}
     public void unFlinch(){isFlinched = false;}
     public Boolean showIsConfused(){return isConfused;}
-    public void Confuse(Pokemon defender){
-        isConfused = true;
-        if(this.ability.getActivatesOnConfuse()){
-            this.ability.doChange(this, defender);
+    public void Confuse(Pokemon defender, Weather weather){
+        if(this.ability.getCannotConfuse() || this.ability.noStatusFromWeather(weather)){
+            this.isConfused = true;
+            if(this.ability.getActivatesOnConfuse()) {
+                this.ability.doChange(this, defender);
+            }
+        }
+        else{
+            System.out.println("Cannot be confused because of " + this.ability.showName());
         }
     }
-    public void unConfuse(){isConfused = false;}
-    public Moves showOnEvol(){return OnEvol;}
-    public Boolean showEndures(){return Endures;}
-    public void resetEndures(){Endures = false;}
-    public void setEndures(){Endures = true;}
-    public int showSubstituteHP(){return substituteHP;}
-    public void setSubstituteHP(int HP){substituteHP = HP;}
+    public void unConfuse(){this.isConfused = false;}
+    public Moves showOnEvol(){return this.OnEvol;}
+    public Boolean showEndures(){return this.Endures;}
+    public void resetEndures(){this.Endures = false;}
+    public void setEndures(){this.Endures = true;}
+    public int showSubstituteHP(){return this.substituteHP;}
+    public void setSubstituteHP(int HP){this.substituteHP = HP;}
     public void createSubstitute() {
-        int SubHealth = (int) Math.round((savedHP / 4.0));
-        if ((HP - SubHealth) > 0) {
-            substituteHP = SubHealth;
-            HP -= SubHealth;
+        int SubHealth = (int) Math.round((this.savedHP / 4.0));
+        if ((this.HP - SubHealth) > 0) {
+            this.substituteHP = SubHealth;
+            this.HP -= SubHealth;
         }
-        if ((HP - SubHealth) <= 0) {
-            System.out.println(name + " does not have enough health to create a decoy!");
+        if ((this.HP - SubHealth) <= 0) {
+            System.out.println(this.name + " does not have enough health to create a decoy!");
         }
     }
-    public void damageSubstitute(int damage){substituteHP -= damage;}
-    public void setHP(int setTo){HP = setTo;}
-    public Boolean showFloats(){return Floats;}
-    public List<Integer> showIVs() {return IV;}
-    public List<Integer> showEVs(){return EVs;}
-    public int showRawGender(){return Gender;}
-    public Boolean showCharged(){return isCharged;}
-    public void Charge(){isCharged = true;}
-    public void unCharge(){isCharged = false;}
-    public Boolean showIsInfatuated(){return isInfatuated;}
-    public void Infatuate(){isInfatuated = true;}
-    public void unInfatuate(){isInfatuated = false;}
-    public void gainProtection(){isProtected = true;}
-    public void endProtection(){isProtected = false;}
-    public Boolean getIsProtected(){return isProtected;}
-    public void setNoStatChange(){noStatChange = true;}
-    public Boolean getNoStatChange(){return noStatChange;}
-    public void resetNoStatChange(){noStatChange = false;}
-    public void setStatChangeTimer(int timerChange){statChangeTimer = timerChange;}
-    public void changeStatChangeTimer(int timerChange) {statChangeTimer -= timerChange;}
-    public int showStatChangeTimer(){return statChangeTimer;}
-    public void setSpecAttTimer(int timerChange){SpecAttTimer = timerChange;}
-    public void setPhysAttTimer(int timerChange){PhysAttTimer = timerChange;}
-    public void setSpeedTimer(int timerChange){SpeedTimer = timerChange;}
-    public void setSpecDefTimer(int timerChange){SpecDefTimer = timerChange;}
-    public void setPhysDefTimer(int timerChange){PhysDefTimer = timerChange;}
-    public void setEvasTimer(int timerChange){EvasTimer = timerChange;}
-    public void setAccTimer(int timerChange){AccTimer = timerChange;}
-    public void changeSpecAttTimer(int timerChange){SpecAttTimer += timerChange;}
-    public void changePhysAttTimer(int timerChange){PhysAttTimer += timerChange;}
-    public void changeSpeedTimer(int timerChange){SpeedTimer += timerChange;}
-    public void changeSpecDefTimer(int timerChange){SpecDefTimer += timerChange;}
-    public void changePhysDefTimer(int timerChange){PhysDefTimer += timerChange;}
-    public void changeEvasTimer(int timerChange){EvasTimer += timerChange;}
-    public void changeAccTimer(int timerChange){AccTimer += timerChange;}
-    public void changeCritTimer(int timerChange){critTimer += timerChange;}
-    public int showSpecAttTimer(){return SpecAttTimer;}
-    public int showPhysAttTimer(){return PhysAttTimer;}
-    public int showSpeedTimer(){return SpeedTimer;}
-    public int showSpecDefTimer(){return SpecDefTimer;}
-    public int showPhysDefTimer(){return PhysDefTimer;}
-    public int showAccTimer(){return SpecAttTimer;}
-    public int showEvasTimer(){return EvasTimer;}
-    public int showCritTimer(){return critTimer;}
-    public String showPokedexType(){return pokedexType;}
+    public void damageSubstitute(int damage){this.substituteHP -= damage;}
+    public void setHP(int setTo){this.HP = setTo;}
+    public Boolean showFloats(){return this.Floats;}
+    public List<Integer> showIVs() {return this.IV;}
+    public List<Integer> showEVs(){return this.EVs;}
+    public int showRawGender(){return this.Gender;}
+    public Boolean showCharged(){return this.isCharged;}
+    public void Charge(){this.isCharged = true;}
+    public void unCharge(){this.isCharged = false;}
+    public Boolean showIsInfatuated(){return this.isInfatuated;}
+    public void Infatuate(){this.isInfatuated = true;}
+    public void unInfatuate(){this.isInfatuated = false;}
+    public void gainProtection(){this.isProtected = true;}
+    public void endProtection(){this.isProtected = false;}
+    public Boolean getIsProtected(){return this.isProtected;}
+    public void setNoStatChange(){this.noStatChange = true;}
+    public Boolean getNoStatChange(){return this.noStatChange;}
+    public void resetNoStatChange(){this.noStatChange = false;}
+    public void setStatChangeTimer(int timerChange){this.statChangeTimer = timerChange;}
+    public void changeStatChangeTimer(int timerChange) {this.statChangeTimer -= timerChange;}
+    public int showStatChangeTimer(){return this.statChangeTimer;}
+    public void setSpecAttTimer(int timerChange){this.SpecAttTimer = timerChange;}
+    public void setPhysAttTimer(int timerChange){this.PhysAttTimer = timerChange;}
+    public void setSpeedTimer(int timerChange){this.SpeedTimer = timerChange;}
+    public void setSpecDefTimer(int timerChange){this.SpecDefTimer = timerChange;}
+    public void setPhysDefTimer(int timerChange){this.PhysDefTimer = timerChange;}
+    public void setEvasTimer(int timerChange){this.EvasTimer = timerChange;}
+    public void setAccTimer(int timerChange){this.AccTimer = timerChange;}
+    public void changeSpecAttTimer(int timerChange){this.SpecAttTimer += timerChange;}
+    public void changePhysAttTimer(int timerChange){this.PhysAttTimer += timerChange;}
+    public void changeSpeedTimer(int timerChange){this.SpeedTimer += timerChange;}
+    public void changeSpecDefTimer(int timerChange){this.SpecDefTimer += timerChange;}
+    public void changePhysDefTimer(int timerChange){this.PhysDefTimer += timerChange;}
+    public void changeEvasTimer(int timerChange){this.EvasTimer += timerChange;}
+    public void changeAccTimer(int timerChange){this.AccTimer += timerChange;}
+    public void changeCritTimer(int timerChange){this.critTimer += timerChange;}
+    public int showSpecAttTimer(){return this.SpecAttTimer;}
+    public int showPhysAttTimer(){return this.PhysAttTimer;}
+    public int showSpeedTimer(){return this.SpeedTimer;}
+    public int showSpecDefTimer(){return this.SpecDefTimer;}
+    public int showPhysDefTimer(){return this.PhysDefTimer;}
+    public int showAccTimer(){return this.SpecAttTimer;}
+    public int showEvasTimer(){return this.EvasTimer;}
+    public int showCritTimer(){return this.critTimer;}
+    public String showPokedexType(){return this.pokedexType;}
     public Boolean showhasGender(){
         return this.hasGender;
     }
@@ -628,11 +644,11 @@ public class Pokemon implements AddMoveset, Cloneable {
     public Boolean showFrozen(){
         return this.isFrozen;
     }
-    public void Freeze(){
+    public void Freeze(Weather weather){
         if (this.type1.equals("Ice") || this.type2.equals("Ice")) {
             System.out.println("Freeze doesn't affect Ice Types!");
         }
-        else if (this.showAbility().showFreeze()) {
+        else if (this.showAbility().showFreeze() || this.showAbility().noStatusFromWeather(weather)) {
             System.out.println(this.name + " cannot be frozen because of its " + this.ability.showName());
         }
         else {
@@ -642,8 +658,8 @@ public class Pokemon implements AddMoveset, Cloneable {
     public void unFreeze(){
         this.isFrozen = false;
     }
-    public void Sleep(){
-        if(this.ability.showSleep()) {
+    public void Sleep(Weather weather){
+        if(this.ability.showSleep() || this.ability.noStatusFromWeather(weather)) {
             System.out.println(this.name + " cannot be put to sleep because of its " + this.ability.showName());
         }
         else {
@@ -653,7 +669,7 @@ public class Pokemon implements AddMoveset, Cloneable {
     public void Wake(){
         this.isAsleep = false;
     }
-    public void Paralyze(String moveType, String failType, String moveName){
+    public void Paralyze(String moveType, String failType, String moveName, Weather weather){
         if (failType.equals(this.type1) || failType.equals(this.type2)) {
             System.out.println(moveName + " cannot paralyze " + failType + " types!");
         }
@@ -662,7 +678,7 @@ public class Pokemon implements AddMoveset, Cloneable {
                 System.out.println("Ground types cannot be paralyzed by electric moves!");
             }
         }
-        else if (this.ability.showParalyze()) {
+        else if (this.ability.showParalyze() || this.ability.noStatusFromWeather(weather)) {
             System.out.println(this.name + " cannot be paralyzed because of its " + this.ability.showName());
         }
         else {
@@ -672,11 +688,11 @@ public class Pokemon implements AddMoveset, Cloneable {
     public void unParalyze(){
         this.isParalyzed = false;
     }
-    public void Burn(){
+    public void Burn(Weather weather){
         if (this.type1.equals("Fire") || this.type2.equals("Fire")) {
             System.out.println("Burn doesn't affect Fire Types!");
         }
-        else if (this.ability.showBurn()) {
+        else if (this.ability.showBurn() || this.ability.noStatusFromWeather(weather)) {
             System.out.println(this.name + " cannot be burned because of its " + this.ability.showName());
         }
         else {
@@ -698,10 +714,10 @@ public class Pokemon implements AddMoveset, Cloneable {
     public Boolean showPoisoned(){
         return this.isPoisoned;
     }
-    public void Poison(){
+    public void Poison(Weather weather){
         if (!(this.type1.equals("Poison") || this.type2.equals("Poison") ||
                 this.type1.equals("Steel")) || this.type2.equals("Steel")) {
-            if (this.ability.showPoison()) {
+            if (this.ability.showPoison() || this.ability.noStatusFromWeather(weather)) {
                 System.out.println(this.name + " cannot be poisoned because of its " + this.ability.showName());
             } else {
                 this.isPoisoned = true;
@@ -1184,13 +1200,13 @@ public class Pokemon implements AddMoveset, Cloneable {
         this.moves.add(this.OnEvol);
         boolean removeLearned = false;
         Scanner scan = new Scanner(System.in);
-        if (moves.size() > 4) {
-            if (moves.size() > 4) {
+        if (this.moves.size() > 4) {
+            if (this.moves.size() > 4) {
                 System.out.println("Your " + name + " can only learn 4 moves. Which of these moves would you like to get rid of?");
                 List<String> names = new ArrayList<>();
                 List<String> numbers = new ArrayList<>();
                 int ticker = 1;
-                for (Moves yourmoves : moves) {
+                for (Moves yourmoves : this.moves) {
                     System.out.println(yourmoves.showName() + " [" + ticker + "]");
                     names.add(yourmoves.showName());
                     numbers.add(Integer.toString(ticker));
@@ -1208,17 +1224,17 @@ public class Pokemon implements AddMoveset, Cloneable {
                 if (numbers.contains(removeMove)) {
                     remove = numbers.indexOf(removeMove);
                 }
-                if (moves.get(remove).showName().equals(OnEvol.showName())) {
+                if (this.moves.get(remove).showName().equals(this.OnEvol.showName())) {
                     removeLearned = true;
                 }
                 if (!removeLearned) {
-                    System.out.println(name + " has forgotten " + moves.get(remove).showName());
-                    System.out.println(name + " has successfully learned " + OnEvol.showName());
+                    System.out.println(this.name + " has forgotten " + this.moves.get(remove).showName());
+                    System.out.println(this.name + " has successfully learned " + this.OnEvol.showName());
                 }
                 if (removeLearned) {
-                    System.out.println(name + " has not learned " + OnEvol.showName());
+                    System.out.println(this.name + " has not learned " + this.OnEvol.showName());
                 }
-                moves.remove(remove);
+                this.moves.remove(remove);
             }
         }
     }
@@ -1455,6 +1471,7 @@ public class Pokemon implements AddMoveset, Cloneable {
 
     public void resetForThrow(){
         this.resetFallAsleep();
+        this.isCursed = false;
         this.resetMults();
         this.resetAbilities();
         this.resetNoStatChange();
@@ -1474,6 +1491,7 @@ public class Pokemon implements AddMoveset, Cloneable {
         this.resetCannotFlee();
         this.resetProhibitedMoves();
         this.resetCannotHaveStatLowered();
+        this.useBerry = false;
         this.isOdorSleuth = false;
         if(!this.type4.equals("")){
             this.resetType4();
@@ -1486,6 +1504,9 @@ public class Pokemon implements AddMoveset, Cloneable {
         }
         this.healPerTurn = 0;
         this.healEveryTurn = false;
+        if (this.ability.showName().equals("Natural Cure")){
+            ridStatusEffects();
+        }
     }
 
     public void checkMimic(){

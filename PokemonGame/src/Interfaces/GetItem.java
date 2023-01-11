@@ -5,6 +5,7 @@ import Items.Berries.*;
 import Items.Consumable.*;
 import Items.EvolItems.*;
 import Items.HeldItem.*;
+import PokemonCreation.AllAbilities.L.Leftovers;
 import PokemonCreation.Items;
 import Items.NoItem;
 
@@ -39,34 +40,45 @@ public interface GetItem {
     static Items getRawstBerry(){return new RawstBerry();}
     static Items getMudBall(){return new MudBall();}
     static Items getBlackTumblestone(){return new BlackTumblestone();}
+    static Items getRazzBerry(){return new RazzBerry();}
+    static Items getOvalStone(){return new OvalStone();}
+    static Items getLeftovers(){return new Leftovers();}
+    static Items getKingsRock(){return new KingsRock();}
 
     static Items getRandomItem(){
         Random random = new Random();
-        int rand = random.nextInt(24);
-        if(rand == 0){getApricorn();}
-        if (rand == 1){getCheriBerry();}
-        if(rand == 2){getPechaBerry();}
-        if(rand == 3){getDazzlingHoney();}
-        if(rand == 4){getMediumEXPCandy();}
-        if(rand == 5){getSeedOfMastery();}
-        if(rand == 6){getSmallExpCandy();}
-        if(rand == 7){getSpoiledApricorn();}
-        if(rand == 8){getDragonScale();}
-        if(rand == 9){getLeafStone();}
-        if(rand == 10){getSunStone();}
-        if(rand == 11){getAbsorbBulb();}
-        if(rand == 12){getBrightPowder();}
-        if(rand == 13){getEverstone();}
-        if(rand == 14){getRazorClaw();}
-        if(rand == 15){getScopeLens();}
-        if(rand == 16){getShedShell();}
-        if(rand == 17){getSilverPowder();}
-        if(rand == 18){getSitrusBerry();}
-        if(rand == 19){getOranBerry();}
-        if(rand == 20){getPrismScale();}
-        if(rand == 21){getLeek();}
-        if(rand == 22){getMoonStone();}
-        if(rand == 23){getRawstBerry();}
-        return getNoItem();
+        Items randItem = getNoItem();
+        int rand = random.nextInt(30);
+        if(rand == 0){randItem = getApricorn();}
+        if (rand == 1){randItem = getCheriBerry();}
+        if(rand == 2){randItem = getPechaBerry();}
+        if(rand == 3){randItem = getDazzlingHoney();}
+        if(rand == 4){randItem = getMediumEXPCandy();}
+        if(rand == 5){randItem = getSeedOfMastery();}
+        if(rand == 6){randItem = getSmallExpCandy();}
+        if(rand == 7){randItem = getSpoiledApricorn();}
+        if(rand == 8){randItem = getDragonScale();}
+        if(rand == 9){randItem = getLeafStone();}
+        if(rand == 10){randItem = getSunStone();}
+        if(rand == 11){randItem = getAbsorbBulb();}
+        if(rand == 12){randItem = getBrightPowder();}
+        if(rand == 13){randItem = getEverstone();}
+        if(rand == 14){randItem = getRazorClaw();}
+        if(rand == 15){randItem = getScopeLens();}
+        if(rand == 16){randItem = getShedShell();}
+        if(rand == 17){randItem = getSilverPowder();}
+        if(rand == 18){randItem = getSitrusBerry();}
+        if(rand == 19){randItem = getOranBerry();}
+        if(rand == 20){randItem = getPrismScale();}
+        if(rand == 21){randItem = getLeek();}
+        if(rand == 22){randItem = getMoonStone();}
+        if(rand == 23){randItem = getRawstBerry();}
+        if(rand == 24){randItem = getMudBall();}
+        if(rand == 25){randItem = getBlackTumblestone();}
+        if(rand == 26){randItem = getRazzBerry();}
+        if(rand == 27){randItem = getOvalStone();}
+        if(rand == 28){randItem = getLeftovers();}
+        if(rand == 29){randItem = getKingsRock();}
+        return randItem;
     }
 }

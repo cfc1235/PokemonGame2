@@ -19,6 +19,7 @@ import Moveset.Normal.*;
 import Moveset.Poison.*;
 import Moveset.Psychic.*;
 import Moveset.Rock.*;
+import Moveset.Rock.RockClimb;
 import Moveset.SelfChange.*;
 import Moveset.Steel.*;
 import Moveset.SwapPower.*;
@@ -417,4 +418,23 @@ public interface AddMoveset {
     default Moves addHammerArm(){return new HammerArm();}
     default Moves addWoodHammer(){return new WoodHammer();}
     default Moves addBlock(){return new Block();}
+    default Moves addMinimize(){return new Minimize();}
+    default Moves addRockClimb(){return new RockClimb();}
+    default Moves addSoftBoiled(){return new SoftBoiled();}
+    default Moves addHealingWish(){return new HealingWish();}
+    default Moves addLick(){return new Lick();}
+    default Moves addBellyDrum(){return new BellyDrum();}
+    default Moves addGunkShot(){return new GunkShot();}
+    default Moves addHighHorsepower(){return new HighHorsepower();}
+    default Moves addBelch(){return new Belch();}
+    default Moves addDarkestLariat(){return new DarkestLariat();}
+    default Moves addCurse(){return new Curse();}
+    default Moves addSlackOff(){return new SlackOff();}
+    default Moves addChillingWater(){return new ChillingWater();}
+    default Moves addSnowscape(){return new Snowscape();}
+    default Moves addPowerGem(){return new PowerGem();}
+    default Moves addShellSideArm(){return new ShellSideArm();}
+    default Moves addEerieSpell(){return new EerieImpulse();}
+    default Moves addAcidSpray(){return new AcidSpray();}
+    default Moves addRazorShell(){return new RazorShell();}
 }

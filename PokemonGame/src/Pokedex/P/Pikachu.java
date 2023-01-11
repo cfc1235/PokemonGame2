@@ -3,15 +3,12 @@ package Pokedex.P;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
-import Items.Berries.OranBerry;
-import Items.Consumable.SeedOfMastery;
-import Items.Consumable.SmallEXPCandy;
-import Items.Consumable.SpoiledApricorn;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.L.LightningRod;
 import PokemonCreation.AllAbilities.S.Static;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
+import Interfaces.GetItem;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +45,7 @@ public class Pikachu extends Pokemon {
         setGivesEVs(0, 0, 0, 0, 2, 0);
         setBaseStats(40, 55, 35, 50,
                 50, 90, 25, 190,
-                13.2, "Pikachu", "Medium Fast",
+                13.2, "Electric", "Medium Fast",
                 level, 112);
         this.setPokeCry("025Cry.wav");
         Collections.addAll(this.itemEvolReqs, "Thunderstone");
@@ -59,10 +56,10 @@ public class Pikachu extends Pokemon {
             this.dirName = "PikachuMale.png";
         }
         Collections.addAll(this.possibleWildItems,
-                new CreateOrderedMap<>(35, new OranBerry()),
-                new CreateOrderedMap<>(15, new SpoiledApricorn()),
-                new CreateOrderedMap<>(100, new SmallEXPCandy()),
-                new CreateOrderedMap<>(10, new SeedOfMastery()));
+                new CreateOrderedMap<>(35, GetItem.getOranBerry()),
+                new CreateOrderedMap<>(15, GetItem.getSpoiledApricorn()),
+                new CreateOrderedMap<>(100, GetItem.getSmallExpCandy()),
+                new CreateOrderedMap<>(10,  GetItem.getSeedOfMastery()));
         getWildItem();
     }
 
@@ -75,7 +72,8 @@ public class Pikachu extends Pokemon {
         setTotalEXP();
         setNextLevelEXP();
         setEXPNeeded();
-        Collections.addAll(this.possibleAbilities, new Static(), new LightningRod());
+        Collections.addAll(this.possibleAbilities, new Static(),
+                new LightningRod());
         getAbilities();
         this.savedAbility = this.ability;
         this.name = this.pokedexType;

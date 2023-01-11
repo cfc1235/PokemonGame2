@@ -134,6 +134,22 @@ public interface GetPokemon {
         if(ID == 71){
             pokemon = new Victreebel(level, globalVariables);
         }
+        if(ID == 79){
+            if(regionCheck < .75){
+                pokemon = new Slowpoke(level, globalVariables);
+            }
+            else {
+                pokemon = new AlolanSlowpoke(level, globalVariables);
+            }
+        }
+        if (ID == 80){
+            if(regionCheck < .75){
+                pokemon = new Slowbro(level, globalVariables);
+            }
+            else {
+                pokemon = new AlolanSlowbro(level, globalVariables);
+            }
+        }
         if(ID == 83){
             if(regionCheck < .75){
                 pokemon = new Farfetchd(level, globalVariables);
@@ -141,6 +157,12 @@ public interface GetPokemon {
             else{
                 pokemon = new GalarianFarfetchd(level, globalVariables);
             }
+        }
+        if (ID == 113){
+            pokemon = new Chansey(level, globalVariables);
+        }
+        if(ID == 143){
+            pokemon = new Snorlax(level, globalVariables);
         }
         if(ID == 144){
             if(regionCheck < .75) {
@@ -211,6 +233,14 @@ public interface GetPokemon {
          if(ID == 185){
              pokemon = new Sudowoodo(level, globalVariables);
          }
+         if(ID == 199){
+             if(regionCheck <= .75){
+                 pokemon = new Slowking(level, globalVariables);
+             }
+             else {
+                 pokemon = new AlolanSlowking(level, globalVariables);
+             }
+         }
          if(ID == 204){
              pokemon = new Pineco(level, globalVariables);
          }
@@ -219,6 +249,9 @@ public interface GetPokemon {
          }
          if(ID == 206){
              pokemon = new Dunsparce(level, globalVariables);
+         }
+         if(ID == 242){
+             pokemon = new Blissey(level, globalVariables);
          }
          if(ID == 261){
              pokemon = new Poochyena(level, globalVariables);
@@ -240,6 +273,12 @@ public interface GetPokemon {
          }
          if(ID == 269){
              pokemon = new Dustox(level, globalVariables);
+         }
+         if(ID == 278){
+             pokemon = new Wingull(level, globalVariables);
+         }
+         if(ID == 279){
+             pokemon = new Pelipper(level, globalVariables);
          }
          if(ID == 311){
              pokemon = new Plusle(level, globalVariables);
@@ -264,6 +303,12 @@ public interface GetPokemon {
          }
          if(ID == 438){
              pokemon = new Bonsly(level, globalVariables);
+         }
+         if (ID == 440){
+             pokemon = new Happiny(level, globalVariables);
+         }
+         if(ID == 446){
+             pokemon = new Munchlax(level, globalVariables);
          }
          if(ID == 504){
              pokemon = new Patrat(level, globalVariables);
@@ -439,8 +484,34 @@ public interface GetPokemon {
                         IVs, HPMissing, Evs, Gender, ability, isShiny, new NoItem());
             }
         }
+        if(ID == 79){
+            if(isAlolan){
+                if(items.showName().equals("Galarica Cuff")){
+                    evolution = new AlolanSlowbro(level, moves, nature, name,
+                            IVs, HPMissing, Evs, Gender, ability, isShiny, new NoItem());
+                }
+                if(items.showName().equals("Galarica Wreath")){
+                    evolution = new AlolanSlowking(level, moves, nature, name,
+                            IVs, HPMissing, Evs, Gender, ability, isShiny, new NoItem());
+                }
+            }
+            else {
+                if(items.showName().equals("King's Rock")){
+                    evolution = new Slowking(level, moves, nature, name,
+                            IVs, HPMissing, Evs, Gender, ability, isShiny, new NoItem());
+                }
+                else {
+                    evolution = new Slowbro(level, moves, nature, name,
+                            IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+                }
+            }
+        }
         if(ID == 83 && isHisuian){
             evolution = new Sirfetchd(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 113){
+            evolution = new Blissey(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(ID == 147){
@@ -502,6 +573,10 @@ public interface GetPokemon {
             evolution = new Dustox(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
+        if(ID == 278){
+            evolution = new Dustox(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
         if(ID == 349){
             evolution = new Milotic(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
@@ -516,6 +591,14 @@ public interface GetPokemon {
         }
         if(ID == 438){
             evolution = new Sudowoodo(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 440){
+            evolution = new Chansey(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if (ID == 446){
+            evolution = new Snorlax(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(ID == 504) {

@@ -116,13 +116,28 @@ public class Abilities {
     protected Boolean powersRawDamage = false;
     protected Boolean attackerNoSecondary = false;
     protected Boolean noRecoil = false;
+    protected Boolean cannotConfuse = false;
+    protected Boolean noStatusOnWeather = false;
+    protected Boolean throwWeather = false;
+    protected Weather weatherOnThrow = new Weather();
 
+    public Weather getWeatherOnThrow(){return this.weatherOnThrow;}
+    public Boolean getThrowWeather(){return this.throwWeather;}
+    public Boolean noStatusFromWeather(Weather weather){
+        if(this.noStatusOnWeather && this.WeatherReq.equals(weather)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public Boolean getCannotConfuse(){return this.cannotConfuse;}
     public Boolean getNoRecoil(){return this.noRecoil;}
     public Boolean getAttackerNoSecondary(){return this.attackerNoSecondary;}
     public double getDamageReduction(){return this.damageReduction;}
     public Boolean getNoFlinch(){return this.noFlinch;}
     public ArrayList<String> getCausesStatEffect(){return this.causesStatEffect;}
-    public void statEffectOnDamage(Moves moves, Pokemon attacker){
+    public void statEffectOnDamage(Moves moves, Pokemon attacker, Weather weather){
         if(!this.causesStatEffect.isEmpty()) {
             if ((moves.getIsSpecial() && this.requiresSpecial) ||
                     (!moves.getIsSpecial() && this.requiresPhys) ||
@@ -131,19 +146,19 @@ public class Abilities {
                 if (this.statChance > new Random().nextDouble()) {
                     String effect = this.causesStatEffect.get(0);
                     if(effect.equals("Burn")){
-                        attacker.Burn();
+                        attacker.Burn(weather);
                     }
                     if(effect.equals("Sleep")){
-                        attacker.Sleep();
+                        attacker.Sleep(weather);
                     }
                     if(effect.equals("Paralysis")){
-                        attacker.Paralyze("","","");
+                        attacker.Paralyze("","","", weather);
                     }
                     if(effect.equals("Freeze")){
-                        attacker.Freeze();
+                        attacker.Freeze(weather);
                     }
                     if(effect.equals("Poison")){
-                        attacker.Poison();
+                        attacker.Poison(weather);
                     }
                     if(effect.equals("Infatuate")){
                         attacker.Infatuate();

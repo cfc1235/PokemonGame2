@@ -46,7 +46,10 @@ public class Items {
     protected boolean forcesEvol = false;
     protected double healByPercMax = 0;
     protected Boolean curesBurn = false;
+    protected Boolean endOfTurn = false;
+    protected int flinchChance = 0;
 
+    public int getFlinchChance(){return this.flinchChance;}
     public Boolean getForcesEvol(){return this.forcesEvol;}
     public ArrayList<CreateOrderedMap<String, Double>> getTypesAffected(){return this.typesAffected;}
     public Boolean getAffectsType(){return this.affectsType;}
@@ -85,6 +88,7 @@ public class Items {
     public void useBerry(Pokemon user, Boolean magicRoom, String enemyAbility){
         if(!magicRoom && !enemyAbility.equals("Unnerve")){
             this.itemUsed = true;
+            user.setUseBerry();
             if(this.isBerry){
                 if(this.canHeal){
                     user.changeHP(-1 * this.healAm);
@@ -109,6 +113,11 @@ public class Items {
         }
     }
 
+    public void resolveEndOfTurn(Pokemon user){
+        if(this.endOfTurn){
+            user.changeHP(-1 * (int) (this.healByPercMax * user.showSavedHP()));
+        }
+    }
 
     public double[] getStatMults(){
         //[Phys Att, Phys Def, Spec Att, Spec Def, Speed, Acc, Evas]

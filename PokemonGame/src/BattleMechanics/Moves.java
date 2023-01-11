@@ -194,7 +194,15 @@ public class Moves {
     protected int coins = 0;
     protected int createsWonderRoom = 0;
     protected Boolean isMimic = false;
+    protected Boolean wish = false;
+    protected Boolean ignoresEvas = false;
+    protected Boolean ignoresDef = false;
+    protected Boolean createCurse = false;
 
+    public void eerieSpellPP(){this.PP -= 3;}
+    public Boolean getCreateCurse(){return this.createCurse;}
+    public void isCurse(String type1, String type2){}
+    public Boolean getWish(){return this.wish;}
     public void reduceMimicPP(){
         this.PP -= 1;
     }
@@ -427,6 +435,9 @@ public class Moves {
     }
 
     public Boolean Hits(Pokemon attacker, Pokemon defender, Pokemon PlayerPoke, Weather weather) {
+        if(this.name.equals("Belch") && !attacker.getUseBerry()){
+            return false;
+        }
         Boolean hit = true;
         if(attacker.getCannotMiss()){
             attacker.resetCannotMiss();
@@ -447,7 +458,7 @@ public class Moves {
             int randomupper = 100;
             int R = new Random().nextInt(randomupper);
             int TotalAccAttDef = (int) Math.round(attacker.showAccMult());
-            if(!attacker.showAbility().getIgnoresEvas()){
+            if(!attacker.showAbility().getIgnoresEvas() || !this.ignoresEvas){
                 TotalAccAttDef -= defender.showEvasMult() +
                     defender.showAbility().getStatMults(defender, attacker, this, weather)[6] +
                     defender.showItem().getStatMults()[6];
@@ -536,7 +547,7 @@ public class Moves {
         return STABTotal;
     }
 
-    private double CalcSubtractor(){
+    protected double CalcSubtractor(){
         return (Math.random() * (1 - .85) + .85);
     }
 
@@ -578,13 +589,29 @@ public class Moves {
 
     private double DefCalc(Pokemon defender){
         double defMult = 0;
-        if(defender.showDefMult() == 0){defMult = 1;}
-        if(defender.showDefMult() == 1){defMult = (3.0/2);}
-        if(defender.showDefMult() == 2){defMult = (4.0/2);}
-        if (defender.showDefMult() == 3){defMult = (5.0/2);}
-        if(defender.showDefMult() == 4){defMult = (6.0/2);}
-        if(defender.showDefMult() == 5){defMult = (7.0/2);}
-        if(defender.showDefMult() >= 6){defMult = (8.0/2);}
+        if(!this.ignoresDef) {
+            if (defender.showDefMult() == 0) {
+                defMult = 1;
+            }
+            if (defender.showDefMult() == 1) {
+                defMult = (3.0 / 2);
+            }
+            if (defender.showDefMult() == 2) {
+                defMult = (4.0 / 2);
+            }
+            if (defender.showDefMult() == 3) {
+                defMult = (5.0 / 2);
+            }
+            if (defender.showDefMult() == 4) {
+                defMult = (6.0 / 2);
+            }
+            if (defender.showDefMult() == 5) {
+                defMult = (7.0 / 2);
+            }
+            if (defender.showDefMult() >= 6) {
+                defMult = (8.0 / 2);
+            }
+        }
         if(defender.showDefMult() <= -1){defMult = (2.0/3);}
         if(defender.showDefMult() == -2){defMult = (2.0/4);}
         if(defender.showDefMult() == -3){defMult = (2.0/5);}
@@ -1004,7 +1031,7 @@ public class Moves {
                 }
             }
             if(!defender.showAbility().getCausesStatEffect().isEmpty()){
-                defender.showAbility().statEffectOnDamage(this, attacker);
+                defender.showAbility().statEffectOnDamage(this, attacker, weather);
             }
         }
         if(defender.getIsProtected()){
@@ -1015,7 +1042,7 @@ public class Moves {
         }
         savedRefinedDamage -= (int)  (savedRefinedDamage * defender.showAbility().getDamageReduction());
         if((defender.showSavedHP() == defender.showHP())
-                && defender.showAbility().equals("Sturdy")
+                && defender.showAbility().showName().equals("Sturdy")
                 && (savedRefinedDamage >= defender.showSavedHP())){
             savedRefinedDamage = defender.showHP() - 1;
         }
@@ -1041,7 +1068,7 @@ public class Moves {
                 attacker.showItem().getStatMults()[0];
     }
 
-    private double getPhysAttack(Pokemon attacker, Pokemon defender,
+    protected double getPhysAttack(Pokemon attacker, Pokemon defender,
                                      Weather weather){
         return (((2 * attacker.showLevel()) / 5.0) + 2) *
                 this.power * attacker.showPhysAttack() * AttackCalc(defender) *
@@ -1049,7 +1076,7 @@ public class Moves {
                 attacker.showItem().getStatMults()[0];
     }
 
-    private double getSpecAttack(Pokemon attacker, Pokemon defender,
+    protected double getSpecAttack(Pokemon attacker, Pokemon defender,
                                  Weather weather){
         return (((2 * attacker.showLevel()) / 5.0) + 2)
                 * this.power * attacker.showSpecAttack() * SpecAttackCalc(attacker) *
@@ -1057,14 +1084,14 @@ public class Moves {
                 attacker.showItem().getStatMults()[2];
     }
 
-    private double getPhysDef(Pokemon attacker, Pokemon defender,
+    protected double getPhysDef(Pokemon attacker, Pokemon defender,
                               Weather weather){
         return defender.showPhysDefense() * DefCalc(defender) *
                 defender.showAbility().getStatMults(defender, attacker, this, weather)[1] *
                 defender.showItem().getStatMults()[1] * 50.0;
     }
 
-    private double getSpecDef(Pokemon attacker, Pokemon defender,
+    protected double getSpecDef(Pokemon attacker, Pokemon defender,
                               Weather weather){
         return defender.showSpecDefense() * SpecDefCalc(defender) *
                 defender.showAbility().getStatMults(defender, attacker, this, weather)[3] *
@@ -1139,6 +1166,9 @@ public class Moves {
             changed.changeAttMult(this.MultChange);
             if (this.onTimer) {
                 changed.setPhysAttTimer(this.timerChange);
+            }
+            if (this.name.equals("Belly Drum")){
+                changed.changeHP(changed.showSavedHP()/2);
             }
         }
         if (this.affectsEv) {

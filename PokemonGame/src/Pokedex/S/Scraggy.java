@@ -56,5 +56,6 @@ public class Scraggy extends Pokemon {
         this.setPokeCry("559Cry.wav");
         Collections.addAll(this.possibleWildItems, new CreateOrderedMap<>(5, GetItem.getShedShell()),
                 new CreateOrderedMap<>(95, GetItem.getNoItem()));
+        getWildItem();
     }
 }

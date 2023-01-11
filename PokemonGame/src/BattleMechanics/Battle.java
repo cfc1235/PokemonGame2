@@ -8,6 +8,7 @@ import Moveset.OtherDamage.ConfusionDamage;
 import Moveset.OtherDamage.NoMove;
 import Moveset.OtherDamage.Struggle;
 import PlayerMechanics.*;
+import Pokedex.P.Pelipper;
 import PokemonCreation.Abilities;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
@@ -57,6 +58,8 @@ public class Battle implements AddMoveset {
     private int isWonderRoom = 0;
     private Pokemon playerTrueSelf = new Pokemon();
     private Pokemon AITrueSelf = new Pokemon();
+    private Boolean playerWish = false;
+    private Boolean AIWish = false;
 
     public Battle(GlobalVariables globalVariables, String type, ArrayList<Pokemon> AIParty) {
         this.type = type;
@@ -424,7 +427,15 @@ public class Battle implements AddMoveset {
         }
         this.affectsGround.playerPokeGroundOnSwitch(this.PlayerPoke,
                 this.AIPoke);
-        return ThrowPoke();
+        Pokemon newPoke = ThrowPoke();
+        if (this.playerWish){
+            this.playerWish = false;
+            newPoke.resetForWin(this.globalVariables);
+        }
+        if (newPoke.showAbility().getThrowWeather()){
+            this.weather = newPoke.showAbility().getWeatherOnThrow();
+        }
+        return newPoke;
     }
 
     private void victoryReset() {
@@ -478,6 +489,9 @@ public class Battle implements AddMoveset {
         int ticker = 0;
         this.PlayerPoke = ThrowPoke();
         this.AIPoke = this.AIParty.get(0);
+        if(this.AIPoke.showAbility().getThrowWeather()){
+            this.weather = this.AIPoke.showAbility().getWeatherOnThrow();
+        }
         this.globalVariables.addBattleCount(this.AIPoke.showID());
         this.AIPoke.setJustThrown();
         this.PlayerPoke.showAbility().resolveStart(this.PlayerPoke, this.AIPoke, this.weather);
@@ -592,10 +606,13 @@ public class Battle implements AddMoveset {
                         }
                     }
                 }
-                if (!AIParty.isEmpty()) {
-                    AIPoke = AIParty.get(0);
-                    globalVariables.addBattleCount(AIPoke.showID());
-                    System.out.println("Enemy has thrown out " + AIPoke.showName());
+                if (!this.AIParty.isEmpty()) {
+                    this.AIPoke = this.AIParty.get(0);
+                    if(this.AIPoke.showAbility().getThrowWeather()){
+                        this.weather = this.AIPoke.showAbility().getWeatherOnThrow();
+                    }
+                    this.globalVariables.addBattleCount(this.AIPoke.showID());
+                    System.out.println("Enemy has thrown out " + this.AIPoke.showName());
                 }
             }
         }
@@ -631,6 +648,16 @@ public class Battle implements AddMoveset {
         if(attacker == this.PlayerPoke){
             enemyMove = this.AISelectedMove;
         }
+        if(SelectMove.getWish()){
+            if(attacker == this.AIPoke){
+                this.AIWish = true;
+            }
+            else {
+                this.playerWish = true;
+            }
+            attacker.setHP(0);
+        }
+        SelectMove.isCurse(attacker.showType1(), attacker.showType2());
         if(SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)){
             int DamageDealt = 0;
             Boolean Paralyzed = false;
@@ -660,11 +687,11 @@ public class Battle implements AddMoveset {
                     }
                 }
                 if (!attacker.showFlinched()) {
-                    if (attacker == PlayerPoke) {
-                        playerForcedMove = SelectMove;
+                    if (attacker == this.PlayerPoke) {
+                        this.playerForcedMove = SelectMove;
                     }
-                    if (attacker == AIPoke) {
-                        AIForcedMove = SelectMove;
+                    if (attacker == this.AIPoke) {
+                        this.AIForcedMove = SelectMove;
                     }
                     if (!attacker.showFrozen() && !attacker.showAsleep()
                             && !Paralyzed && !Infatuated &&
@@ -689,15 +716,15 @@ public class Battle implements AddMoveset {
                             !defender.showChargeProtect() &&
                             !SelectMove.showHealOrDamage()) {
                         if ((SelectMove.showreqCharge()) &&
-                                (attacker == PlayerPoke)) {
-                            playerChargeTimer = SelectMove.getTurnLength();
+                                (attacker == this.PlayerPoke)) {
+                            this.playerChargeTimer = SelectMove.getTurnLength();
                             System.out.println("Your " + attacker.showName() + " must charge for " + playerChargeTimer);
                             if (SelectMove.showCannotBeAttacked()) {
                                 attacker.setChargeProtect();
                             }
                         }
-                        if ((SelectMove.showreqCharge()) && (attacker == AIPoke)) {
-                            AIChargeTimer = SelectMove.getTurnLength();
+                        if ((SelectMove.showreqCharge()) && (attacker == this.AIPoke)) {
+                            this.AIChargeTimer = SelectMove.getTurnLength();
                             System.out.println("Enemy " + attacker.showName() + " must charge for " + AIChargeTimer);
                             if (SelectMove.showCannotBeAttacked()) {
                                 attacker.setChargeProtect();
@@ -814,6 +841,9 @@ public class Battle implements AddMoveset {
                                 else {
                                     defender.giveItem(new NoItem());
                                 }
+                            }
+                            if(SelectMove.getCreateCurse()){
+                                defender.setIsCured();
                             }
                             if(SelectMove.getResetsType()){
                                 if(SelectMove.StateChangeAlly) {
@@ -966,7 +996,11 @@ public class Battle implements AddMoveset {
                                             " protects from recoil!");
                                 }
                                 else {
-                                    int damage = SelectMove.selfDamage(DamageDealt);
+                                    int damage = 0;
+                                    if(SelectMove.getCutHPBy() > 0){
+                                        damage = (int) Math.ceil(defender.showSavedHP() / SelectMove.getCutHPBy());
+                                    }
+                                    damage = SelectMove.selfDamage(DamageDealt);
                                     attacker.addToRecoilTotal(damage);
                                     attacker.changeHP(damage);
                                 }
@@ -988,12 +1022,12 @@ public class Battle implements AddMoveset {
                                         if (SelectMove.showCanOnlyConfuse()) {
                                             if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
                                                     !SelectMove.showcanMiss()) {
-                                                defender.Confuse(attacker);
+                                                defender.Confuse(attacker, this.weather);
                                             }
                                         }
                                         if (SelectMove.showCanConfuse()) {
                                             if ((SelectMove.showConfuseChance()) >= Math.random()) {
-                                                defender.Confuse(attacker);
+                                                defender.Confuse(attacker, this.weather);
                                             }
                                         }
                                         if (defender.showIsConfused()) {
@@ -1005,18 +1039,18 @@ public class Battle implements AddMoveset {
                                     if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                         if (SelectMove.showOnlyCanPoison()) {
                                             if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather)
-                                            || !SelectMove.showcanMiss()) {
-                                                defender.Poison();
-                                                if(defender.showAbility().showName().equals("Synchronize")){
-                                                    attacker.Poison();
+                                                    || !SelectMove.showcanMiss()) {
+                                                defender.Poison(this.weather);
+                                                if (defender.showAbility().showName().equals("Synchronize")) {
+                                                    attacker.Poison(this.weather);
                                                 }
                                             }
                                         }
                                     if (SelectMove.showcanPoison()) {
                                             if ((SelectMove.showPoisonChance()) >= Math.random()) {
-                                                defender.Poison();
+                                                defender.Poison(this.weather);
                                                 if(defender.showAbility().showName().equals("Synchronize")){
-                                                    attacker.Poison();
+                                                    attacker.Poison(this.weather);
                                                 }
                                             }
                                         }
@@ -1034,12 +1068,12 @@ public class Battle implements AddMoveset {
                                         if (SelectMove.showOnlyCanSleep()) {
                                             if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
                                                     !SelectMove.showcanMiss()) {
-                                                defender.Sleep();
+                                                defender.Sleep(this.weather);
                                             }
                                         }
                                         if (SelectMove.showcanSleep()) {
                                             if ((SelectMove.showSleepChance()) >= Math.random()) {
-                                                defender.Sleep();
+                                                defender.Sleep(this.weather);
                                             }
                                         }
                                         if (defender.showAsleep()) {
@@ -1053,18 +1087,18 @@ public class Battle implements AddMoveset {
                                             if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
                                                     !SelectMove.showcanMiss()) {
                                                 defender.Paralyze(SelectMove.showType(), SelectMove.getParalysisTypeFail(),
-                                                        SelectMove.showName());
+                                                        SelectMove.showName(), this.weather);
                                                 if(defender.showAbility().showName().equals("Synchronize")){
-                                                    attacker.Paralyze("","","");
+                                                    attacker.Paralyze("","","", this.weather);
                                                 }
                                             }
                                         }
                                         if (SelectMove.showcanParalyze()) {
                                             if ((SelectMove.getParalysisChance()) >= (Math.random())) {
                                                 defender.Paralyze(SelectMove.showType(), SelectMove.getParalysisTypeFail(),
-                                                        SelectMove.showName());
+                                                        SelectMove.showName(), this.weather);
                                                 if(defender.showAbility().showName().equals("Synchronize")){
-                                                    attacker.Paralyze("","","");
+                                                    attacker.Paralyze("","","", this.weather);
                                                 }
                                             }
                                         }
@@ -1076,19 +1110,19 @@ public class Battle implements AddMoveset {
                             }
                             if (SelectMove.showName().equals("Psycho Shift")) {
                                 if (attacker.showBurn()) {
-                                    defender.Burn();
+                                    defender.Burn(this.weather);
                                 }
                                 if (attacker.showPoisoned()) {
-                                    defender.Poison();
+                                    defender.Poison(this.weather);
                                 }
                                 if (attacker.showParalysis()) {
-                                    defender.Paralyze("","","");
+                                    defender.Paralyze("","","", this.weather);
                                 }
                                 if (attacker.showAsleep()) {
-                                    defender.Sleep();
+                                    defender.Sleep(this.weather);
                                 }
                                 if (attacker.showFrozen()) {
-                                    defender.Freeze();
+                                    defender.Freeze(this.weather);
                                 }
                             }
                             if(SelectMove.getSwapPower()){
@@ -1102,12 +1136,12 @@ public class Battle implements AddMoveset {
                                     if (SelectMove.showOnlyCanFreeze()) {
                                         if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
                                                 !SelectMove.showcanMiss()) {
-                                            defender.Freeze();
+                                            defender.Freeze(this.weather);
                                         }
                                     }
                                     if (SelectMove.showcanFreeze()) {
                                         if ((SelectMove.getFreezeChance()) >= Math.random()) {
-                                            defender.Freeze();
+                                            defender.Freeze(this.weather);
                                         }
                                     }
                                     if (defender.showFrozen()) {
@@ -1120,17 +1154,17 @@ public class Battle implements AddMoveset {
                                     if (SelectMove.showOnlyCanBurn()) {
                                         if (SelectMove.Hits(attacker, defender, this.PlayerPoke, this.weather) ||
                                             !SelectMove.showcanMiss()) {
-                                            defender.Burn();
+                                            defender.Burn(this.weather);
                                             if(defender.showAbility().showName().equals("Synchronize")){
-                                                attacker.Burn();
+                                                attacker.Burn(this.weather);
                                             }
                                         }
                                     }
                                   if (SelectMove.showcanBurn()) {
                                         if ((SelectMove.showBurnChance() / outOfReqChance) >= Math.random()) {
-                                            defender.Burn();
+                                            defender.Burn(this.weather);
                                             if(defender.showAbility().showName().equals("Synchronize")){
-                                                attacker.Burn();
+                                                attacker.Burn(this.weather);
                                             }
                                         }
                                     }
@@ -1150,6 +1184,14 @@ public class Battle implements AddMoveset {
                                     this.playerItemUsed = attacker.showItem();
                                 } else {
                                     this.AIItemUsed = attacker.showItem();
+                                }
+                            }
+                            if(SelectMove.showName().equals("Eerie Spell")){
+                                if(attacker == this.PlayerPoke){
+                                    this.PlayerSelectedMove.eerieSpellPP();
+                                }
+                                else {
+                                    this.AISelectedMove.eerieSpellPP();
                                 }
                             }
                             if(SelectMove.showName().equals("Quick Guard")){
@@ -1246,7 +1288,7 @@ public class Battle implements AddMoveset {
                                 attacker.ridStatusEffects();
                             }
                             if (SelectMove.showSelfSleep()) {
-                                attacker.Sleep();
+                                attacker.Sleep(this.weather);
                                 System.out.println(getAttackerName(attacker) + " has put itself to sleep!");
                             }
                             if (SelectMove.showFullDef()) {
@@ -1323,7 +1365,8 @@ public class Battle implements AddMoveset {
                                     this.AIPoke.setFakeLevitateTimer(SelectMove.getLevitateTimer());
                                 }
                             }
-                            if (SelectMove.showCanFlinch() || defender.showAbility().showName().equals("Stench")) {
+                            if (SelectMove.showCanFlinch() || defender.showAbility().showName().equals("Stench")
+                                    || attacker.showItem().getFlinchChance() > 0.0) {
                                 if (!defender.showAbility().getNoFlinch()) {
                                     Boolean abilityAffected = false;
                                     if (defender.showAbility().showName().equals("Stench")) {
@@ -1332,7 +1375,8 @@ public class Battle implements AddMoveset {
                                             abilityAffected = true;
                                         }
                                     }
-                                    if ((SelectMove.showFlinchChance() / outOfReqChance) >= Math.random()) {
+                                    int flinchChance = SelectMove.showFlinchChance() + attacker.showItem().getFlinchChance();
+                                    if ((flinchChance / outOfReqChance) >= Math.random()) {
                                         defender.Flinch();
                                         System.out.println(defender.showName() + " is flinching!");
                                         defender.showAbility().addStageDuringEffect(defender, attacker, "Flinch");
@@ -1365,7 +1409,7 @@ public class Battle implements AddMoveset {
                             }
                             if (SelectMove.showSelfConfuse()) {
                                 if (attacker.getOutrageTimer() <= 0) {
-                                    attacker.Confuse(defender);
+                                    attacker.Confuse(defender, this.weather);
                                     int addToConfuse = (int) (Math.round(Math.random() * (4) + 2));
                                     attacker.setConfuseTimer(addToConfuse);
                                 }
@@ -1524,7 +1568,7 @@ public class Battle implements AddMoveset {
                                 attacker.changeHP(-1 * Heal);
                             }
                         }
-                        if (attacker == AIPoke) {
+                        if (attacker == this.AIPoke) {
                             if ((SelectMove.dealsDamage) &&
                                     (this.AIChargeTimer <= 0)) {
                                 DamageDealt = SelectMove.damageDealt(
@@ -1556,7 +1600,7 @@ public class Battle implements AddMoveset {
                     }
                 }
                 if (attacker.showAsleep()) {
-                    sleepTimer -= 1;
+                    this.sleepTimer -= 1;
                     System.out.println(attacker.showName() + " is still asleep!");
                     if (SelectMove.showName().equals("Snore")) {
                         DamageDealt = SelectMove.damageDealt(
@@ -1589,8 +1633,8 @@ public class Battle implements AddMoveset {
                                 }
                             }
                         }
-                        if (attacker == AIPoke) {
-                            System.out.println("Enemy " + AIPoke.showName() + " dealt " + DamageDealt + " damage!");
+                        if (attacker == this.AIPoke) {
+                            System.out.println("Enemy " + this.AIPoke.showName() + " dealt " + DamageDealt + " damage!");
                             if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
                                 defender.changeHP(DamageDealt);
                                 defender.setPreviousDamage(DamageDealt);
@@ -1611,7 +1655,7 @@ public class Battle implements AddMoveset {
                             }
                         }
                     }
-                    if (sleepTimer <= 0) {
+                    if (this.sleepTimer <= 0) {
                         attacker.Wake();
                         System.out.println(attacker.showName() + " woke up!");
                     }
@@ -1633,7 +1677,7 @@ public class Battle implements AddMoveset {
                     System.out.println(attacker.showName() + " is too in love to fight!");
                 }
                 if (newMove.equals("Sleep Talk")) {
-                    attacker.Sleep();
+                    attacker.Sleep(this.weather);
                 }
                 if (attacker.showFlinched()) {
                     System.out.println(attacker.showName() + " flinched!");
@@ -1675,6 +1719,7 @@ public class Battle implements AddMoveset {
                 }
             }
         }
+        attacker.showItem().resolveEndOfTurn(attacker);
         attacker.endTurnHeal();
         attacker.setPreviousDamage(0);
         attacker.tickDownCannotHaveStatLowered();
@@ -1711,7 +1756,7 @@ public class Battle implements AddMoveset {
         attacker.resetPhysWall();
         attacker.resetSpecWall();
         attacker.tickDownLevitateTimer();
-        attacker.tickDownSetFallAsleep();
+        attacker.tickDownSetFallAsleep(this.weather);
         if(attacker.getIsProtected()) {
             attacker.endProtection();
             System.out.println("Protection Ended!");
@@ -1728,77 +1773,77 @@ public class Battle implements AddMoveset {
         this.weatherTicker -= 1;
         if(this.weatherTicker == 0){
             this.weather = this.savedWeather;
-            System.out.println("Weather is back to " + weather.showName());
+            System.out.println("Weather is back to " + this.weather.showName());
         }
         if(attacker.showStatChangeTimer() == 0){
             attacker.resetNoStatChange();
-            if(attacker == PlayerPoke){
+            if(attacker == this.PlayerPoke){
                 System.out.println("Your " + attacker.showName() + " is susceptible to status changes!");
             }
-            if(attacker == AIPoke){
+            if(attacker == this.AIPoke){
                 System.out.println("Enemy " + attacker.showName() + " is susceptible to status changes!");
             }
         }
         if(attacker.showAccTimer() == 0) {
             attacker.resetAccMult();
-            if(attacker == PlayerPoke){
+            if(attacker == this.PlayerPoke){
                 System.out.println("Your " + attacker.showName() + "'s accuracy multiplier wore off!");
             }
-            if(attacker == AIPoke){
+            if(attacker == this.AIPoke){
                 System.out.println("Enemy " + attacker.showName() + "'s multiplier wore off!");
             }
         }
         if(attacker.showCritTimer() == 0) {
             attacker.resetIsCritUp();
-            if(attacker == PlayerPoke){
+            if(attacker == this.PlayerPoke){
                 System.out.println("Your " + attacker.showName() + "'s critical multiplier wore off!");
             }
-            if(attacker == AIPoke){
+            if(attacker == this.AIPoke){
                 System.out.println("Enemy " + attacker.showName() + "'s critical multiplier wore off!");
             }
         }
         if(attacker.showPhysAttTimer() == 0){
             attacker.resetAttMult();
-            if(attacker == PlayerPoke){
+            if(attacker == this.PlayerPoke){
                 System.out.println("Your " + attacker.showName() + "'s attack multiplier wore off!");
             }
-            if(attacker == AIPoke){
+            if(attacker == this.AIPoke){
                 System.out.println("Enemy " + attacker.showName() + "'s attack multiplier wore off!");
             }
         }
         if(attacker.showSpecAttTimer() == 0) {
             attacker.resetSpecAttMult();
-            if(attacker == PlayerPoke){
+            if(attacker == this.PlayerPoke){
                 System.out.println("Your " + attacker.showName() + "'s special attack multiplier wore off!");
             }
-            if(attacker == AIPoke){
+            if(attacker == this.AIPoke){
                 System.out.println("Enemy " + attacker.showName() + "'s special attack multiplier wore off!");
             }
         }
         if(attacker.showPhysDefTimer() == 0){
             attacker.resetDefMult();
-            if(attacker == PlayerPoke){
+            if(attacker == this.PlayerPoke){
                 System.out.println("Your " + attacker.showName() + "'s defense multiplier wore off!");
             }
-            if(attacker == AIPoke){
+            if(attacker == this.AIPoke){
                 System.out.println("Enemy " + attacker.showName() + "'s defense multiplier wore off!");
             }
         }
         if(attacker.showSpecDefTimer() == 0){
             attacker.resetSpecDefMult();
-            if(attacker == PlayerPoke){
+            if(attacker == this.PlayerPoke){
                 System.out.println("Your " + attacker.showName() + "'s special defense multiplier wore off!");
             }
-            if(attacker == AIPoke){
+            if(attacker == this.AIPoke){
                 System.out.println("Enemy " + attacker.showName() + "'s special defense multiplier wore off!");
             }
         }
         if(attacker.showEvasTimer() == 0) {
             attacker.resetEvasMult();
-            if(attacker == PlayerPoke){
+            if(attacker == this.PlayerPoke){
                 System.out.println("Your " + attacker.showName() + "'s evasion multiplier wore off!");
             }
-            if(attacker == AIPoke){
+            if(attacker == this.AIPoke){
                 System.out.println("Enemy " + attacker.showName() + "'s evasion multiplier wore off!");
             }
         }
@@ -1821,37 +1866,37 @@ public class Battle implements AddMoveset {
         if(attacker.showPoisoned()) {
             DamageDealt = (int) Math.round(defender.showSavedHP() * (1.0 / 16));
             defender.changeHP(DamageDealt);
-            if (attacker == PlayerPoke) {
-                System.out.println("Your " + PlayerPoke.showName() + " dealt " + DamageDealt + " damage due to the poison!");
+            if (attacker == this.PlayerPoke) {
+                System.out.println("Your " + this.PlayerPoke.showName() + " dealt " + DamageDealt + " damage due to the poison!");
             }
-            if (attacker == AIPoke) {
-                System.out.println("Enemy " + AIPoke.showName() + " dealt " + DamageDealt + " damage due to the poison!");
+            if (attacker == this.AIPoke) {
+                System.out.println("Enemy " + this.AIPoke.showName() + " dealt " + DamageDealt + " damage due to the poison!");
             }
         }
         if(attacker.showBurn()) {
             DamageDealt = (int) Math.round(defender.showSavedHP() * (1.0 / 16));
             defender.changeHP(DamageDealt);
-            if (attacker == PlayerPoke) {
-                System.out.println("Your " + PlayerPoke.showName() + " dealt " + DamageDealt + " damage due to the burn!");
+            if (attacker == this.PlayerPoke) {
+                System.out.println("Your " + this.PlayerPoke.showName() + " dealt " + DamageDealt + " damage due to the burn!");
             }
-            if (attacker == AIPoke) {
-                System.out.println("Enemy " + AIPoke.showName() + " dealt " + DamageDealt + " damage due to the burn!");
+            if (attacker == this.AIPoke) {
+                System.out.println("Enemy " + this.AIPoke.showName() + " dealt " + DamageDealt + " damage due to the burn!");
             }
         }
         if(defender.showSeeded()){
             DamageDealt = (int) Math.round(defender.showSavedHP() * (1.0/8));
-            if (attacker == PlayerPoke) {
-                System.out.println("Your " + PlayerPoke.showName() + " dealt " + DamageDealt + " damage due to the seed!");
+            if (attacker == this.PlayerPoke) {
+                System.out.println("Your " + this.PlayerPoke.showName() + " dealt " + DamageDealt + " damage due to the seed!");
             }
-            if (attacker == AIPoke) {
-                System.out.println("Enemy " + AIPoke.showName() + " dealt " + DamageDealt + " damage due to the seed!");
+            if (attacker == this.AIPoke) {
+                System.out.println("Enemy " + this.AIPoke.showName() + " dealt " + DamageDealt + " damage due to the seed!");
             }
             defender.changeHP(DamageDealt);
-            if (attacker == PlayerPoke) {
-                System.out.println("Your " + PlayerPoke.showName() + " healed for " + DamageDealt + " damage due to the seed!");
+            if (attacker == this.PlayerPoke) {
+                System.out.println("Your " + this.PlayerPoke.showName() + " healed for " + DamageDealt + " damage due to the seed!");
             }
-            if (attacker == AIPoke) {
-                System.out.println("Enemy " + AIPoke.showName() + " healed " + DamageDealt + " damage due to the seed!");
+            if (attacker == this.AIPoke) {
+                System.out.println("Enemy " + this.AIPoke.showName() + " healed " + DamageDealt + " damage due to the seed!");
             }
             attacker.changeHP(-DamageDealt);
             if (attacker.showHP() > attacker.showSavedHP()) {
@@ -2067,6 +2112,10 @@ public class Battle implements AddMoveset {
         this.AIPoke.setThrownOnFaint();
         this.affectsGround.AIPokeGroundOnSwitch(this.AIPoke,
                 this.PlayerPoke);
+        if(this.AIWish){
+            this.AIPoke.resetForWin(this.globalVariables);
+            this.AIWish = false;
+        }
         this.AITrueSelf = this.AIPoke;
     }
 }

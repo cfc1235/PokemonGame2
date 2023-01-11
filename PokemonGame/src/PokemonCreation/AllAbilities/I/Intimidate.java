@@ -12,6 +12,6 @@ public class Intimidate extends Abilities {
         this.changeEAtt = -1;
         this.abilitiesCounter = true;
         Collections.addAll(this.counteringAbilities, "Clear Body",
-                "Hyper Cutter", "White Smoke");
+                "Hyper Cutter", "White Smoke", "Own Tempo");
     }
 }
