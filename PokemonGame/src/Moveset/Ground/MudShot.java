@@ -15,7 +15,7 @@ public class MudShot extends Moves {
         this.isSpecial = true;
         this.StatchangeEnemy = true;
         this.affectsSpeed = true;
-        this.MultChange = 1;
+        this.MultChange = -1;
         this.statChangeReqChance= true;
         this.StatChangeReq = 100;
         this.changeTypeName = " speed ";

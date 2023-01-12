@@ -5,7 +5,7 @@ import Items.Berries.*;
 import Items.Consumable.*;
 import Items.EvolItems.*;
 import Items.HeldItem.*;
-import PokemonCreation.AllAbilities.L.Leftovers;
+import Items.HeldItem.Leftovers;
 import PokemonCreation.Items;
 import Items.NoItem;
 
@@ -44,11 +44,12 @@ public interface GetItem {
     static Items getOvalStone(){return new OvalStone();}
     static Items getLeftovers(){return new Leftovers();}
     static Items getKingsRock(){return new KingsRock();}
+    static Items getPoisonBarb(){return new PoisonBarb();}
 
     static Items getRandomItem(){
         Random random = new Random();
         Items randItem = getNoItem();
-        int rand = random.nextInt(30);
+        int rand = random.nextInt(31);
         if(rand == 0){randItem = getApricorn();}
         if (rand == 1){randItem = getCheriBerry();}
         if(rand == 2){randItem = getPechaBerry();}
@@ -79,6 +80,7 @@ public interface GetItem {
         if(rand == 27){randItem = getOvalStone();}
         if(rand == 28){randItem = getLeftovers();}
         if(rand == 29){randItem = getKingsRock();}
+        if(rand == 30){randItem = getPoisonBarb();}
         return randItem;
     }
 }

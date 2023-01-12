@@ -1,6 +1,7 @@
 package Moveset.Psychic;
 
 import BattleMechanics.Moves;
+import PokemonCreation.Pokemon;
 
 public class StoredPower extends Moves {
 
@@ -14,5 +15,16 @@ public class StoredPower extends Moves {
         this.isSpecial = true;
         this.acc = 100;
         this.TMNum = 183;
+    }
+
+    @Override
+    protected void setDamage(Pokemon attacker, Pokemon defender,
+                             Moves enemyMove, int lastDamage) {
+        this.power = 20;
+        double increases = attacker.showAccMult()
+                + attacker.showDefMult() + attacker.showEvasMult()
+                + attacker.showSpeedMult() + attacker.showSpecAttMult()
+                + attacker.showSpecDefMult();
+        this.power += (int) (20 * increases);
     }
 }

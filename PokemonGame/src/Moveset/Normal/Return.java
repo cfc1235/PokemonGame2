@@ -1,6 +1,7 @@
 package Moveset.Normal;
 
 import BattleMechanics.Moves;
+import PokemonCreation.Pokemon;
 
 public class Return extends Moves {
 
@@ -13,5 +14,12 @@ public class Return extends Moves {
         this.makesContact = true;
         this.type = "Normal";
         this.TMNum = 327;
+    }
+
+    @Override
+    protected void setDamage(Pokemon attacker, Pokemon defender,
+                             Moves enemyMove, int lastDamage) {
+        this.power = (int) (Math.floor((((double) attacker.showHP())/
+                        attacker.showSavedHP()) * 120));
     }
 }

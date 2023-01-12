@@ -120,7 +120,9 @@ public class Abilities {
     protected Boolean noStatusOnWeather = false;
     protected Boolean throwWeather = false;
     protected Weather weatherOnThrow = new Weather();
+    protected Boolean noStatChange = false;
 
+    public Boolean getNoStatChange(){return this.noStatChange;}
     public Weather getWeatherOnThrow(){return this.weatherOnThrow;}
     public Boolean getThrowWeather(){return this.throwWeather;}
     public Boolean noStatusFromWeather(Weather weather){

@@ -5,6 +5,7 @@ import PokemonCreation.Abilities;
 
 public class LightningRod extends Abilities {
     public LightningRod(){
+        this.name = "Lighting Rod";
         this.affectsType = true;
         this.typesAffected.add(new CreateOrderedMap<>("Electric", 0.0));
         this.onDealtDamage = true;

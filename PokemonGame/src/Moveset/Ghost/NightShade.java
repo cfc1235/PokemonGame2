@@ -1,6 +1,7 @@
 package Moveset.Ghost;
 
 import BattleMechanics.Moves;
+import PokemonCreation.Pokemon;
 
 public class NightShade extends Moves {
 
@@ -13,5 +14,11 @@ public class NightShade extends Moves {
         this.PP = 15;
         this.savedPP = this.PP;
         this.dealsDamage = true;
+    }
+
+    @Override
+    protected void setDamage(Pokemon attacker, Pokemon defender,
+                             Moves enemyMove, int lastDamage) {
+        this.power = attacker.showLevel();
     }
 }

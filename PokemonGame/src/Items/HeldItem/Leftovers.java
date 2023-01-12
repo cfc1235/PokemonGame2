@@ -1,4 +1,4 @@
-package PokemonCreation.AllAbilities.L;
+package Items.HeldItem;
 
 import PokemonCreation.Items;
 

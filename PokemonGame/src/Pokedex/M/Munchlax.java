@@ -3,7 +3,7 @@ package Pokedex.M;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.AllAbilities.G.Gluttony;
-import PokemonCreation.AllAbilities.L.Leftovers;
+import Items.HeldItem.Leftovers;
 import PokemonCreation.AllAbilities.P.Pickup;
 import PokemonCreation.AllAbilities.T.ThickFat;
 import PokemonCreation.Pokemon;

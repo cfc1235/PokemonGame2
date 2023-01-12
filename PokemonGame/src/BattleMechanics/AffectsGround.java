@@ -1,6 +1,7 @@
 package BattleMechanics;
 
 import PokemonCreation.Pokemon;
+import Weather.Weather;
 
 public class AffectsGround {
 
@@ -56,7 +57,8 @@ public class AffectsGround {
         this.stickyWebAgainstAI = true;
     }
 
-    public void playerPokeGroundOnSwitch(Pokemon playerPoke, Pokemon AIPoke) {
+    public void playerPokeGroundOnSwitch(Pokemon playerPoke, Pokemon AIPoke,
+                                          Weather weather) {
         if (!playerPoke.showType1().equals("Flying") ||
                 !playerPoke.showType2().equals("Flying")) {
             if (this.StickyWebAgainstPlayer) {
@@ -104,14 +106,15 @@ public class AffectsGround {
                 else {
                     if(!playerPoke.showType2().equals("Steel") ||
                     !playerPoke.showType1().equals("Steel")){
-                        playerPoke.Poison();
+                        playerPoke.Poison(weather);
                     }
                 }
             }
         }
     }
 
-    public void AIPokeGroundOnSwitch(Pokemon AIPoke, Pokemon playerPoke) {
+    public void AIPokeGroundOnSwitch(Pokemon AIPoke, Pokemon playerPoke,
+                                     Weather weather) {
         if (!AIPoke.showType1().equals("Flying") ||
                 !AIPoke.showType2().equals("Flying")) {
             if (this.stickyWebAgainstAI) {
@@ -137,7 +140,7 @@ public class AffectsGround {
                 } else {
                     if (!AIPoke.showType2().equals("Steel") ||
                             !AIPoke.showType1().equals("Steel")) {
-                        AIPoke.Poison();
+                        AIPoke.Poison(weather);
                     }
                 }
             }

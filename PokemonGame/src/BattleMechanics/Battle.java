@@ -8,7 +8,6 @@ import Moveset.OtherDamage.ConfusionDamage;
 import Moveset.OtherDamage.NoMove;
 import Moveset.OtherDamage.Struggle;
 import PlayerMechanics.*;
-import Pokedex.P.Pelipper;
 import PokemonCreation.Abilities;
 import PokemonCreation.Items;
 import PokemonCreation.Pokemon;
@@ -60,6 +59,7 @@ public class Battle implements AddMoveset {
     private Pokemon AITrueSelf = new Pokemon();
     private Boolean playerWish = false;
     private Boolean AIWish = false;
+    protected int lastDamage = 0;
 
     public Battle(GlobalVariables globalVariables, String type, ArrayList<Pokemon> AIParty) {
         this.type = type;
@@ -288,13 +288,13 @@ public class Battle implements AddMoveset {
         }
 
         Scanner scan = new Scanner(System.in);
-        if (this.isFirst || PlayerSelectedMove.showName().equals("Quash")) {
+        if (this.isFirst || this.PlayerSelectedMove.showName().equals("Quash")) {
             System.out.println("You First!");
             if(this.PlayerSelectedMove.showaffectsBoth()) {
                 System.out.println("This move can target yourself or the enemy. Who would you like to target? (E for enemy)");
                 String target = scan.nextLine();
                 if (target.equals("e")) {
-                    Turn(PlayerPoke, PlayerPoke, PlayerSelectedMove);
+                    Turn(this.PlayerPoke, this.PlayerPoke, this.PlayerSelectedMove);
                 }
                 if (!target.equals("e")) {
                     Turn(PlayerPoke, AIPoke, PlayerSelectedMove);
@@ -426,7 +426,7 @@ public class Battle implements AddMoveset {
             }
         }
         this.affectsGround.playerPokeGroundOnSwitch(this.PlayerPoke,
-                this.AIPoke);
+                this.AIPoke, this.weather);
         Pokemon newPoke = ThrowPoke();
         if (this.playerWish){
             this.playerWish = false;
@@ -702,7 +702,8 @@ public class Battle implements AddMoveset {
                                     attacker, attacker, this.weather,
                                     this.terrain, this.Waiting,
                                     enemyMove, this.isFirst,
-                                    magicRoom, this.isTrickRoom>0);
+                                    magicRoom, this.isTrickRoom>0,
+                                    this.lastDamage);
                             attacker.changeHP(DamageDealt);
                             System.out.println(getAttackerName(attacker) +
                                     " dealt " + DamageDealt +
@@ -744,7 +745,9 @@ public class Battle implements AddMoveset {
                                             attacker, attacker, this.weather,
                                             this.terrain, this.Waiting,
                                             enemyMove, this.isFirst,
-                                            magicRoom, this.isTrickRoom>0);
+                                            magicRoom, this.isTrickRoom>0,
+                                            this.lastDamage);
+                                    this.lastDamage = DamageDealt;
                                     if (!SelectMove.getDealsFutureDamage()) {
                                         System.out.println("Your " +
                                                 this.PlayerPoke.showName() + " dealt " +
@@ -797,7 +800,9 @@ public class Battle implements AddMoveset {
                                             attacker, attacker, this.weather,
                                             this.terrain, this.Waiting,
                                             enemyMove, this.isFirst,
-                                            magicRoom, this.isTrickRoom>0);
+                                            magicRoom, this.isTrickRoom>0,
+                                            this.lastDamage);
+                                    this.lastDamage = DamageDealt;
                                     System.out.println("Enemy " + this.AIPoke.showName() +
                                             " dealt " + DamageDealt + " damage!");
                                     if (defender.showSubstituteHP() <= 0 ||
@@ -1549,7 +1554,9 @@ public class Battle implements AddMoveset {
                                     attacker, attacker, this.weather,
                                     this.terrain, this.Waiting,
                                     enemyMove, this.isFirst,
-                                    magicRoom, this.isTrickRoom>0);
+                                    magicRoom, this.isTrickRoom>0,
+                                    this.lastDamage);
+                            this.lastDamage = DamageDealt;
                             System.out.println("Your " + this.PlayerPoke.showName()
                                     + " dealt " + DamageDealt + " damage!");
                             if (defender.showSubstituteHP() <= 0 || SelectMove.showIgnoreSubstitute()) {
@@ -1564,8 +1571,14 @@ public class Battle implements AddMoveset {
                             }
                             if (SelectMove.showDamBackHeal()) {
                                 int Heal = (int) Math.round(DamageDealt / SelectMove.showBackHealAm());
-                                System.out.println("Your " + PlayerPoke.showName() + " healed for " + DamageDealt + " !");
-                                attacker.changeHP(-1 * Heal);
+                                if(defender.showAbility().showName().equals("Liquid Ooze")){
+                                    System.out.println("Your " + this.PlayerPoke.showName() + " took " + DamageDealt + " damage because of Liquid Ooze!");
+                                    attacker.changeHP(Heal);
+                                }
+                                else {
+                                    System.out.println("Your " + this.PlayerPoke.showName() + " healed for " + DamageDealt + " !");
+                                    attacker.changeHP(-1 * Heal);
+                                }
                             }
                         }
                         if (attacker == this.AIPoke) {
@@ -1575,7 +1588,9 @@ public class Battle implements AddMoveset {
                                         attacker, attacker, this.weather,
                                         this.terrain, this.Waiting,
                                         enemyMove, this.isFirst,
-                                        magicRoom, this.isTrickRoom>0);
+                                        magicRoom, this.isTrickRoom>0,
+                                        this.lastDamage);
+                                this.lastDamage = DamageDealt;
                                 System.out.println("Enemy " + AIPoke.showName() +
                                         " dealt " + DamageDealt + " damage!");
                                 if (defender.showSubstituteHP() <= 0 ||
@@ -1607,7 +1622,9 @@ public class Battle implements AddMoveset {
                                 attacker, attacker, this.weather,
                                 this.terrain, this.Waiting,
                                 enemyMove, this.isFirst,
-                                magicRoom, this.isTrickRoom>0);
+                                magicRoom, this.isTrickRoom>0,
+                                this.lastDamage);
+                        this.lastDamage = DamageDealt;
                         if (attacker == this.PlayerPoke) {
                             System.out.println("Your " +
                                     this.PlayerPoke.showName() +
@@ -1692,6 +1709,7 @@ public class Battle implements AddMoveset {
     }
 
     private void endTurn(Pokemon defender, Pokemon attacker){
+        this.lastDamage = 0;
         int DamageDealt;
         if(attacker == this.PlayerPoke) {
             if(this.AIPoke.getBideDamage() > 0){
@@ -2054,10 +2072,12 @@ public class Battle implements AddMoveset {
     private Boolean isFirst() {
         Boolean first = null;
         if(!this.terrain.showName().equals("Psychic")) {
-            if (this.PlayerSelectedMove.getGoesFirst()) {
+            if (this.PlayerSelectedMove.getGoesFirst()
+                    || this.AISelectedMove.getGoesSecond()) {
                 return true;
             }
-            if (this.AISelectedMove.getGoesFirst()) {
+            if (this.AISelectedMove.getGoesFirst()
+                    || this.PlayerSelectedMove.getGoesSecond()) {
                 return false;
             }
         }
@@ -2111,7 +2131,7 @@ public class Battle implements AddMoveset {
                 this.AIPoke, this.PlayerPoke, this.weather);
         this.AIPoke.setThrownOnFaint();
         this.affectsGround.AIPokeGroundOnSwitch(this.AIPoke,
-                this.PlayerPoke);
+                this.PlayerPoke, this.weather);
         if(this.AIWish){
             this.AIPoke.resetForWin(this.globalVariables);
             this.AIWish = false;

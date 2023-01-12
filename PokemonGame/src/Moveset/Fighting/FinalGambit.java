@@ -1,6 +1,7 @@
 package Moveset.Fighting;
 
 import BattleMechanics.Moves;
+import PokemonCreation.Pokemon;
 
 public class FinalGambit extends Moves {
     public FinalGambit(){
@@ -14,5 +15,11 @@ public class FinalGambit extends Moves {
         this.recoil = 1;
         this.savedPP = this.PP;
         this.isSpecial = true;
+    }
+
+    @Override
+    protected void setDamage(Pokemon attacker, Pokemon defender,
+                             Moves enemyMove, int lastDamage) {
+        this.power = attacker.showHP();
     }
 }

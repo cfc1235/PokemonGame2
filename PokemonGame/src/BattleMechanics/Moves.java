@@ -198,7 +198,13 @@ public class Moves {
     protected Boolean ignoresEvas = false;
     protected Boolean ignoresDef = false;
     protected Boolean createCurse = false;
+    protected Boolean goesSecond = false;
 
+    protected void setDamageType(Weather weather){};
+    protected void setDamage(Pokemon attacker, Pokemon defender,
+                             Moves enemyMove, int lastDamage){};
+    protected void setDamageAcc(Weather weather){};
+    public Boolean getGoesSecond(){return this.goesSecond;}
     public void eerieSpellPP(){this.PP -= 3;}
     public Boolean getCreateCurse(){return this.createCurse;}
     public void isCurse(String type1, String type2){}
@@ -431,10 +437,12 @@ public class Moves {
     }
 
     public int selfDamage(int DamageDealt){
-        return (int) Math.round(this.recoil * DamageDealt);
+        return (int)
+                Math.round(this.recoil * DamageDealt);
     }
 
-    public Boolean Hits(Pokemon attacker, Pokemon defender, Pokemon PlayerPoke, Weather weather) {
+    public Boolean Hits(Pokemon attacker, Pokemon defender, Pokemon PlayerPoke,
+                        Weather weather) {
         if(this.name.equals("Belch") && !attacker.getUseBerry()){
             return false;
         }
@@ -444,17 +452,7 @@ public class Moves {
             return true;
         }
         if (this.CanMiss){
-            if(this.name.equals("Thunder")){
-                if(weather.showName().equals("Rain")){
-                    setAccuracy(100);
-                }
-                if(weather.showName().equals("Sunshine")){
-                    setAccuracy(50);
-                }
-                else {
-                    setAccuracy(70);
-                }
-            }
+            this.setDamageAcc(weather);
             int randomupper = 100;
             int R = new Random().nextInt(randomupper);
             int TotalAccAttDef = (int) Math.round(attacker.showAccMult());
@@ -643,7 +641,7 @@ public class Moves {
                            Weather weather, Terrain terrain,
                            List<Pokemon> Waiting, Moves enemyMove,
                            Boolean isFirst, Boolean magicRoom,
-                           Boolean wonderRoom){
+                           Boolean wonderRoom, int lastDamage){
         int RefinedDamage;
         double RawDamage = 0;
         int savedRefinedDamage = 0;
@@ -664,181 +662,15 @@ public class Moves {
         if(isUsed && defender.showItem().getIsConsumable()){
             defender.giveItem(new NoItem());
         }
-        if(this.name.equals("Weather Ball")){
-            if(weather.showName().equals("Sunny")){
-                this.type = "Fire";
-            }
-            if(weather.showName().equals("Heavy Rain")){
-                this.type = "Water";
-            }
-            if(weather.showName().equals("Hail")){
-                this.type = "Ice";
-            }
-            if(weather.showName().equals("Sandstorm")){
-                this.type = "Rock";
-            }
-        }
-        if(this.name.equals("Grass Knot") || this.name.equals("Low Kick")){
-            if(defender.showWeight() < 22){
-                this.power = 20;
-            }
-            if(defender.showWeight() >= 22){
-                this.power = 40;
-            }
-            if(defender.showWeight() >= 55){
-                this.power = 60;
-            }
-            if(defender.showWeight() >= 110){
-                this.power = 80;
-            }
-            if(defender.showWeight() >= 220){
-                this.power = 100;
-            }
-            if(defender.showWeight() >= 440){
-                this.power = 120;
-            }
-        }
+        this.setDamage(attacker, defender, enemyMove, lastDamage);
+        this.setDamageType(weather);
         if(this.retaliatingMove){
             this.createPower(attacker.getPreviousDamage());
-        }
-        if(this.name.equals("Heavy Slam")){
-            double weightPerc = defender.showWeight()/attacker.showWeight();
-            if(weightPerc <= .2){
-                this.power = 120;
-            }
-            else if(weightPerc <= .25){
-                this.power = 100;
-            }
-            else if(weightPerc <= .33){
-                this.power = 80;
-            }
-            else if(weightPerc <= .5){
-                this.power = 60;
-            }
-            else {
-                this.power = 40;
-            }
         }
         if(this.name.equals("Beat Up")){
             for(Pokemon pokemon : Waiting){
                 RawDamage += Math.round(pokemon.showBaseAtt()/10.0) + 5;
             }
-        }
-        if(this.name.equals("Fling")){
-            this.power = attacker.showItem().showFlingDamage();
-            attacker.showItem().useBerry(defender, false, defender.showAbility().showName());
-        }
-        if(this.name.equals("Gyro Ball")){
-            this.power = 25 * (defender.showSpeed(
-                    enemyMove.getSpeedPriority()) /
-                    attacker.showSpeed(this.speedPriority));
-        }
-        if(this.name.equals("Heat Crash")){
-            double weightPerc = defender.showWeight()/
-                    attacker.showWeight();
-            if(weightPerc >= .5){
-                this.power = 40;
-            }
-            if(weightPerc < .5){
-                this.power = 60;
-            }
-            if(weightPerc < .33){
-                this.power = 80;
-            }
-            if(weightPerc < .25){
-                this.power = 100;
-            }
-            if(weightPerc < .20){
-                this.power = 120;
-            }
-        }
-        if(this.name.equals("Frustration")){
-            this.power = (int) Math.floor((
-                    attacker.showSavedHP() -
-                            (attacker.showSavedHP() -
-                                    attacker.showHP()))/1.5);
-        }
-        if(this.name.equals("Return")){
-            this.power = (int) (Math.floor(
-                    (((double) attacker.showHP())/
-                            attacker.showSavedHP()) * 120));
-        }
-        if(this.name.equals("Reversal") || this.name.equals("Flail")){
-            double HPPerc = ((double) attacker.showHP()/attacker.showSavedHP()) * 100;
-            if(this.name.equals("Reversal")) {
-                if (HPPerc >= 67.16) {
-                    this.power = 20;
-                } else if (HPPerc >= 34.38) {
-                    this.power = 40;
-                } else if (HPPerc >= 20.31) {
-                    this.power = 80;
-                } else if (HPPerc >= 9.38) {
-                    this.power = 100;
-                } else if (HPPerc >= 3.13) {
-                    this.power = 150;
-                } else {
-                    this.power = 200;
-                }
-            }
-            if(this.name.equals("Flail")){
-                if (HPPerc >= 68.75) {
-                    this.power = 20;
-                } else if (HPPerc >= 35.42) {
-                    this.power = 40;
-                } else if (HPPerc >= 20.83) {
-                    this.power = 80;
-                } else if (HPPerc >= 10.42) {
-                    this.power = 100;
-                } else if (HPPerc >= 4.17) {
-                    this.power = 150;
-                } else {
-                    this.power = 200;
-                }
-            }
-        }
-        if(this.name.equals("Stored Power")){
-            this.power = 20;
-            double increases = attacker.showAccMult()
-                    + attacker.showDefMult() + attacker.showEvasMult()
-                    + attacker.showSpeedMult() + attacker.showSpecAttMult()
-                    + attacker.showSpecDefMult();
-            this.power += (int) (20 * increases);
-        }
-        if(this.name.equals("Night Shade")){
-            this.power = attacker.showLevel();
-        }
-        if(this.name.equals("Final Gambit")){
-            this.power = attacker.showHP();
-        }
-        if(this.name.equals("Electro Ball")){
-            double targetSpeedPerc = (double) defender.showSpeed(1)/attacker.showSpeed(1);
-            if(targetSpeedPerc > .5){
-                this.power = 60;
-            }
-            else if(targetSpeedPerc > .33){
-                this.power = 80;
-            }
-            else if(targetSpeedPerc > .25){
-                this.power = 120;
-            }
-            else{
-                this.power = 150;
-            }
-        }
-        if(this.name.equals("Spit Up")){
-            if(attacker.getStockpile() == 0){
-                this.power = 1;
-            }
-            if(attacker.getStockpile() == 1){
-                this.power = 100;
-            }
-            if(attacker.getStockpile() == 2){
-                this.power = 200;
-            }
-            if(attacker.getStockpile() == 3){
-                this.power = 300;
-            }
-            attacker.resetStockpile();
         }
         if(!defender.getIsProtected()){
             if(this.name.equals("Sheer Cold")){
@@ -1159,7 +991,8 @@ public class Moves {
                 attacker.setHP(-1);
             }
         }
-        if (this.MultChange < 0 && changed.getCannotHaveStatLowered() > 0){
+        if (this.MultChange < 0 || changed.getCannotHaveStatLowered() > 0 ||
+        changed.showAbility().getNoStatChange()){
             return;
         }
         if (this.affectsPhysAtt) {

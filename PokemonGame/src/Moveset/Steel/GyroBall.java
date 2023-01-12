@@ -1,6 +1,7 @@
 package Moveset.Steel;
 
 import BattleMechanics.Moves;
+import PokemonCreation.Pokemon;
 
 public class GyroBall extends Moves {
     public GyroBall(){
@@ -13,5 +14,13 @@ public class GyroBall extends Moves {
         this.savedPP = this.PP;
         this.makesContact = true;
         this.TMNum = 152;
+    }
+
+    @Override
+    protected void setDamage(Pokemon attacker, Pokemon defender,
+                             Moves enemyMove, int lastDamage) {
+        this.power = 25 * (defender.showSpeed(
+                enemyMove.getSpeedPriority()) /
+                attacker.showSpeed(this.speedPriority));
     }
 }

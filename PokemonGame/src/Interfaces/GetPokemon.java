@@ -21,6 +21,8 @@ import Pokedex.O.*;
 import Pokedex.P.*;
 import Pokedex.R.*;
 import Pokedex.S.*;
+import Pokedex.T.Tentacool;
+import Pokedex.T.Tentacruel;
 import Pokedex.T.Toucannon;
 import Pokedex.T.Trumbeak;
 import Pokedex.V.*;
@@ -134,6 +136,12 @@ public interface GetPokemon {
         if(ID == 71){
             pokemon = new Victreebel(level, globalVariables);
         }
+         if(ID == 72){
+             pokemon = new Tentacool(level, globalVariables);
+         }
+         if(ID == 73){
+             pokemon = new Tentacruel(level, globalVariables);
+         }
         if(ID == 79){
             if(regionCheck < .75){
                 pokemon = new Slowpoke(level, globalVariables);
@@ -301,6 +309,12 @@ public interface GetPokemon {
          if(ID == 405){
              pokemon = new Luxray(level, globalVariables);
          }
+         if(ID == 427){
+             pokemon = new Buneary(level, globalVariables);
+         }
+         if(ID == 428){
+             pokemon = new Lopunny(level, globalVariables);
+         }
          if(ID == 438){
              pokemon = new Bonsly(level, globalVariables);
          }
@@ -309,6 +323,12 @@ public interface GetPokemon {
          }
          if(ID == 446){
              pokemon = new Munchlax(level, globalVariables);
+         }
+         if (ID == 456){
+             pokemon = new Finneon(level, globalVariables);
+         }
+         if(ID == 457){
+             pokemon = new Lumineon(level, globalVariables);
          }
          if(ID == 504){
              pokemon = new Patrat(level, globalVariables);
@@ -484,6 +504,10 @@ public interface GetPokemon {
                         IVs, HPMissing, Evs, Gender, ability, isShiny, new NoItem());
             }
         }
+        if(ID == 72){
+            evolution = new Tentacruel(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, new NoItem());
+        }
         if(ID == 79){
             if(isAlolan){
                 if(items.showName().equals("Galarica Cuff")){
@@ -589,6 +613,10 @@ public interface GetPokemon {
             evolution = new Luxray(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
+        if(ID == 427){
+            evolution = new Lopunny(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
         if(ID == 438){
             evolution = new Sudowoodo(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
@@ -599,6 +627,10 @@ public interface GetPokemon {
         }
         if (ID == 446){
             evolution = new Snorlax(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if (ID == 456){
+            evolution = new Lumineon(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
         if(ID == 504) {

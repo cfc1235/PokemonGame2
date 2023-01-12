@@ -437,4 +437,12 @@ public interface AddMoveset {
     default Moves addEerieSpell(){return new EerieImpulse();}
     default Moves addAcidSpray(){return new AcidSpray();}
     default Moves addRazorShell(){return new RazorShell();}
+    default Moves addBubbleBeam(){return new BubbleBeam();}
+    default Moves addAcidArmor(){return new AcidArmor();}
+    default Moves addDoubleKick(){return new DoubleKick();}
+    default Moves addFlatter(){return new Flatter();}
+    default Moves addCosmicPower(){return new CosmicPower();}
+    default Moves addMagicCoat(){return new MagicCoat();}
+    default Moves addMirrorCoat(){return new MirrorCoat();}
+    default Moves addViseGrip(){return new ViseGrip();}
 }
