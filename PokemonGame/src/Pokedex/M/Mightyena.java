@@ -8,7 +8,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.I.Intimidate;
 import PokemonCreation.AllAbilities.M.Moxxie;
 import PokemonCreation.AllAbilities.Q.QuickFeet;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

@@ -7,7 +7,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.E.EarlyBird;
 import PokemonCreation.AllAbilities.I.IronFist;
 import PokemonCreation.AllAbilities.S.Swarm;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

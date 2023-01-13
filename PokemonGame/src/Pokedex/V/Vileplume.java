@@ -7,7 +7,7 @@ import Items.HeldItem.AbsorbBulb;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.C.Chlorophyll;
 import PokemonCreation.AllAbilities.E.EffectSpore;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

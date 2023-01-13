@@ -7,7 +7,7 @@ import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.Abilities;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

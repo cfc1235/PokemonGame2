@@ -1,6 +1,7 @@
 package PokemonCreation;
 
 import Interfaces.*;
+import Items.Items;
 import Items.NoItem;
 import Moveset.OtherDamage.NoMove;
 import BattleMechanics.BaseVortex;
@@ -1035,16 +1036,16 @@ public class Pokemon implements AddMoveset, Cloneable {
 
     public void addFirstMoves() {
         for(int i = 0; i <= level; ++i){
-            for(CreateOrderedMap<Integer, Moves> moveMap: learnedMoves){
+            for(CreateOrderedMap<Integer, Moves> moveMap: this.learnedMoves){
                 if(moveMap.getKey() == i){
-                    moves.add(moveMap.getValue());
+                    this.moves.add(moveMap.getValue());
                 }
             }
         }
-        while (moves.size() > 4) {
+        while (this.moves.size() > 4) {
             Random rand = new Random();
-            int remove = rand.nextInt(moves.size());
-            moves.remove(remove);
+            int remove = rand.nextInt(this.moves.size());
+            this.moves.remove(remove);
         }
     }
     public Boolean LevelUp(String type, Pokemon Defeated){
@@ -1445,7 +1446,6 @@ public class Pokemon implements AddMoveset, Cloneable {
         this.resetItem();
         this.critTotal = 0;
         this.ability.resolveEndFight(this);
-        int coins = 0;
         for(Moves moves : this.moves){
             globalVariables.getWallet().addWinnings(moves.getCoins());
         }

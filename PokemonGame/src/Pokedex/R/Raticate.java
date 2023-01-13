@@ -8,7 +8,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.G.Guts;
 import PokemonCreation.AllAbilities.H.Hustle;
 import PokemonCreation.AllAbilities.R.RunAway;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

@@ -10,7 +10,7 @@ import Items.Consumable.SpoiledApricorn;
 import Moveset.SelfChange.Harden;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.S.ShedSkin;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

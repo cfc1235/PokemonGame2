@@ -6,7 +6,7 @@ import Interfaces.GlobalVariables;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.C.Chlorophyll;
 import PokemonCreation.AllAbilities.G.Gluttony;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

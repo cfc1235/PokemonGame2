@@ -9,7 +9,7 @@ import Moveset.OtherDamage.NoMove;
 import Moveset.OtherDamage.Struggle;
 import PlayerMechanics.*;
 import PokemonCreation.Abilities;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 import Terrain.Terrain;
 import Weather.Weather;

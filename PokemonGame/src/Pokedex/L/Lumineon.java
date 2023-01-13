@@ -7,7 +7,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.S.StormDrain;
 import PokemonCreation.AllAbilities.S.SwiftSwim;
 import PokemonCreation.AllAbilities.W.WaterVeil;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

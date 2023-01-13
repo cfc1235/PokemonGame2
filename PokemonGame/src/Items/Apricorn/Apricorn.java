@@ -1,6 +1,6 @@
 package Items.Apricorn;
 
-import PokemonCreation.Items;
+import Items.Items;
 
 public class Apricorn extends Items {
 

@@ -8,7 +8,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.C.Competitve;
 import PokemonCreation.AllAbilities.C.CuteCharm;
 import PokemonCreation.AllAbilities.M.MarvelScale;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

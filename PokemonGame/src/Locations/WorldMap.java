@@ -15,12 +15,16 @@ public class WorldMap {
     private ArrayList<AreaTypes> fullMap;
 
     public WorldMap(){
+        this.fullMap = new ArrayList<>();
         this.home = new Home();
         this.homeTown = new HomeTown();
         this.route1 = new Route1();
         this.firstTown = new FirstTown();
         this.center1 = new PokemonCenter1();
+        this.createMap();
+    }
 
+    public void createMap(){
         this.home.addToNextArea(this.homeTown);
         this.home.addToTotalAreas(this.homeTown);
 
@@ -45,7 +49,6 @@ public class WorldMap {
         Collections.addAll(this.fullMap, this.home, this.homeTown,
                 this.route1, this.firstTown, this.center1);
     }
-
     public ArrayList<AreaTypes> getFullMap(){return this.fullMap;}
 
     public AreaTypes goHome(){

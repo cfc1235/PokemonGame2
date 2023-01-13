@@ -8,7 +8,7 @@ import Moveset.Flying.Hurricane;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.M.MarvelScale;
 import PokemonCreation.AllAbilities.S.ShedSkin;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 import Items.NoItem;
 

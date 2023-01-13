@@ -199,6 +199,7 @@ public class Moves {
     protected Boolean ignoresDef = false;
     protected Boolean createCurse = false;
     protected Boolean goesSecond = false;
+    protected Boolean ignoresProtect = false;
 
     protected void setDamageType(Weather weather){};
     protected void setDamage(Pokemon attacker, Pokemon defender,
@@ -453,6 +454,10 @@ public class Moves {
         }
         if (this.CanMiss){
             this.setDamageAcc(weather);
+            if(attacker.showAbility().showName().equals("No Gaurd") ||
+                    defender.showAbility().showName().equals("No Gaurd")){
+                this.acc = 100;
+            }
             int randomupper = 100;
             int R = new Random().nextInt(randomupper);
             int TotalAccAttDef = (int) Math.round(attacker.showAccMult());
@@ -672,7 +677,7 @@ public class Moves {
                 RawDamage += Math.round(pokemon.showBaseAtt()/10.0) + 5;
             }
         }
-        if(!defender.getIsProtected()){
+        if(!defender.getIsProtected() || this.ignoresProtect){
             if(this.name.equals("Sheer Cold")){
                 if(!defender.showType1().equals("Ice") &&
                         !defender.showType2().equals("Ice")){
@@ -693,6 +698,9 @@ public class Moves {
             if (this.cutsHPTo) {
                 if(this.name.equals("Endeavor")){
                     savedRefinedDamage = defender.showHP() - attacker.showHP();
+                }
+                if(this.name.equals("Guillotine")){
+                    defender.setHP(-1);
                 }
                 else {
                     savedRefinedDamage = (int) Math.ceil(defender.showHP() / this.cutHPBy);
@@ -866,7 +874,7 @@ public class Moves {
                 defender.showAbility().statEffectOnDamage(this, attacker, weather);
             }
         }
-        if(defender.getIsProtected()){
+        if(defender.getIsProtected() && !this.ignoresProtect){
             System.out.println("Enemy " + defender.showName() + " is protected!");
         }
         if(this.name.equals("Weather Ball")){

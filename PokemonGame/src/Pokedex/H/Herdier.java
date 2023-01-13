@@ -7,7 +7,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.I.Intimidate;
 import PokemonCreation.AllAbilities.S.SandRush;
 import PokemonCreation.AllAbilities.S.Scrappy;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

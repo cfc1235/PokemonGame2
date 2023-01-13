@@ -1,6 +1,6 @@
 package Items.Consumable;
 
-import PokemonCreation.Items;
+import Items.Items;
 
 public class SpoiledApricorn extends Items {
     public SpoiledApricorn(){

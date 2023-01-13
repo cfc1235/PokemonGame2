@@ -12,7 +12,7 @@ import Moveset.Flying.Gust;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.C.CompoundEyes;
 import PokemonCreation.AllAbilities.S.ShieldDust;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

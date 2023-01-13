@@ -9,7 +9,7 @@ import PokemonCreation.Abilities;
 
 import PokemonCreation.AllAbilities.S.Scrappy;
 import PokemonCreation.AllAbilities.S.Steadfast;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

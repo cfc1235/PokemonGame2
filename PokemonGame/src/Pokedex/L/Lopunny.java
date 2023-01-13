@@ -11,7 +11,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.C.CuteCharm;
 import PokemonCreation.AllAbilities.K.Klutz;
 import PokemonCreation.AllAbilities.L.Limber;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

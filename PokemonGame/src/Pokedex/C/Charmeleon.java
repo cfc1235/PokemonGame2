@@ -3,6 +3,7 @@ package Pokedex.C;
 import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
+import Items.Items;
 import PokemonCreation.*;
 import PokemonCreation.AllAbilities.S.SolarPower;
 import PokemonCreation.AllAbilities.B.Blaze;

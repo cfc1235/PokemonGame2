@@ -7,7 +7,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.D.Drizzle;
 import PokemonCreation.AllAbilities.K.KeenEyes;
 import PokemonCreation.AllAbilities.R.RainDish;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

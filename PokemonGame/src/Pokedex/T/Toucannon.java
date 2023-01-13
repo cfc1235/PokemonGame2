@@ -8,7 +8,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.K.KeenEyes;
 import PokemonCreation.AllAbilities.S.SheerForce;
 import PokemonCreation.AllAbilities.S.SkillLink;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

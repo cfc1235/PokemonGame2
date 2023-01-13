@@ -1,7 +1,7 @@
 package PlayerMechanics;
 
 import Interfaces.CreateOrderedMap;
-import PokemonCreation.Items;
+import Items.Items;
 import Items.NoItem;
 
 import java.util.ArrayList;

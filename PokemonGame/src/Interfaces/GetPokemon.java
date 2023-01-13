@@ -1,6 +1,7 @@
 package Interfaces;
 
 import BattleMechanics.Moves;
+import Items.Items;
 import Pokedex.A.*;
 import Pokedex.AlolanForm.*;
 import Pokedex.B.*;
@@ -380,11 +381,42 @@ public interface GetPokemon {
          if(ID == 735){
              pokemon = new Gumshoos(level, globalVariables);
          }
+         if(ID == 736){
+             pokemon = new Grubbin(level, globalVariables);
+         }
+         if(ID == 737){
+             pokemon = new Charjabug(level, globalVariables);
+         }
+         if(ID == 738){
+             pokemon = new Vikavolt(level, globalVariables);
+         }
+         if(ID == 744){
+             pokemon = new Rockruff(level, globalVariables);
+         }
+         if(ID == 745){
+             if(regionCheck < .33){
+                 pokemon = new LycanrocDay(level, globalVariables);
+             }
+             else if(regionCheck < .66){
+                 pokemon = new LycanrocNight(level, globalVariables);
+             }
+             else {
+                 pokemon = new LycanrocDusk(level, globalVariables);
+             }
+         }
          if(ID == 862){
              pokemon = new Sirfetchd(level, globalVariables);
          }
          if(ID == 902){
              pokemon = new Basculegion(level, globalVariables);
+         }
+         if(ID == 982){
+             if(regionCheck == .01){
+                 pokemon = new Dudunsparce(level, globalVariables, true);
+             }
+             else {
+                 pokemon = new Dudunsparce(level, globalVariables, false);
+             }
          }
         return pokemon;
     }
@@ -575,6 +607,18 @@ public interface GetPokemon {
             evolution = new Forretress(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
         }
+        if(ID == 206) {
+            if (new Random().nextInt(100) == 1) {
+                evolution = new Dudunsparce(level, moves, nature, name,
+                        IVs, HPMissing, Evs, Gender, ability, isShiny,
+                        items, true);
+            }
+            else {
+                evolution = new Dudunsparce(level, moves, nature, name,
+                        IVs, HPMissing, Evs, Gender, ability, isShiny,
+                        items, false);
+            }
+        }
         if(ID == 261){
             evolution = new Mightyena(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
@@ -664,6 +708,30 @@ public interface GetPokemon {
         if(ID == 734){
             evolution = new Gumshoos(level, moves, nature, name,
                     IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 736) {
+            evolution = new Charjabug(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 737){
+            evolution = new Vikavolt(level, moves, nature, name,
+                    IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+        }
+        if(ID == 744){
+            if(ability.showName().equals("Own Tempo")){
+                evolution = new LycanrocDusk(level, moves, nature, name,
+                        IVs, HPMissing, Evs, Gender, isShiny, items);
+            }
+            else {
+                if(globalVariables.getTime()){
+                    evolution = new LycanrocDay(level, moves, nature, name,
+                            IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+                }
+                else {
+                    evolution = new LycanrocNight(level, moves, nature, name,
+                            IVs, HPMissing, Evs, Gender, ability, isShiny, items);
+                }
+            }
         }
         if(!evolution.showOnEvol().showName().equals("Nothing") &&
                 pokemon != evolution) {

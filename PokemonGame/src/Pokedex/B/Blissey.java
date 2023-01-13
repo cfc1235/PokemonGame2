@@ -7,7 +7,7 @@ import Interfaces.GlobalVariables;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.N.NaturalCure;
 import PokemonCreation.AllAbilities.S.SereneGrace;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

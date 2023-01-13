@@ -4,16 +4,11 @@ import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GetItem;
 import Interfaces.GlobalVariables;
-import Items.Apricorn.Apricorn;
-import Items.Consumable.SeedOfMastery;
-import Items.Consumable.SmallEXPCandy;
-import Items.Consumable.SpoiledApricorn;
-import Moveset.SelfChange.Harden;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.I.Intimidate;
 import PokemonCreation.AllAbilities.M.Moxxie;
 import PokemonCreation.AllAbilities.S.ShedSkin;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

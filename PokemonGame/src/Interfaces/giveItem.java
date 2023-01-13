@@ -1,6 +1,6 @@
 package Interfaces;
 
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.ArrayList;

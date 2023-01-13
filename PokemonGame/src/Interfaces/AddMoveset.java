@@ -445,4 +445,14 @@ public interface AddMoveset {
     default Moves addMagicCoat(){return new MagicCoat();}
     default Moves addMirrorCoat(){return new MirrorCoat();}
     default Moves addViseGrip(){return new ViseGrip();}
+    default Moves addGuillotine(){return new Guillotine();}
+    default Moves addTrailblaze(){return new Trailblaze();}
+    default Moves addHyperDrill(){return new HyperDrill();}
+    default Moves addBoomburst(){return new Boomburst();}
+    default Moves addPounce(){return new Pounce();}
+    default Moves addPoisonTail(){return new PoisonTail();}
+    default Moves addSmartStrike(){return new SmartStrike();}
+    default Moves addIceSpinner(){return new IceSpinner();}
+    default Moves addAccelerock(){return new Accelerock();}
+    default Moves addCrushClaw(){return new CrushClaw();}
 }

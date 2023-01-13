@@ -11,7 +11,7 @@ import Moveset.Electric.ThunderPunch;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.L.LightningRod;
 import PokemonCreation.AllAbilities.S.Static;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

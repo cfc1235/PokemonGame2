@@ -8,7 +8,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.C.ClearBody;
 import PokemonCreation.AllAbilities.L.LiquidOoze;
 import PokemonCreation.AllAbilities.R.RainDish;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

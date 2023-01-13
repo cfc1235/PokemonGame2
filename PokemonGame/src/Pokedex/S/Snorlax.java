@@ -8,7 +8,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.G.Gluttony;
 import PokemonCreation.AllAbilities.I.Immunity;
 import PokemonCreation.AllAbilities.T.ThickFat;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

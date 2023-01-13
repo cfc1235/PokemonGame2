@@ -8,7 +8,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.R.Rattled;
 import PokemonCreation.AllAbilities.R.RockHead;
 import PokemonCreation.AllAbilities.S.Sturdy;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

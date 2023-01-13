@@ -1,5 +1,6 @@
 package Pokedex.D;
 
+import BattleMechanics.Moves;
 import Interfaces.CreateOrderedMap;
 import Interfaces.GlobalVariables;
 import PokemonCreation.AllAbilities.R.Rattled;
@@ -27,10 +28,9 @@ public class Dunsparce extends Pokemon {
                 new CreateOrderedMap<>(8, addRollout()), new CreateOrderedMap<>(12, addGlare()),
                 new CreateOrderedMap<>(16, addScreech()), new CreateOrderedMap<>(20, addAncientPower()),
                 new CreateOrderedMap<>(24, addDrillRun()), new CreateOrderedMap<>(28, addYawn()),
-                new CreateOrderedMap<>(32, addBodySlam()), new CreateOrderedMap<>(36, addTakeDown()),
-                new CreateOrderedMap<>(40, addRoost()), new CreateOrderedMap<>(44, addDragonRush()),
-                new CreateOrderedMap<>(48, addCoil()), new CreateOrderedMap<>(52, addDoubleEdge()),
-                new CreateOrderedMap<>(56, addEndeavor()));
+                new CreateOrderedMap<>(32, addHyperDrill()), new CreateOrderedMap<>(36, addRoost()),
+                new CreateOrderedMap<>(40, addDragonRush()), new CreateOrderedMap<>(44, addCoil()),
+                new CreateOrderedMap<>(48, addDoubleEdge()), new CreateOrderedMap<>(52, addEndeavor()));
         addFirstMoves();
         Collections.addAll(this.TMmoves, addSolarBeam(), addThunderWave(),
                 addDig(), addScreech(), addRest(), addRockSlide(), addThief(),
@@ -55,5 +55,15 @@ public class Dunsparce extends Pokemon {
         setEXPNeeded();
         this.setFullDirName("Dunsparce.png", globalVariables);
         this.setPokeCry("206Cry.wav");
+    }
+
+    @Override
+    protected Boolean getSpecialEvolReq(){
+        for (Moves moves : this.moves){
+            if (moves.showName().equals("Hyper Drill")){
+                return true;
+            }
+        }
+        return false;
     }
 }

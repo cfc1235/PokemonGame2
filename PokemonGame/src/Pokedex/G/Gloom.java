@@ -8,7 +8,7 @@ import Items.NoItem;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.C.Chlorophyll;
 import PokemonCreation.AllAbilities.S.Stench;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

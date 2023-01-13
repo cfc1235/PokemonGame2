@@ -1,6 +1,6 @@
 package Items.Berries;
 
-import PokemonCreation.Items;
+import Items.Items;
 
 public class SitrusBerry extends Items {
     public SitrusBerry(){

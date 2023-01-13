@@ -7,7 +7,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.I.Insomnia;
 import PokemonCreation.AllAbilities.K.KeenEyes;
 import PokemonCreation.AllAbilities.T.TintedLenses;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

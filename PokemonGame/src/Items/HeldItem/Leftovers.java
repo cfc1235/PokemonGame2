@@ -1,6 +1,6 @@
 package Items.HeldItem;
 
-import PokemonCreation.Items;
+import Items.Items;
 
 public class Leftovers extends Items {
     public Leftovers(){

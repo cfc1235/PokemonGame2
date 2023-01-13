@@ -1,6 +1,6 @@
 package Items.Consumable;
 
-import PokemonCreation.Items;
+import Items.Items;
 
 public class DazzlingHoney extends Items {
     public DazzlingHoney(){

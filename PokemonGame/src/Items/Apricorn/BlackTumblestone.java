@@ -1,6 +1,6 @@
 package Items.Apricorn;
 
-import PokemonCreation.Items;
+import Items.Items;
 
 public class BlackTumblestone extends Items {
     public BlackTumblestone(){

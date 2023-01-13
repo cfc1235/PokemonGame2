@@ -1,6 +1,6 @@
 package Items.EvolItems;
 
-import PokemonCreation.Items;
+import Items.Items;
 
 public class PrismScale extends Items {
     public PrismScale(){

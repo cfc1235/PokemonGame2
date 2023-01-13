@@ -1,4 +1,5 @@
 package Pokedex.I;
+import Items.Items;
 import PokemonCreation.AllAbilities.C.Chlorophyll;
 import PokemonCreation.AllAbilities.O.Overgrowth;
 import BattleMechanics.Moves;

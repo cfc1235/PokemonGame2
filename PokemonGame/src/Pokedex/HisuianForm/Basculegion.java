@@ -8,7 +8,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.A.Adaptability;
 import PokemonCreation.AllAbilities.M.MoldBreaker;
 import PokemonCreation.AllAbilities.R.Rattled;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

@@ -9,7 +9,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.A.Adaptability;
 import PokemonCreation.AllAbilities.S.Stakeout;
 import PokemonCreation.AllAbilities.S.StrongJaw;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

@@ -1,7 +1,7 @@
 package Items.HeldItem;
 
 import Interfaces.CreateOrderedMap;
-import PokemonCreation.Items;
+import Items.Items;
 
 public class AbsorbBulb extends Items {
     public AbsorbBulb(){

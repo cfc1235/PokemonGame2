@@ -7,7 +7,7 @@ import Items.HeldItem.AbsorbBulb;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.C.Chlorophyll;
 import PokemonCreation.AllAbilities.H.Healer;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

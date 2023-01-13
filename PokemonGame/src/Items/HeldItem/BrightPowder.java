@@ -1,7 +1,6 @@
 package Items.HeldItem;
 
-import Interfaces.CreateOrderedMap;
-import PokemonCreation.Items;
+import Items.Items;
 
 public class BrightPowder extends Items {
     public BrightPowder(){

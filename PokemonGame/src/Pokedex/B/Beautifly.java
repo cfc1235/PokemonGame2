@@ -8,7 +8,7 @@ import Moveset.Flying.Gust;
 import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.R.Rivalry;
 import PokemonCreation.AllAbilities.S.Swarm;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

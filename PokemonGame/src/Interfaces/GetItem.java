@@ -6,7 +6,7 @@ import Items.Consumable.*;
 import Items.EvolItems.*;
 import Items.HeldItem.*;
 import Items.HeldItem.Leftovers;
-import PokemonCreation.Items;
+import Items.Items;
 import Items.NoItem;
 
 import java.util.Random;
@@ -45,11 +45,12 @@ public interface GetItem {
     static Items getLeftovers(){return new Leftovers();}
     static Items getKingsRock(){return new KingsRock();}
     static Items getPoisonBarb(){return new PoisonBarb();}
+    static Items getCellBattery(){return new CellBattery();}
 
     static Items getRandomItem(){
         Random random = new Random();
         Items randItem = getNoItem();
-        int rand = random.nextInt(31);
+        int rand = random.nextInt(32);
         if(rand == 0){randItem = getApricorn();}
         if (rand == 1){randItem = getCheriBerry();}
         if(rand == 2){randItem = getPechaBerry();}
@@ -81,6 +82,7 @@ public interface GetItem {
         if(rand == 28){randItem = getLeftovers();}
         if(rand == 29){randItem = getKingsRock();}
         if(rand == 30){randItem = getPoisonBarb();}
+        if(rand == 31){randItem = getCellBattery();}
         return randItem;
     }
 }

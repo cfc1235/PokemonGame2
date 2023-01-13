@@ -121,7 +121,11 @@ public class Abilities {
     protected Boolean throwWeather = false;
     protected Weather weatherOnThrow = new Weather();
     protected Boolean noStatChange = false;
+    protected double physMult = 1.0;
+    protected double specMult = 1.0;
 
+    public double getPhysMult(){return this.physMult;}
+    public double getSpecMult(){return this.specMult;}
     public Boolean getNoStatChange(){return this.noStatChange;}
     public Weather getWeatherOnThrow(){return this.weatherOnThrow;}
     public Boolean getThrowWeather(){return this.throwWeather;}

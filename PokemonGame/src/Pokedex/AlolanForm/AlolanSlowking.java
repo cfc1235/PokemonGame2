@@ -8,7 +8,7 @@ import PokemonCreation.Abilities;
 import PokemonCreation.AllAbilities.O.Oblivious;
 import PokemonCreation.AllAbilities.O.OwnTempo;
 import PokemonCreation.AllAbilities.R.Regenerator;
-import PokemonCreation.Items;
+import Items.Items;
 import PokemonCreation.Pokemon;
 
 import java.util.Collections;

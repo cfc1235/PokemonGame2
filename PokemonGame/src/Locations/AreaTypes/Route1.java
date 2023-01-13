@@ -19,7 +19,7 @@ public class Route1 extends AreaTypes{
                 new CreateOrderedMap<>(15, 731), new CreateOrderedMap<>(30, 733),
                 new CreateOrderedMap<>(2, 172), new CreateOrderedMap<>(15, 438),
                 new CreateOrderedMap<>(2, 440), new CreateOrderedMap<>(5, 446),
-                new CreateOrderedMap<>(10, 427));
+                new CreateOrderedMap<>(10, 427), new CreateOrderedMap<>(15, 736));
         Collections.addAll(this.nightChance, new CreateOrderedMap<>(50, 19),
                 new CreateOrderedMap<>(5, 20), new CreateOrderedMap<>(45, 163),
                 new CreateOrderedMap<>(15, 43), new CreateOrderedMap<>(15, 69),
@@ -28,7 +28,8 @@ public class Route1 extends AreaTypes{
                 new CreateOrderedMap<>(5, 206), new CreateOrderedMap<>(10, 10),
                 new CreateOrderedMap<>(15, 731), new CreateOrderedMap<>(2, 172),
                 new CreateOrderedMap<>(15, 438), new CreateOrderedMap<>(2, 440),
-                new CreateOrderedMap<>(5, 446), new CreateOrderedMap<>(10, 427));
+                new CreateOrderedMap<>(5, 446), new CreateOrderedMap<>(10, 427),
+                new CreateOrderedMap<>(15, 736));
         Collections.addAll(this.heabuttChance, new CreateOrderedMap<>(45, 165),
                 new CreateOrderedMap<>(45, 167), new CreateOrderedMap<>(33, 204),
                 new CreateOrderedMap<>(33, 265));
